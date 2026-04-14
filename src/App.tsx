@@ -308,6 +308,52 @@ const Causes = ({ onLearnMore }: { onLearnMore: (cause: string) => void }) => {
             </motion.div>
           ))}
         </div>
+
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-24 text-center"
+        >
+          <h3 className="text-3xl md:text-5xl font-display font-bold text-gray-900 mb-4 glow-text-blue">
+            Sundas Foundation Archives
+          </h3>
+          <p className="text-xl md:text-2xl text-gray-600 font-light italic">
+            Spread happiness on innocent faces with your donations.
+          </p>
+          <div className="mt-8 h-1 w-24 bg-sundas-red mx-auto rounded-full glow-red"></div>
+        </motion.div>
+
+        <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[
+            "https://sundas.org/Images/NewsandEvents/Events/15-Mar-2025_02-29-46_Secretary%20Health%20Balochistan%20Visits%20Sundas%20Foundation%20Lahore.jpg",
+            "https://sundas.org/images/gallery_2.jpg",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOo7oCa9QMMCiGCtzndYRUDERBNjp6Gxb3Pw&s",
+            "https://pbs.twimg.com/media/F2sviHXaQAAC3U5.jpg",
+            "https://sundas.org/images/gallery_4.jpg"
+          ].map((src, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+              whileHover={{ y: -10, scale: 1.02 }}
+              className="relative aspect-video rounded-2xl overflow-hidden shadow-lg group cursor-pointer"
+            >
+              <img 
+                src={src} 
+                alt={`Archive ${index + 1}`} 
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                referrerPolicy="no-referrer"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                <p className="text-white font-bold">Sundas Archive</p>
+              </div>
+              <div className="absolute inset-0 border-2 border-white/0 group-hover:border-white/20 rounded-2xl transition-all pointer-events-none"></div>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -1038,6 +1084,52 @@ const DonateModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void
   );
 };
 
+const WhatsAppButton = () => {
+  return (
+    <motion.a
+      href="https://wa.me/923001234567"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="fixed bottom-8 left-8 z-[60] bg-[#25D366] text-white p-4 rounded-full shadow-2xl flex items-center justify-center hover:bg-[#128C7E] transition-all glow-whatsapp"
+      initial={{ scale: 0, opacity: 0, x: -100 }}
+      animate={{ 
+        scale: 1, 
+        opacity: 1,
+        x: 0
+      }}
+      transition={{ 
+        type: "spring", 
+        stiffness: 260, 
+        damping: 20,
+        delay: 1
+      }}
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.9 }}
+    >
+      <motion.div
+        animate={{ 
+          y: [0, -8, 0],
+        }}
+        transition={{ 
+          repeat: Infinity, 
+          duration: 2, 
+          ease: "easeInOut" 
+        }}
+      >
+        <svg 
+          xmlns="http://www.w3.org/2000/svg" 
+          width="32" 
+          height="32" 
+          fill="currentColor" 
+          viewBox="0 0 16 16"
+        >
+          <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.06 3.973L0 16l4.104-1.076a7.864 7.864 0 0 0 3.886 1.02h.004c4.368 0 7.926-3.558 7.93-7.93a7.897 7.897 0 0 0-2.323-5.688zM7.994 14.52a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
+        </svg>
+      </motion.div>
+    </motion.a>
+  );
+};
+
 export default function App() {
   const [isDonateModalOpen, setIsDonateModalOpen] = useState(false);
   const [selectedCause, setSelectedCause] = useState<string | null>(null);
@@ -1056,6 +1148,7 @@ export default function App() {
           <DonatePage onBack={() => setShowDonatePage(false)} />
         </motion.div>
         <Footer />
+        <WhatsAppButton />
       </div>
     );
   }
@@ -1073,6 +1166,7 @@ export default function App() {
           <CauseDetail causeId={selectedCause} onBack={() => setSelectedCause(null)} />
         </motion.div>
         <Footer />
+        <WhatsAppButton />
       </div>
     );
   }
@@ -1191,6 +1285,7 @@ export default function App() {
       </motion.main>
 
       <Footer />
+      <WhatsAppButton />
       
       <DonateModal 
         isOpen={isDonateModalOpen} 

@@ -10,6 +10,7 @@
 
   --shadow-glow-blue: 0 0 20px rgba(0, 74, 173, 0.3);
   --shadow-glow-red: 0 0 20px rgba(203, 0, 0, 0.3);
+  --shadow-glow-whatsapp: 0 0 20px rgba(37, 211, 102, 0.4);
 }
 
 @utility glow-blue {
@@ -18,6 +19,10 @@
 
 @utility glow-red {
   box-shadow: var(--shadow-glow-red);
+}
+
+@utility glow-whatsapp {
+  box-shadow: var(--shadow-glow-whatsapp);
 }
 
 @utility glow-text-red {
