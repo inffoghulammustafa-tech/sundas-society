@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Abril Fatface", serif;
+  --font-display: "Abril Fatface", serif;
+  
+  --color-sundas-blue: #004aad;
+  --color-sundas-red: #cb0000;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+}
