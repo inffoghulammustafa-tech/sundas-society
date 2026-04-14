@@ -56,7 +56,7 @@ const Navbar = ({ onDonate }: { onDonate: () => void }) => {
             <li key={link.name}>
               <a 
                 href={link.href} 
-                className={`transition-colors duration-200 hover:text-sundas-red ${isScrolled ? 'text-gray-700' : 'text-white/90'}`}
+                className={`transition-colors duration-200 hover:text-sundas-red ${isScrolled ? 'text-sundas-blue' : 'text-white/90'}`}
               >
                 {link.name}
               </a>
@@ -77,9 +77,9 @@ const Navbar = ({ onDonate }: { onDonate: () => void }) => {
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? (
-              <X className={isScrolled ? 'text-gray-900' : 'text-white'} />
+              <X className={isScrolled ? 'text-sundas-blue' : 'text-white'} />
             ) : (
-              <Menu className={isScrolled ? 'text-gray-900' : 'text-white'} />
+              <Menu className={isScrolled ? 'text-sundas-blue' : 'text-white'} />
             )}
           </button>
         </div>
@@ -92,14 +92,14 @@ const Navbar = ({ onDonate }: { onDonate: () => void }) => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white border-t border-gray-100 overflow-hidden"
+            className="md:hidden bg-white border-t border-sundas-blue/10 overflow-hidden"
           >
             <ul className="px-6 py-6 space-y-4">
               {navLinks.map((link) => (
                 <li key={link.name}>
                   <a 
                     href={link.href} 
-                    className="block text-lg font-medium text-gray-800 hover:text-sundas-red"
+                    className="block text-lg font-medium text-sundas-blue hover:text-sundas-red"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     {link.name}
@@ -160,7 +160,7 @@ const Hero = ({ onDonate }: { onDonate: () => void }) => {
                 const element = document.getElementById('causes');
                 element?.scrollIntoView({ behavior: 'smooth' });
               }}
-              className="w-full sm:w-auto bg-white text-sundas-blue px-10 py-4 rounded-full font-bold text-lg shadow-2xl hover:bg-gray-100 transition-all flex items-center justify-center gap-2"
+              className="w-full sm:w-auto bg-white text-sundas-blue px-10 py-4 rounded-full font-bold text-lg shadow-2xl hover:bg-sundas-blue/5 transition-all flex items-center justify-center gap-2"
             >
               Explore Causes <ArrowRight size={20} />
             </motion.button>
@@ -202,7 +202,7 @@ const Stats = () => {
   const duplicatedStats = [...stats, ...stats, ...stats];
 
   return (
-    <section className="py-20 bg-white border-b border-gray-100 overflow-hidden">
+    <section className="py-20 bg-white border-b border-sundas-blue/10 overflow-hidden">
       <div className="relative flex">
         <motion.div 
           animate={{ x: [0, "-33.333%"] }}
@@ -222,7 +222,7 @@ const Stats = () => {
               <h3 className={`text-5xl md:text-7xl font-display font-extrabold mb-2 ${stat.color}`}>
                 {stat.value}
               </h3>
-              <p className="text-gray-500 font-medium uppercase tracking-widest text-sm">
+              <p className="text-sundas-blue/60 font-medium uppercase tracking-widest text-sm">
                 {stat.label}
               </p>
             </div>
@@ -262,18 +262,18 @@ const Causes = ({ onLearnMore }: { onLearnMore: (cause: string) => void }) => {
   ];
 
   return (
-    <section id="causes" className="py-32 bg-gray-50">
+    <section id="causes" className="py-32 bg-sundas-blue/5">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-20">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-6xl font-display font-extrabold text-gray-900 mb-6"
+            className="text-4xl md:text-6xl font-display font-extrabold text-sundas-blue mb-6"
           >
             Our Primary <span className="text-sundas-red">Causes</span>
           </motion.h2>
-          <p className="text-gray-600 max-w-2xl mx-auto text-lg">
+          <p className="text-sundas-blue/70 max-w-2xl mx-auto text-lg">
             We are dedicated to providing comprehensive care and support to those in need, ensuring no one fights alone.
           </p>
         </div>
@@ -290,13 +290,13 @@ const Causes = ({ onLearnMore }: { onLearnMore: (cause: string) => void }) => {
                 y: -10, 
                 boxShadow: cause.id === 'thalassemia' ? "0 20px 40px rgba(203,0,0,0.15)" : "0 20px 40px rgba(0,74,173,0.15)"
               }}
-              className={`bg-white p-10 rounded-3xl shadow-xl shadow-gray-200/50 border-b-8 ${cause.border} ${cause.bg} transition-all duration-500 group cursor-default`}
+              className={`bg-white p-10 rounded-3xl shadow-xl shadow-sundas-blue/10 border-b-8 ${cause.border} ${cause.bg} transition-all duration-500 group cursor-default`}
             >
               <div className="mb-8 transform group-hover:scale-110 transition-transform duration-300">
                 {cause.icon}
               </div>
-              <h3 className="text-2xl font-display font-bold mb-4 text-gray-900">{cause.title}</h3>
-              <p className="text-gray-600 leading-relaxed mb-8">
+              <h3 className="text-2xl font-display font-bold mb-4 text-sundas-blue">{cause.title}</h3>
+              <p className="text-sundas-blue/70 leading-relaxed mb-8">
                 {cause.description}
               </p>
               <button 
@@ -315,10 +315,10 @@ const Causes = ({ onLearnMore }: { onLearnMore: (cause: string) => void }) => {
           viewport={{ once: true }}
           className="mt-24 text-center"
         >
-          <h3 className="text-3xl md:text-5xl font-display font-bold text-gray-900 mb-4 glow-text-blue">
+          <h3 className="text-3xl md:text-5xl font-display font-bold text-sundas-blue mb-4 glow-text-blue">
             Sundas Foundation Archives
           </h3>
-          <p className="text-xl md:text-2xl text-gray-600 font-light italic">
+          <p className="text-xl md:text-2xl text-sundas-blue/70 font-light italic">
             Spread happiness on innocent faces with your donations.
           </p>
           <div className="mt-8 h-1 w-24 bg-sundas-red mx-auto rounded-full glow-red"></div>
@@ -382,54 +382,54 @@ const CauseDetail = ({ causeId, onBack }: { causeId: string, onBack: () => void 
             referrerPolicy="no-referrer"
           />
           
-          <h1 className="text-4xl md:text-6xl font-display font-extrabold text-gray-900 mb-8">Thalassemia Support</h1>
+          <h1 className="text-4xl md:text-6xl font-display font-extrabold text-sundas-blue mb-8">Thalassemia Support</h1>
           
-          <div className="prose prose-lg max-w-none text-gray-700 space-y-6 leading-relaxed">
+          <div className="prose prose-lg max-w-none text-sundas-blue/80 space-y-6 leading-relaxed">
             <p>At Sundas Foundation, we are deeply committed to supporting patients living with Thalassemia. We work tirelessly to raise awareness, provide life-saving blood transfusions, and deliver effective treatments to those who need them most. Through our efforts, we aim to not only ease their struggles but also bring hope and positivity to their lives.</p>
             
-            <h2 className="text-3xl font-display font-bold text-gray-900 mt-12">Types of thalassemia</h2>
+            <h2 className="text-3xl font-display font-bold text-sundas-blue mt-12">Types of thalassemia</h2>
             <p>There are two main types of thalassemia: alpha-thalassemia and beta-thalassemia, which are further classified into subtypes based on the severity of the disease:</p>
             <ul className="list-disc pl-6 space-y-2">
               <li><strong>Alpha-thalassemia:</strong> Includes silent carrier, alpha-thalassemia trait, hemoglobin H disease, and hydrops fetalis.</li>
               <li><strong>Beta-thalassemia:</strong> Includes beta-thalassemia minor, intermedia, and major (also known as Cooley's anemia).</li>
             </ul>
 
-            <h2 className="text-3xl font-display font-bold text-gray-900 mt-12">Alpha vs. Beta Thalassemia</h2>
+            <h2 className="text-3xl font-display font-bold text-sundas-blue mt-12">Alpha vs. Beta Thalassemia</h2>
             <div className="overflow-x-auto">
-              <table className="w-full border-collapse border border-gray-200 mt-4">
+              <table className="w-full border-collapse border border-sundas-blue/10 mt-4">
                 <thead>
-                  <tr className="bg-gray-50">
-                    <th className="border border-gray-200 p-4 text-left">Aspect</th>
-                    <th className="border border-gray-200 p-4 text-left">Alpha Thalassemia</th>
-                    <th className="border border-gray-200 p-4 text-left">Beta Thalassemia</th>
+                  <tr className="bg-sundas-blue/5">
+                    <th className="border border-sundas-blue/10 p-4 text-left">Aspect</th>
+                    <th className="border border-sundas-blue/10 p-4 text-left">Alpha Thalassemia</th>
+                    <th className="border border-sundas-blue/10 p-4 text-left">Beta Thalassemia</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td className="border border-gray-200 p-4 font-bold">Cause</td>
-                    <td className="border border-gray-200 p-4">Problems with one or more of the four genes that make alpha-globin</td>
-                    <td className="border border-gray-200 p-4">Problems with one or both genes that make beta-globin</td>
+                    <td className="border border-sundas-blue/10 p-4 font-bold">Cause</td>
+                    <td className="border border-sundas-blue/10 p-4">Problems with one or more of the four genes that make alpha-globin</td>
+                    <td className="border border-sundas-blue/10 p-4">Problems with one or both genes that make beta-globin</td>
                   </tr>
                   <tr>
-                    <td className="border border-gray-200 p-4 font-bold">Severity</td>
-                    <td className="border border-gray-200 p-4">Ranges from mild (silent carrier) to fatal (hydrops fetalis)</td>
-                    <td className="border border-gray-200 p-4">Ranges from mild (minor) to severe (major)</td>
+                    <td className="border border-sundas-blue/10 p-4 font-bold">Severity</td>
+                    <td className="border border-sundas-blue/10 p-4">Ranges from mild (silent carrier) to fatal (hydrops fetalis)</td>
+                    <td className="border border-sundas-blue/10 p-4">Ranges from mild (minor) to severe (major)</td>
                   </tr>
                   <tr>
-                    <td className="border border-gray-200 p-4 font-bold">Symptoms</td>
-                    <td className="border border-gray-200 p-4">Fatigue, anemia, enlarged spleen, and bone deformities in severe cases</td>
-                    <td className="border border-gray-200 p-4">Severe anemia, jaundice, bone deformities, and growth delays in major cases</td>
+                    <td className="border border-sundas-blue/10 p-4 font-bold">Symptoms</td>
+                    <td className="border border-sundas-blue/10 p-4">Fatigue, anemia, enlarged spleen, and bone deformities in severe cases</td>
+                    <td className="border border-sundas-blue/10 p-4">Severe anemia, jaundice, bone deformities, and growth delays in major cases</td>
                   </tr>
                   <tr>
-                    <td className="border border-gray-200 p-4 font-bold">Treatment</td>
-                    <td className="border border-gray-200 p-4">Blood transfusions, Iron chelation, Supportive care</td>
-                    <td className="border border-gray-200 p-4">Blood transfusions, Iron chelation, Bone marrow transplant in severe cases</td>
+                    <td className="border border-sundas-blue/10 p-4 font-bold">Treatment</td>
+                    <td className="border border-sundas-blue/10 p-4">Blood transfusions, Iron chelation, Supportive care</td>
+                    <td className="border border-sundas-blue/10 p-4">Blood transfusions, Iron chelation, Bone marrow transplant in severe cases</td>
                   </tr>
                 </tbody>
               </table>
             </div>
 
-            <h2 className="text-3xl font-display font-bold text-gray-900 mt-12">Signs & Symptoms</h2>
+            <h2 className="text-3xl font-display font-bold text-sundas-blue mt-12">Signs & Symptoms</h2>
             <p>The signs and symptoms for thalassemia vary from patient to patient. Some babies start showing symptoms of thalassemia after childbirth while others develop the disease in the first 2-3 years.</p>
             <ul className="list-disc pl-6 space-y-2">
               <li>Fatigue and weakness</li>
@@ -441,11 +441,11 @@ const CauseDetail = ({ causeId, onBack }: { causeId: string, onBack: () => void 
               <li>Dark urine</li>
             </ul>
 
-            <h2 className="text-3xl font-display font-bold text-gray-900 mt-12">Thalassemia Causes</h2>
+            <h2 className="text-3xl font-display font-bold text-sundas-blue mt-12">Thalassemia Causes</h2>
             <p>Thalassemia is caused by inherited mutations in the hemoglobin-producing genes. It is passed from parents to children in an autosomal recessive manner, meaning both parents must carry the gene for the child to inherit the condition.</p>
             <p>Hemoglobin is made up of two types of protein chains: alpha and beta. Mutations in the genes responsible for these chains lead to two main types of thalassemia: alpha-thalassemia and beta-thalassemia. The reduction in either alpha or beta chains disrupts the balance of hemoglobin production, leading to anemia and other complications associated with thalassemia.</p>
 
-            <h2 className="text-3xl font-display font-bold text-gray-900 mt-12">Diagnosis</h2>
+            <h2 className="text-3xl font-display font-bold text-sundas-blue mt-12">Diagnosis</h2>
             <p>Many children start showing symptoms in the early ages. If a child shows any of the symptoms discussed above, it is crucial to consult a doctor and get the following tests done as early as possible:</p>
             <ul className="list-disc pl-6 space-y-2">
               <li><strong>Complete blood count (CBC):</strong> To identify anemia and abnormalities in red blood cells.</li>
@@ -453,7 +453,7 @@ const CauseDetail = ({ causeId, onBack }: { causeId: string, onBack: () => void 
               <li><strong>DNA testing:</strong> To confirm genetic mutations causing thalassemia.</li>
             </ul>
 
-            <h2 className="text-3xl font-display font-bold text-gray-900 mt-12">Thalassemia Treatment</h2>
+            <h2 className="text-3xl font-display font-bold text-sundas-blue mt-12">Thalassemia Treatment</h2>
             <p>Mild forms of thalassemia trait don't need treatment. For moderate to severe thalassemia, treatments might include:</p>
             <ul className="list-disc pl-6 space-y-4">
               <li><strong>Frequent Blood Transfusions:</strong> Severe forms of thalassemia often require regular blood transfusions, sometimes as frequently as every few weeks. However, repeated transfusions can lead to iron buildup in the body, potentially damaging vital organs such as the heart and liver.</li>
@@ -462,7 +462,7 @@ const CauseDetail = ({ causeId, onBack }: { causeId: string, onBack: () => void 
             </ul>
             <p>Sundas Foundation is the epitome of thalassemia treatment and diagnosis in Pakistan. We are dedicated to providing the best healthcare to those affected, no matter the challenges.</p>
 
-            <h2 className="text-3xl font-display font-bold text-gray-900 mt-12">Possible Complications</h2>
+            <h2 className="text-3xl font-display font-bold text-sundas-blue mt-12">Possible Complications</h2>
             <p>Sundas Foundation provides the best thalassemia treatment for those in need in Pakistan. But complications are a part of any recovery journey. If not managed properly, thalassemia can lead to complications such as:</p>
             <ul className="list-disc pl-6 space-y-2">
               <li>Iron overload, affecting the heart, liver, and endocrine glands.</li>
@@ -472,18 +472,18 @@ const CauseDetail = ({ causeId, onBack }: { causeId: string, onBack: () => void 
               <li>Osteoporosis, thrombophilia and pseudoxanthoma elasticum.</li>
             </ul>
 
-            <h2 className="text-3xl font-display font-bold text-gray-900 mt-12">Thalassemia FAQs</h2>
+            <h2 className="text-3xl font-display font-bold text-sundas-blue mt-12">Thalassemia FAQs</h2>
             <div className="space-y-6">
               <div>
-                <h4 className="font-bold text-gray-900">1. How does Sundas Foundation help thalassemia patients?</h4>
+                <h4 className="font-bold text-sundas-blue">1. How does Sundas Foundation help thalassemia patients?</h4>
                 <p>Sundas Foundation is established to support patients suffering from thalassemia and other serious blood disorders. Our staff works tirelessly to raise awareness, provide life-saving blood transfusions, and deliver on-time and effective treatment to needy patients.</p>
               </div>
               <div>
-                <h4 className="font-bold text-gray-900">2. How does Sundas Foundation manage thalassemia treatment?</h4>
+                <h4 className="font-bold text-sundas-blue">2. How does Sundas Foundation manage thalassemia treatment?</h4>
                 <p>We provide comprehensive care including regular transfusions and chelation therapy.</p>
               </div>
               <div>
-                <h4 className="font-bold text-gray-900">3. How can I give donations to Sundas Foundation?</h4>
+                <h4 className="font-bold text-sundas-blue">3. How can I give donations to Sundas Foundation?</h4>
                 <p>You can donate through our website or visit any of our centers.</p>
               </div>
             </div>
@@ -511,9 +511,9 @@ const CauseDetail = ({ causeId, onBack }: { causeId: string, onBack: () => void 
             referrerPolicy="no-referrer"
           />
           
-          <h1 className="text-4xl md:text-6xl font-display font-extrabold text-gray-900 mb-8">Hemophilia Care</h1>
+          <h1 className="text-4xl md:text-6xl font-display font-extrabold text-sundas-blue mb-8">Hemophilia Care</h1>
           
-          <div className="prose prose-lg max-w-none text-gray-700 space-y-6 leading-relaxed">
+          <div className="prose prose-lg max-w-none text-sundas-blue/80 space-y-6 leading-relaxed">
             <p>Our services include:</p>
             <ul className="list-disc pl-6 space-y-2">
               <li>Covering the costs of essential diagnostic tests to monitor and manage the condition.</li>
@@ -522,21 +522,21 @@ const CauseDetail = ({ causeId, onBack }: { causeId: string, onBack: () => void 
             </ul>
             <p>We go beyond treatment at Sundas Foundation by creating a strong support system that ensures better health and well-being for hemophilia patients and their families. Our goal is to improve their quality of life, enabling them to face each day with hope and confidence.</p>
 
-            <h2 className="text-3xl font-display font-bold text-gray-900 mt-12">Hemophilia Types</h2>
+            <h2 className="text-3xl font-display font-bold text-sundas-blue mt-12">Hemophilia Types</h2>
             <ul className="list-disc pl-6 space-y-2">
               <li><strong>Hemophilia A:</strong> Also known as classic hemophilia. It is caused by a deficiency in clotting factor VIII. It is the most common form of the disorder.</li>
               <li><strong>Hemophilia B:</strong> Also called Christmas disease. It is a result of a deficiency in clotting factor IX. It is less common than Hemophilia A.</li>
               <li><strong>Hemophilia C:</strong> This rarer form is caused by a deficiency in clotting factor XI and affects both males and females.</li>
             </ul>
 
-            <h2 className="text-3xl font-display font-bold text-gray-900 mt-12">Hemophilia Causes</h2>
+            <h2 className="text-3xl font-display font-bold text-sundas-blue mt-12">Hemophilia Causes</h2>
             <ul className="list-disc pl-6 space-y-4">
               <li><strong>Genetic mutations:</strong> Hemophilia is usually caused by changes in the genes on the X chromosome, which affect the production of clotting factors.</li>
               <li><strong>Gender differences:</strong> Males have only one X chromosome, so a single mutation can cause hemophilia. Females have two X chromosomes, so they are typically carriers.</li>
               <li><strong>Rare cases:</strong> Sometimes, hemophilia can develop later in life due to autoimmune conditions or certain medical issues.</li>
             </ul>
 
-            <h2 className="text-3xl font-display font-bold text-gray-900 mt-12">Signs & Symptoms</h2>
+            <h2 className="text-3xl font-display font-bold text-sundas-blue mt-12">Signs & Symptoms</h2>
             <ul className="list-disc pl-6 space-y-2">
               <li>Prolonged bleeding from cuts or injuries</li>
               <li>Frequent nose bleeds</li>
@@ -546,7 +546,7 @@ const CauseDetail = ({ causeId, onBack }: { causeId: string, onBack: () => void 
               <li>Excessive bleeding after surgeries or dental procedure</li>
             </ul>
 
-            <h2 className="text-3xl font-display font-bold text-gray-900 mt-12">Hemophilia Treatment</h2>
+            <h2 className="text-3xl font-display font-bold text-sundas-blue mt-12">Hemophilia Treatment</h2>
             <p>While there is no cure for hemophilia, it can be managed effectively through:</p>
             <ul className="list-disc pl-6 space-y-4">
               <li><strong>Replacement Therapy:</strong> Administering clotting factor concentrates to replace the missing or deficient factors.</li>
@@ -556,18 +556,18 @@ const CauseDetail = ({ causeId, onBack }: { causeId: string, onBack: () => void 
             </ul>
             <p>Sundas Foundation works closely with hemophilia patients and provides them quality treatment and better healthcare. Your donations help Sundas Foundation focus on hemophilia patients and their treatment without any financial barriers.</p>
 
-            <h2 className="text-3xl font-display font-bold text-gray-900 mt-12">Hemophilia FAQs</h2>
+            <h2 className="text-3xl font-display font-bold text-sundas-blue mt-12">Hemophilia FAQs</h2>
             <div className="space-y-6">
               <div>
-                <h4 className="font-bold text-gray-900">1. What does Sundas Foundation do for Hemophilia Patients?</h4>
+                <h4 className="font-bold text-sundas-blue">1. What does Sundas Foundation do for Hemophilia Patients?</h4>
                 <p>At Sundas Foundation, we cover the cost of essential diagnostic tests, helping us monitor and manage the condition. We also provide life-saving medications to Hemophilia patients who are poor and cannot afford their treatment costs.</p>
               </div>
               <div>
-                <h4 className="font-bold text-gray-900">2. How can I support Hemophilia patients?</h4>
+                <h4 className="font-bold text-sundas-blue">2. How can I support Hemophilia patients?</h4>
                 <p>You can support by donating funds or volunteering at our centers.</p>
               </div>
               <div>
-                <h4 className="font-bold text-gray-900">3. Is Hemophilia a curable disease?</h4>
+                <h4 className="font-bold text-sundas-blue">3. Is Hemophilia a curable disease?</h4>
                 <p>Currently, there is no cure, but it is highly manageable with modern treatment.</p>
               </div>
             </div>
@@ -595,10 +595,10 @@ const CauseDetail = ({ causeId, onBack }: { causeId: string, onBack: () => void 
             referrerPolicy="no-referrer"
           />
           
-          <h1 className="text-4xl md:text-6xl font-display font-extrabold text-gray-900 mb-8">Blood Bank & Disorders</h1>
+          <h1 className="text-4xl md:text-6xl font-display font-extrabold text-sundas-blue mb-8">Blood Bank & Disorders</h1>
           
-          <div className="prose prose-lg max-w-none text-gray-700 space-y-6 leading-relaxed">
-            <h2 className="text-3xl font-display font-bold text-gray-900 mt-12">Common Blood Disorders</h2>
+          <div className="prose prose-lg max-w-none text-sundas-blue/80 space-y-6 leading-relaxed">
+            <h2 className="text-3xl font-display font-bold text-sundas-blue mt-12">Common Blood Disorders</h2>
             <p>At Sundas Foundation, we are committed to improving the lives of individuals battling a wide range of rare and complex blood disorders. Our mission is to ensure that every patient has access to the care, treatment, and support they need. We provide treatments and facilitate donations for the following conditions:</p>
             
             <ul className="list-disc pl-6 space-y-2">
@@ -612,7 +612,7 @@ const CauseDetail = ({ causeId, onBack }: { causeId: string, onBack: () => void 
             </ul>
             <p>Sundas foundation stands as a light of hope, providing critical support, awareness, and resources for these conditions.</p>
 
-            <h2 className="text-3xl font-display font-bold text-gray-900 mt-12">Signs & Symptoms of Blood Disorders</h2>
+            <h2 className="text-3xl font-display font-bold text-sundas-blue mt-12">Signs & Symptoms of Blood Disorders</h2>
             <p>Every blood disorder symptom varies. Some common symptoms of blood disorders are:</p>
             <ul className="list-disc pl-6 space-y-2">
               <li>Fatigue and weakness</li>
@@ -623,7 +623,7 @@ const CauseDetail = ({ causeId, onBack }: { causeId: string, onBack: () => void 
               <li>Swollen lymph nodes</li>
             </ul>
 
-            <h2 className="text-3xl font-display font-bold text-gray-900 mt-12">Treatment Options</h2>
+            <h2 className="text-3xl font-display font-bold text-sundas-blue mt-12">Treatment Options</h2>
             <p>The treatment option also varies for different blood disorders. While some blood disorders can be managed with medication, others are fatal and require intensive care.</p>
             <ul className="list-disc pl-6 space-y-4">
               <li><strong>Medications:</strong> To manage symptoms or address the underlying cause.</li>
@@ -632,22 +632,22 @@ const CauseDetail = ({ causeId, onBack }: { causeId: string, onBack: () => void 
               <li><strong>Lifestyle Changes:</strong> Improved diet and regular monitoring.</li>
             </ul>
 
-            <h2 className="text-3xl font-display font-bold text-gray-900 mt-12">Living with Blood Disorders</h2>
+            <h2 className="text-3xl font-display font-bold text-sundas-blue mt-12">Living with Blood Disorders</h2>
             <p>Living with a blood disorder requires ongoing care and management. Regular check-ups, following the treatment plans, and maintaining a healthy lifestyle can significantly improve quality of life.</p>
             <p>At Sundas Foundation, we are dedicated to raising awareness and support for individuals and families dealing with blood disorders. Your donations can help patients suffering from various blood disorders. Be a part of Sundas Foundation and let’s become a beacon of hope for those in need.</p>
 
-            <h2 className="text-3xl font-display font-bold text-gray-900 mt-12">Other Blood Disorders FAQs</h2>
+            <h2 className="text-3xl font-display font-bold text-sundas-blue mt-12">Other Blood Disorders FAQs</h2>
             <div className="space-y-6">
               <div>
-                <h4 className="font-bold text-gray-900">1. What blood disorders are managed by Sundas Foundation?</h4>
+                <h4 className="font-bold text-sundas-blue">1. What blood disorders are managed by Sundas Foundation?</h4>
                 <p>Sundas Foundation is dedicatedly working to relieve patients suffering from Thalassemia, Hemophilia, Glanzmann’s thrombasthenia & Bernard-Soulier syndrome, pure red cell aplasia & aplastic anemia, chronic dyserythropoietic anemia (CDA), von Willebrand’s disease, and deficiencies in factor I, V, VII, X, and XIII.</p>
               </div>
               <div>
-                <h4 className="font-bold text-gray-900">2. How does Sundas Foundation manage blood disorders?</h4>
+                <h4 className="font-bold text-sundas-blue">2. How does Sundas Foundation manage blood disorders?</h4>
                 <p>We provide specialized medical care, transfusions, and medication support tailored to each condition.</p>
               </div>
               <div>
-                <h4 className="font-bold text-gray-900">3. How can I support patients with blood disorders?</h4>
+                <h4 className="font-bold text-sundas-blue">3. How can I support patients with blood disorders?</h4>
                 <p>You can support through financial donations or by donating blood at our high-tech blood bank facilities.</p>
               </div>
             </div>
@@ -678,8 +678,8 @@ const DonatePage = ({ onBack }: { onBack: () => void }) => {
   }, []);
 
   return (
-    <div className="pt-20 pb-20 bg-gray-100 min-h-screen font-sans">
-      <div className="bg-red-700 py-16 text-white text-center">
+    <div className="pt-20 pb-20 bg-sundas-blue/5 min-h-screen font-sans">
+      <div className="bg-sundas-red py-16 text-white text-center">
         <div className="max-w-4xl mx-auto px-6">
           <button 
             onClick={onBack}
@@ -701,24 +701,24 @@ const DonatePage = ({ onBack }: { onBack: () => void }) => {
       </div>
 
       <div className="container mx-auto px-4 -mt-12 pb-20">
-        <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100">
+        <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden border border-sundas-blue/10">
           
-          <div className="flex border-b overflow-x-auto bg-gray-50/50">
+          <div className="flex border-b border-sundas-blue/10 overflow-x-auto bg-sundas-blue/5">
             <button 
               onClick={() => setActiveTab('credit-card')} 
-              className={`flex-1 py-6 px-4 text-center font-bold transition-all flex items-center justify-center gap-2 ${activeTab === 'credit-card' ? 'border-b-4 border-sundas-red text-sundas-red bg-white' : 'text-gray-500 hover:bg-gray-100'}`}
+              className={`flex-1 py-6 px-4 text-center font-bold transition-all flex items-center justify-center gap-2 ${activeTab === 'credit-card' ? 'border-b-4 border-sundas-red text-sundas-red bg-white' : 'text-sundas-blue/50 hover:bg-sundas-blue/10'}`}
             >
               <CreditCard size={20} /> Credit Card
             </button>
             <button 
               onClick={() => setActiveTab('bank-transfer')} 
-              className={`flex-1 py-6 px-4 text-center font-bold transition-all flex items-center justify-center gap-2 ${activeTab === 'bank-transfer' ? 'border-b-4 border-sundas-red text-sundas-red bg-white' : 'text-gray-500 hover:bg-gray-100'}`}
+              className={`flex-1 py-6 px-4 text-center font-bold transition-all flex items-center justify-center gap-2 ${activeTab === 'bank-transfer' ? 'border-b-4 border-sundas-red text-sundas-red bg-white' : 'text-sundas-blue/50 hover:bg-sundas-blue/10'}`}
             >
               <Hospital size={20} /> Bank Transfer
             </button>
             <button 
               onClick={() => setActiveTab('offline-cheque')} 
-              className={`flex-1 py-6 px-4 text-center font-bold transition-all flex items-center justify-center gap-2 ${activeTab === 'offline-cheque' ? 'border-b-4 border-sundas-red text-sundas-red bg-white' : 'text-gray-500 hover:bg-gray-100'}`}
+              className={`flex-1 py-6 px-4 text-center font-bold transition-all flex items-center justify-center gap-2 ${activeTab === 'offline-cheque' ? 'border-b-4 border-sundas-red text-sundas-red bg-white' : 'text-sundas-blue/50 hover:bg-sundas-blue/10'}`}
             >
               <Mail size={20} /> Cash / Cheque
             </button>
@@ -731,36 +731,36 @@ const DonatePage = ({ onBack }: { onBack: () => void }) => {
                 animate={{ opacity: 1, y: 0 }}
                 className="space-y-8"
               >
-                <h3 className="text-2xl font-display font-bold text-gray-800">Online Secure Payment</h3>
+                <h3 className="text-2xl font-display font-bold text-sundas-blue">Online Secure Payment</h3>
                 <div className="grid md:grid-cols-2 gap-8">
                   <div className="space-y-6">
                     <div>
-                      <label className="block text-sm font-bold text-gray-700 mb-2">Donation Amount (PKR)</label>
-                      <input type="number" placeholder="5000" className="w-full border-2 border-gray-100 p-4 rounded-xl focus:border-sundas-red outline-none transition-all bg-gray-50 focus:bg-white" />
+                      <label className="block text-sm font-bold text-sundas-blue/80 mb-2">Donation Amount (PKR)</label>
+                      <input type="number" placeholder="5000" className="w-full border-2 border-sundas-blue/10 p-4 rounded-xl focus:border-sundas-red outline-none transition-all bg-sundas-blue/5 focus:bg-white" />
                     </div>
                     <div>
-                      <label className="block text-sm font-bold text-gray-700 mb-2">Full Name</label>
-                      <input type="text" placeholder="John Doe" className="w-full border-2 border-gray-100 p-4 rounded-xl focus:border-sundas-red outline-none transition-all bg-gray-50 focus:bg-white" />
+                      <label className="block text-sm font-bold text-sundas-blue/80 mb-2">Full Name</label>
+                      <input type="text" placeholder="John Doe" className="w-full border-2 border-sundas-blue/10 p-4 rounded-xl focus:border-sundas-red outline-none transition-all bg-sundas-blue/5 focus:bg-white" />
                     </div>
                   </div>
                   <div className="space-y-6">
                     <div>
-                      <label className="block text-sm font-bold text-gray-700 mb-2">Card Number</label>
+                      <label className="block text-sm font-bold text-sundas-blue/80 mb-2">Card Number</label>
                       <div className="relative">
-                        <input type="text" placeholder="xxxx xxxx xxxx xxxx" className="w-full border-2 border-gray-100 p-4 rounded-xl focus:border-sundas-red outline-none transition-all bg-gray-50 focus:bg-white" />
-                        <div className="absolute right-4 top-4 text-gray-400">
+                        <input type="text" placeholder="xxxx xxxx xxxx xxxx" className="w-full border-2 border-sundas-blue/10 p-4 rounded-xl focus:border-sundas-red outline-none transition-all bg-sundas-blue/5 focus:bg-white" />
+                        <div className="absolute right-4 top-4 text-sundas-blue/40">
                           <CreditCard size={24} />
                         </div>
                       </div>
                     </div>
                     <div className="flex gap-4">
                       <div className="flex-1">
-                        <label className="block text-sm font-bold text-gray-700 mb-2">Expiry</label>
-                        <input type="text" placeholder="MM/YY" className="w-full border-2 border-gray-100 p-4 rounded-xl focus:border-sundas-red outline-none transition-all bg-gray-50 focus:bg-white" />
+                        <label className="block text-sm font-bold text-sundas-blue/80 mb-2">Expiry</label>
+                        <input type="text" placeholder="MM/YY" className="w-full border-2 border-sundas-blue/10 p-4 rounded-xl focus:border-sundas-red outline-none transition-all bg-sundas-blue/5 focus:bg-white" />
                       </div>
                       <div className="flex-1">
-                        <label className="block text-sm font-bold text-gray-700 mb-2">CVV</label>
-                        <input type="text" placeholder="***" className="w-full border-2 border-gray-100 p-4 rounded-xl focus:border-sundas-red outline-none transition-all bg-gray-50 focus:bg-white" />
+                        <label className="block text-sm font-bold text-sundas-blue/80 mb-2">CVV</label>
+                        <input type="text" placeholder="***" className="w-full border-2 border-sundas-blue/10 p-4 rounded-xl focus:border-sundas-red outline-none transition-all bg-sundas-blue/5 focus:bg-white" />
                       </div>
                     </div>
                   </div>
@@ -777,29 +777,29 @@ const DonatePage = ({ onBack }: { onBack: () => void }) => {
                 animate={{ opacity: 1, y: 0 }}
                 className="space-y-8"
               >
-                <h3 className="text-2xl font-display font-bold text-gray-800">Bank Account Details</h3>
-                <div className="bg-gray-50 p-8 rounded-2xl border border-gray-100 space-y-6">
+                <h3 className="text-2xl font-display font-bold text-sundas-blue">Bank Account Details</h3>
+                <div className="bg-sundas-blue/5 p-8 rounded-2xl border border-sundas-blue/10 space-y-6">
                   <div className="grid md:grid-cols-2 gap-8">
                     <div>
-                      <p className="text-sm text-gray-500 font-bold uppercase tracking-wider mb-1">Bank Name</p>
-                      <p className="text-lg font-bold text-gray-900">Habib Bank Limited (HBL)</p>
+                      <p className="text-sm text-sundas-blue/60 font-bold uppercase tracking-wider mb-1">Bank Name</p>
+                      <p className="text-lg font-bold text-sundas-blue">Habib Bank Limited (HBL)</p>
                     </div>
                     <div>
-                      <p className="text-sm text-gray-500 font-bold uppercase tracking-wider mb-1">Account Title</p>
-                      <p className="text-lg font-bold text-gray-900">Sundas Foundation</p>
+                      <p className="text-sm text-sundas-blue/60 font-bold uppercase tracking-wider mb-1">Account Title</p>
+                      <p className="text-lg font-bold text-sundas-blue">Sundas Foundation</p>
                     </div>
                     <div>
-                      <p className="text-sm text-gray-500 font-bold uppercase tracking-wider mb-1">Account Number</p>
-                      <p className="text-lg font-bold text-gray-900">0042 7901 2345 03</p>
+                      <p className="text-sm text-sundas-blue/60 font-bold uppercase tracking-wider mb-1">Account Number</p>
+                      <p className="text-lg font-bold text-sundas-blue">0042 7901 2345 03</p>
                     </div>
                     <div>
-                      <p className="text-sm text-gray-500 font-bold uppercase tracking-wider mb-1">IBAN</p>
-                      <p className="text-lg font-bold text-gray-900">PK72 HABB 0042 7901 2345 03</p>
+                      <p className="text-sm text-sundas-blue/60 font-bold uppercase tracking-wider mb-1">IBAN</p>
+                      <p className="text-lg font-bold text-sundas-blue">PK72 HABB 0042 7901 2345 03</p>
                     </div>
                   </div>
                 </div>
                 <div className="p-6 bg-sundas-blue/5 rounded-2xl border border-sundas-blue/10">
-                  <p className="text-gray-700">Please send a screenshot of the transfer to <span className="font-bold text-sundas-blue">donations@sundas.org</span> for confirmation.</p>
+                  <p className="text-sundas-blue/80">Please send a screenshot of the transfer to <span className="font-bold text-sundas-blue">donations@sundas.org</span> for confirmation.</p>
                 </div>
               </motion.div>
             )}
@@ -810,21 +810,21 @@ const DonatePage = ({ onBack }: { onBack: () => void }) => {
                 animate={{ opacity: 1, y: 0 }}
                 className="space-y-8"
               >
-                <h3 className="text-2xl font-display font-bold text-gray-800">Cash or Cheque Donation</h3>
+                <h3 className="text-2xl font-display font-bold text-sundas-blue">Cash or Cheque Donation</h3>
                 <div className="space-y-6">
-                  <p className="text-gray-600 text-lg">You can visit any of our centers to donate in person or send a cheque to our main office.</p>
-                  <div className="bg-gray-50 p-8 rounded-2xl border border-gray-100">
-                    <h4 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
+                  <p className="text-sundas-blue/70 text-lg">You can visit any of our centers to donate in person or send a cheque to our main office.</p>
+                  <div className="bg-sundas-blue/5 p-8 rounded-2xl border border-sundas-blue/10">
+                    <h4 className="font-bold text-sundas-blue mb-4 flex items-center gap-2">
                       <MapPin size={20} className="text-sundas-red" /> Main Office Address
                     </h4>
-                    <p className="text-gray-700 leading-relaxed">
+                    <p className="text-sundas-blue/80 leading-relaxed">
                       Sundas Foundation Headquarters<br />
                       80-G, Gulberg III, Lahore, Pakistan<br />
                       Phone: +92 42 111 786 327
                     </p>
                   </div>
-                  <div className="p-6 bg-yellow-50 rounded-2xl border border-yellow-100">
-                    <p className="text-yellow-800 font-medium">Please make all cheques payable to <span className="font-bold">"Sundas Foundation"</span>.</p>
+                  <div className="p-6 bg-sundas-red/5 rounded-2xl border border-sundas-red/10">
+                    <p className="text-sundas-red font-medium">Please make all cheques payable to <span className="font-bold">"Sundas Foundation"</span>.</p>
                   </div>
                 </div>
               </motion.div>
@@ -842,10 +842,10 @@ const Contact = () => {
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-20 items-center">
           <div>
-            <h2 className="text-4xl md:text-5xl font-display font-extrabold text-gray-900 mb-8">
+            <h2 className="text-4xl md:text-5xl font-display font-extrabold text-sundas-blue mb-8">
               Get in <span className="text-sundas-red">Touch</span>
             </h2>
-            <p className="text-gray-600 text-lg mb-12">
+            <p className="text-sundas-blue/70 text-lg mb-12">
               Have questions or want to volunteer? Reach out to us and our team will get back to you as soon as possible.
             </p>
             
@@ -855,8 +855,8 @@ const Contact = () => {
                   <Phone size={24} />
                 </div>
                 <div>
-                  <h4 className="font-bold text-gray-900">Call Us</h4>
-                  <p className="text-gray-600">+92 42 111 786 327</p>
+                  <h4 className="font-bold text-sundas-blue">Call Us</h4>
+                  <p className="text-sundas-blue/60">+92 42 111 786 327</p>
                 </div>
               </div>
               <div className="flex items-start gap-5">
@@ -864,8 +864,8 @@ const Contact = () => {
                   <Mail size={24} />
                 </div>
                 <div>
-                  <h4 className="font-bold text-gray-900">Email Us</h4>
-                  <p className="text-gray-600">info@sundas.org.pk</p>
+                  <h4 className="font-bold text-sundas-blue">Email Us</h4>
+                  <p className="text-sundas-blue/60">info@sundas.org.pk</p>
                 </div>
               </div>
               <div className="flex items-start gap-5">
@@ -873,32 +873,32 @@ const Contact = () => {
                   <MapPin size={24} />
                 </div>
                 <div>
-                  <h4 className="font-bold text-gray-900">Visit Us</h4>
-                  <p className="text-gray-600">80-G, Gulberg III, Lahore, Pakistan</p>
+                  <h4 className="font-bold text-sundas-blue">Visit Us</h4>
+                  <p className="text-sundas-blue/60">80-G, Gulberg III, Lahore, Pakistan</p>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="bg-gray-50 p-10 rounded-3xl border border-gray-100 shadow-sm">
+          <div className="bg-sundas-blue/5 p-10 rounded-3xl border border-sundas-blue/10 shadow-sm">
             <form className="space-y-6">
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Full Name</label>
-                  <input type="text" className="w-full px-5 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-sundas-blue outline-none transition-all" placeholder="John Doe" />
+                  <label className="block text-sm font-semibold text-sundas-blue/80 mb-2">Full Name</label>
+                  <input type="text" className="w-full px-5 py-3 rounded-xl border border-sundas-blue/20 focus:ring-2 focus:ring-sundas-blue outline-none transition-all" placeholder="John Doe" />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
-                  <input type="email" className="w-full px-5 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-sundas-blue outline-none transition-all" placeholder="john@example.com" />
+                  <label className="block text-sm font-semibold text-sundas-blue/80 mb-2">Email Address</label>
+                  <input type="email" className="w-full px-5 py-3 rounded-xl border border-sundas-blue/20 focus:ring-2 focus:ring-sundas-blue outline-none transition-all" placeholder="john@example.com" />
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Subject</label>
-                <input type="text" className="w-full px-5 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-sundas-blue outline-none transition-all" placeholder="How can we help?" />
+                <label className="block text-sm font-semibold text-sundas-blue/80 mb-2">Subject</label>
+                <input type="text" className="w-full px-5 py-3 rounded-xl border border-sundas-blue/20 focus:ring-2 focus:ring-sundas-blue outline-none transition-all" placeholder="How can we help?" />
               </div>
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Message</label>
-                <textarea rows={4} className="w-full px-5 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-sundas-blue outline-none transition-all" placeholder="Your message here..."></textarea>
+                <label className="block text-sm font-semibold text-sundas-blue/80 mb-2">Message</label>
+                <textarea rows={4} className="w-full px-5 py-3 rounded-xl border border-sundas-blue/20 focus:ring-2 focus:ring-sundas-blue outline-none transition-all" placeholder="Your message here..."></textarea>
               </div>
               <button className="w-full bg-sundas-blue text-white py-4 rounded-xl font-bold hover:bg-sundas-blue/90 transition-all shadow-lg shadow-sundas-blue/20">
                 Send Message
@@ -913,7 +913,7 @@ const Contact = () => {
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-950 text-white pt-24 pb-12 px-6 relative overflow-hidden">
+    <footer className="bg-sundas-blue text-white pt-24 pb-12 px-6 relative overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-sundas-blue via-sundas-red to-sundas-blue glow-red opacity-50"></div>
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-16 mb-20">
@@ -934,7 +934,7 @@ const Footer = () => {
                 SUNDAS <span className="text-sundas-red glow-text-red">CLONE</span>
               </div>
             </div>
-            <p className="text-gray-400 leading-relaxed mb-8">
+            <p className="text-white/70 leading-relaxed mb-8">
               Founded by Munnoo Bhai (Late) to serve humanity and save innocent lives through healthcare and blood donation.
             </p>
             <div className="flex space-x-5">
@@ -960,7 +960,7 @@ const Footer = () => {
             <h4 className="text-lg font-bold mb-8 flex items-center gap-2">
               Quick Links <div className="h-1 w-8 bg-sundas-red rounded-full glow-red"></div>
             </h4>
-            <ul className="text-gray-400 space-y-4">
+            <ul className="text-white/60 space-y-4">
               {['About Foundation', 'Zakat Calculator', 'Volunteer Program', 'Privacy Policy'].map((link) => (
                 <li key={link}>
                   <motion.a 
@@ -982,9 +982,9 @@ const Footer = () => {
             transition={{ delay: 0.2 }}
           >
             <h4 className="text-lg font-bold mb-8 flex items-center gap-2">
-              Our Services <div className="h-1 w-8 bg-sundas-blue rounded-full glow-blue"></div>
+              Our Services <div className="h-1 w-8 bg-white rounded-full glow-blue"></div>
             </h4>
-            <ul className="text-gray-400 space-y-4">
+            <ul className="text-white/60 space-y-4">
               {['Blood Transfusion', 'Diagnostic Lab', 'Emergency Care', 'Patient Support'].map((service) => (
                 <li key={service}>
                   <motion.a 
@@ -1008,7 +1008,7 @@ const Footer = () => {
             <h4 className="text-lg font-bold mb-8 flex items-center gap-2">
               Newsletter <div className="h-1 w-8 bg-sundas-red rounded-full glow-red"></div>
             </h4>
-            <p className="text-gray-400 mb-6">Subscribe to get latest updates and news.</p>
+            <p className="text-white/70 mb-6">Subscribe to get latest updates and news.</p>
             <div className="flex gap-2 p-1 bg-white/5 rounded-xl border border-white/10 focus-within:border-sundas-red focus-within:glow-red transition-all">
               <input type="email" placeholder="Email" className="bg-transparent px-4 py-2 rounded-lg outline-none w-full text-white" />
               <motion.button 
@@ -1022,7 +1022,7 @@ const Footer = () => {
           </motion.div>
         </div>
 
-        <div className="pt-12 border-t border-white/5 text-center text-gray-500 text-sm">
+        <div className="pt-12 border-t border-white/5 text-center text-white/40 text-sm">
           <p>© {new Date().getFullYear()} Sundas Foundation Clone. All rights reserved. Built for humanity.</p>
         </div>
       </div>
@@ -1060,20 +1060,20 @@ const DonateModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void
             <div className="p-8">
               <div className="grid grid-cols-3 gap-4 mb-8">
                 {['$10', '$50', '$100'].map(amount => (
-                  <button key={amount} className="py-3 border-2 border-gray-100 rounded-xl font-bold hover:border-sundas-red hover:text-sundas-red transition-all">
+                  <button key={amount} className="py-3 border-2 border-sundas-blue/10 rounded-xl font-bold hover:border-sundas-red hover:text-sundas-red transition-all">
                     {amount}
                   </button>
                 ))}
               </div>
               
               <div className="space-y-4">
-                <input type="number" placeholder="Custom Amount" className="w-full px-5 py-3 rounded-xl border border-gray-200 outline-none focus:border-sundas-blue" />
+                <input type="number" placeholder="Custom Amount" className="w-full px-5 py-3 rounded-xl border border-sundas-blue/20 outline-none focus:border-sundas-blue" />
                 <button className="w-full bg-sundas-red text-white py-4 rounded-xl font-bold text-lg shadow-lg shadow-sundas-red/20 hover:bg-sundas-red/90 transition-all">
                   Proceed to Payment
                 </button>
               </div>
               
-              <p className="text-center text-gray-400 text-xs mt-6">
+              <p className="text-center text-sundas-blue/40 text-xs mt-6">
                 All donations are tax-deductible. Secure payment powered by Sundas Clone.
               </p>
             </div>
@@ -1137,7 +1137,7 @@ export default function App() {
 
   if (showDonatePage) {
     return (
-      <div className="min-h-screen bg-gray-50 font-sans text-gray-900 selection:bg-sundas-red/10 selection:text-sundas-red">
+      <div className="min-h-screen bg-sundas-blue/5 font-sans text-sundas-blue selection:bg-sundas-red/10 selection:text-sundas-red">
         <Navbar onDonate={() => setShowDonatePage(true)} />
         <motion.div
           initial={{ opacity: 0, x: 20 }}
@@ -1155,7 +1155,7 @@ export default function App() {
 
   if (selectedCause) {
     return (
-      <div className="min-h-screen bg-gray-50 font-sans text-gray-900 selection:bg-sundas-red/10 selection:text-sundas-red">
+      <div className="min-h-screen bg-sundas-blue/5 font-sans text-sundas-blue selection:bg-sundas-red/10 selection:text-sundas-red">
         <Navbar onDonate={() => setShowDonatePage(true)} />
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
@@ -1172,7 +1172,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 font-sans text-gray-900 selection:bg-sundas-red/10 selection:text-sundas-red">
+    <div className="min-h-screen bg-sundas-blue/5 font-sans text-sundas-blue selection:bg-sundas-red/10 selection:text-sundas-red">
       <Navbar onDonate={() => setShowDonatePage(true)} />
       
       <motion.main
@@ -1204,14 +1204,14 @@ export default function App() {
                 <div className="absolute -bottom-10 -right-10 w-64 h-64 bg-sundas-red/10 rounded-full blur-3xl -z-10"></div>
                 <div className="absolute -top-10 -left-10 w-64 h-64 bg-sundas-blue/10 rounded-full blur-3xl -z-10"></div>
                 
-                <div className="absolute bottom-10 left-10 bg-white p-6 rounded-2xl shadow-xl border border-gray-100 max-w-xs hidden md:block">
+                <div className="absolute bottom-10 left-10 bg-white p-6 rounded-2xl shadow-xl border border-sundas-blue/10 max-w-xs hidden md:block">
                   <div className="flex items-center gap-4 mb-3">
                     <div className="p-2 bg-sundas-red/10 rounded-lg text-sundas-red">
                       <HeartHandshake size={24} />
                     </div>
-                    <span className="font-bold text-gray-900">Our Mission</span>
+                    <span className="font-bold text-sundas-blue">Our Mission</span>
                   </div>
-                  <p className="text-sm text-gray-600 leading-relaxed">
+                  <p className="text-sm text-sundas-blue/70 leading-relaxed">
                     To provide high-quality healthcare services to non-affording patients with blood disorders.
                   </p>
                 </div>
@@ -1223,32 +1223,32 @@ export default function App() {
                 viewport={{ once: true }}
               >
                 <span className="text-sundas-red font-bold tracking-widest uppercase text-sm mb-4 block">Who We Are</span>
-                <h2 className="text-4xl md:text-5xl font-display font-extrabold text-gray-900 mb-8 leading-tight">
+                <h2 className="text-4xl md:text-5xl font-display font-extrabold text-sundas-blue mb-8 leading-tight">
                   Serving Humanity with <span className="text-sundas-blue">Compassion</span> Since 1998
                 </h2>
-                <p className="text-gray-600 text-lg leading-relaxed mb-8">
+                <p className="text-sundas-blue/70 text-lg leading-relaxed mb-8">
                   Sundas Foundation was established in 1998 with the vision of providing free treatment to patients suffering from Thalassemia, Hemophilia, and other blood-related disorders.
                 </p>
-                <p className="text-gray-600 text-lg leading-relaxed mb-10">
+                <p className="text-sundas-blue/70 text-lg leading-relaxed mb-10">
                   Founded by the legendary Munnoo Bhai, we have grown from a single center to a nationwide network, saving thousands of lives through voluntary blood donations and state-of-the-art medical facilities.
                 </p>
                 
                 <div className="grid grid-cols-2 gap-8 mb-12">
                   <div className="flex items-center gap-3">
                     <div className="w-2 h-2 bg-sundas-red rounded-full"></div>
-                    <span className="font-semibold text-gray-800">Free Treatment</span>
+                    <span className="font-semibold text-sundas-blue/80">Free Treatment</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="w-2 h-2 bg-sundas-blue rounded-full"></div>
-                    <span className="font-semibold text-gray-800">Safe Blood</span>
+                    <span className="font-semibold text-sundas-blue/80">Safe Blood</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="w-2 h-2 bg-sundas-red rounded-full"></div>
-                    <span className="font-semibold text-gray-800">Expert Doctors</span>
+                    <span className="font-semibold text-sundas-blue/80">Expert Doctors</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="w-2 h-2 bg-sundas-blue rounded-full"></div>
-                    <span className="font-semibold text-gray-800">24/7 Support</span>
+                    <span className="font-semibold text-sundas-blue/80">24/7 Support</span>
                   </div>
                 </div>
 
