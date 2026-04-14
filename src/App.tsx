@@ -127,10 +127,14 @@ const Navbar = ({ onDonate }: { onDonate: () => void }) => {
 
 const Hero = ({ onDonate }: { onDonate: () => void }) => {
   return (
-    <section className="relative h-screen flex items-center justify-center overflow-hidden bg-sundas-blue">
-      {/* Background Pattern/Overlay */}
-      <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/20 via-transparent to-transparent"></div>
-      <div className="absolute inset-0 bg-gradient-to-br from-sundas-blue via-sundas-blue to-sundas-red opacity-90"></div>
+    <section className="relative h-screen flex items-center justify-center overflow-hidden">
+      {/* Background Image */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105"
+        style={{ backgroundImage: 'url("https://sundas.org/images/gallery_4.jpg")' }}
+      ></div>
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black/40"></div>
       
       <div className="relative z-10 max-w-5xl mx-auto px-6 text-center text-white">
         <motion.div
@@ -141,8 +145,8 @@ const Hero = ({ onDonate }: { onDonate: () => void }) => {
           <span className="inline-block px-4 py-1 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-sm font-semibold mb-6 tracking-wide uppercase">
             ESTABLISHED SINCE 1998
           </span>
-          <h1 className="text-5xl md:text-8xl font-display font-extrabold mb-8 leading-[0.9] tracking-tight">
-            Your Little <span className="text-white/80 italic">Donation</span> Can Make a Big Difference
+          <h1 className="text-4xl md:text-6xl font-display font-extrabold mb-8 leading-tight tracking-tight glow-text-red">
+            Your Little <span className="text-white/80 italic glow-text-blue">Donation</span> Can Make a Big Difference
           </h1>
           <p className="text-xl md:text-2xl mb-10 opacity-90 max-w-2xl mx-auto font-light leading-relaxed">
             Providing Free Treatment to Thalassemia & Hemophilia Patients across Pakistan. Join our mission to serve humanity.
@@ -150,21 +154,21 @@ const Hero = ({ onDonate }: { onDonate: () => void }) => {
           
           <div className="flex flex-col sm:flex-row justify-center items-center gap-5">
             <motion.button 
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(255,255,255,0.4)" }}
               whileTap={{ scale: 0.95 }}
               onClick={() => {
                 const element = document.getElementById('causes');
                 element?.scrollIntoView({ behavior: 'smooth' });
               }}
-              className="w-full sm:w-auto bg-white text-sundas-blue px-10 py-4 rounded-full font-bold text-lg shadow-2xl hover:bg-gray-100 transition-colors flex items-center justify-center gap-2"
+              className="w-full sm:w-auto bg-white text-sundas-blue px-10 py-4 rounded-full font-bold text-lg shadow-2xl hover:bg-gray-100 transition-all flex items-center justify-center gap-2"
             >
               Explore Causes <ArrowRight size={20} />
             </motion.button>
             <motion.button 
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(203,0,0,0.6)" }}
               whileTap={{ scale: 0.95 }}
               onClick={onDonate}
-              className="w-full sm:w-auto border-2 border-white/30 backdrop-blur-sm px-10 py-4 rounded-full font-bold text-lg hover:bg-white hover:text-sundas-blue transition-all"
+              className="w-full sm:w-auto border-2 border-white/30 backdrop-blur-sm px-10 py-4 rounded-full font-bold text-lg hover:bg-white hover:text-sundas-blue transition-all glow-red"
             >
               Donate Now
             </motion.button>
@@ -282,6 +286,10 @@ const Causes = ({ onLearnMore }: { onLearnMore: (cause: string) => void }) => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.2 }}
+              whileHover={{ 
+                y: -10, 
+                boxShadow: cause.id === 'thalassemia' ? "0 20px 40px rgba(203,0,0,0.15)" : "0 20px 40px rgba(0,74,173,0.15)"
+              }}
               className={`bg-white p-10 rounded-3xl shadow-xl shadow-gray-200/50 border-b-8 ${cause.border} ${cause.bg} transition-all duration-500 group cursor-default`}
             >
               <div className="mb-8 transform group-hover:scale-110 transition-transform duration-300">
@@ -859,73 +867,113 @@ const Contact = () => {
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-950 text-white pt-24 pb-12 px-6">
-      <div className="max-w-7xl mx-auto">
+    <footer className="bg-gray-950 text-white pt-24 pb-12 px-6 relative overflow-hidden">
+      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-sundas-blue via-sundas-red to-sundas-blue glow-red opacity-50"></div>
+      <div className="max-w-7xl mx-auto relative z-10">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-16 mb-20">
-          <div className="col-span-1 lg:col-span-1">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="col-span-1 lg:col-span-1"
+          >
             <div className="flex items-center gap-3 mb-8">
               <img 
                 src="https://static.vecteezy.com/system/resources/previews/017/765/065/non_2x/community-care-logo-on-letter-s-template-teamwork-heart-people-family-care-love-logos-charity-foundation-creative-charity-donation-sign-free-vector.jpg" 
                 alt="Sundas Logo" 
-                className="h-12 w-12 rounded-full object-cover border-2 border-white/10"
+                className="h-12 w-12 rounded-full object-cover border-2 border-white/10 glow-blue"
                 referrerPolicy="no-referrer"
               />
-              <div className="text-2xl font-display font-extrabold tracking-tighter">
-                SUNDAS <span className="text-sundas-red">CLONE</span>
+              <div className="text-2xl font-display font-extrabold tracking-tighter glow-text-blue">
+                SUNDAS <span className="text-sundas-red glow-text-red">CLONE</span>
               </div>
             </div>
             <p className="text-gray-400 leading-relaxed mb-8">
               Founded by Munnoo Bhai (Late) to serve humanity and save innocent lives through healthcare and blood donation.
             </p>
             <div className="flex space-x-5">
-              <a href="#" className="p-3 bg-white/5 rounded-full hover:bg-sundas-red transition-colors">
-                <Facebook size={20} />
-              </a>
-              <a href="#" className="p-3 bg-white/5 rounded-full hover:bg-sundas-red transition-colors">
-                <Twitter size={20} />
-              </a>
-              <a href="#" className="p-3 bg-white/5 rounded-full hover:bg-sundas-red transition-colors">
-                <Instagram size={20} />
-              </a>
+              {[Facebook, Twitter, Instagram].map((Icon, i) => (
+                <motion.a 
+                  key={i}
+                  href="#" 
+                  whileHover={{ scale: 1.2, rotate: 10, backgroundColor: "#cb0000", boxShadow: "0 0 15px rgba(203,0,0,0.5)" }}
+                  className="p-3 bg-white/5 rounded-full transition-colors"
+                >
+                  <Icon size={20} />
+                </motion.a>
+              ))}
             </div>
-          </div>
+          </motion.div>
 
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+          >
             <h4 className="text-lg font-bold mb-8 flex items-center gap-2">
-              Quick Links <div className="h-1 w-8 bg-sundas-red rounded-full"></div>
+              Quick Links <div className="h-1 w-8 bg-sundas-red rounded-full glow-red"></div>
             </h4>
             <ul className="text-gray-400 space-y-4">
-              <li><a href="#" className="hover:text-white transition-colors">About Foundation</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Zakat Calculator</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Volunteer Program</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Privacy Policy</a></li>
+              {['About Foundation', 'Zakat Calculator', 'Volunteer Program', 'Privacy Policy'].map((link) => (
+                <li key={link}>
+                  <motion.a 
+                    href="#" 
+                    whileHover={{ x: 10, color: "#ffffff", textShadow: "0 0 8px rgba(255,255,255,0.5)" }}
+                    className="transition-colors inline-block"
+                  >
+                    {link}
+                  </motion.a>
+                </li>
+              ))}
             </ul>
-          </div>
+          </motion.div>
 
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+          >
             <h4 className="text-lg font-bold mb-8 flex items-center gap-2">
-              Our Services <div className="h-1 w-8 bg-sundas-red rounded-full"></div>
+              Our Services <div className="h-1 w-8 bg-sundas-blue rounded-full glow-blue"></div>
             </h4>
             <ul className="text-gray-400 space-y-4">
-              <li><a href="#" className="hover:text-white transition-colors">Blood Transfusion</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Diagnostic Lab</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Emergency Care</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Patient Support</a></li>
+              {['Blood Transfusion', 'Diagnostic Lab', 'Emergency Care', 'Patient Support'].map((service) => (
+                <li key={service}>
+                  <motion.a 
+                    href="#" 
+                    whileHover={{ x: 10, color: "#ffffff", textShadow: "0 0 8px rgba(255,255,255,0.5)" }}
+                    className="transition-colors inline-block"
+                  >
+                    {service}
+                  </motion.a>
+                </li>
+              ))}
             </ul>
-          </div>
+          </motion.div>
 
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 }}
+          >
             <h4 className="text-lg font-bold mb-8 flex items-center gap-2">
-              Newsletter <div className="h-1 w-8 bg-sundas-red rounded-full"></div>
+              Newsletter <div className="h-1 w-8 bg-sundas-red rounded-full glow-red"></div>
             </h4>
             <p className="text-gray-400 mb-6">Subscribe to get latest updates and news.</p>
-            <div className="flex gap-2">
-              <input type="email" placeholder="Email" className="bg-white/5 border border-white/10 px-4 py-2 rounded-lg outline-none focus:border-sundas-red w-full" />
-              <button className="bg-sundas-red p-2 rounded-lg hover:bg-sundas-red/80 transition-colors">
+            <div className="flex gap-2 p-1 bg-white/5 rounded-xl border border-white/10 focus-within:border-sundas-red focus-within:glow-red transition-all">
+              <input type="email" placeholder="Email" className="bg-transparent px-4 py-2 rounded-lg outline-none w-full text-white" />
+              <motion.button 
+                whileHover={{ scale: 1.1, boxShadow: "0 0 15px rgba(203,0,0,0.5)" }}
+                whileTap={{ scale: 0.9 }}
+                className="bg-sundas-red p-2 rounded-lg hover:bg-sundas-red/80 transition-colors shrink-0"
+              >
                 <ArrowRight size={20} />
-              </button>
+              </motion.button>
             </div>
-          </div>
+          </motion.div>
         </div>
 
         <div className="pt-12 border-t border-white/5 text-center text-gray-500 text-sm">
@@ -999,7 +1047,14 @@ export default function App() {
     return (
       <div className="min-h-screen bg-gray-50 font-sans text-gray-900 selection:bg-sundas-red/10 selection:text-sundas-red">
         <Navbar onDonate={() => setShowDonatePage(true)} />
-        <DonatePage onBack={() => setShowDonatePage(false)} />
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -20 }}
+          transition={{ duration: 0.5 }}
+        >
+          <DonatePage onBack={() => setShowDonatePage(false)} />
+        </motion.div>
         <Footer />
       </div>
     );
@@ -1009,7 +1064,14 @@ export default function App() {
     return (
       <div className="min-h-screen bg-gray-50 font-sans text-gray-900 selection:bg-sundas-red/10 selection:text-sundas-red">
         <Navbar onDonate={() => setShowDonatePage(true)} />
-        <CauseDetail causeId={selectedCause} onBack={() => setSelectedCause(null)} />
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 1.05 }}
+          transition={{ duration: 0.5 }}
+        >
+          <CauseDetail causeId={selectedCause} onBack={() => setSelectedCause(null)} />
+        </motion.div>
         <Footer />
       </div>
     );
@@ -1019,7 +1081,11 @@ export default function App() {
     <div className="min-h-screen bg-gray-50 font-sans text-gray-900 selection:bg-sundas-red/10 selection:text-sundas-red">
       <Navbar onDonate={() => setShowDonatePage(true)} />
       
-      <main>
+      <motion.main
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+      >
         <Hero onDonate={() => setShowDonatePage(true)} />
         <Stats />
         
@@ -1122,7 +1188,7 @@ export default function App() {
         </section>
 
         <Contact />
-      </main>
+      </motion.main>
 
       <Footer />
       

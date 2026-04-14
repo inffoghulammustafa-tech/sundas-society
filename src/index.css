@@ -7,6 +7,25 @@
   
   --color-sundas-blue: #004aad;
   --color-sundas-red: #cb0000;
+
+  --shadow-glow-blue: 0 0 20px rgba(0, 74, 173, 0.3);
+  --shadow-glow-red: 0 0 20px rgba(203, 0, 0, 0.3);
+}
+
+@utility glow-blue {
+  box-shadow: var(--shadow-glow-blue);
+}
+
+@utility glow-red {
+  box-shadow: var(--shadow-glow-red);
+}
+
+@utility glow-text-red {
+  text-shadow: 0 0 10px rgba(203, 0, 0, 0.5);
+}
+
+@utility glow-text-blue {
+  text-shadow: 0 0 10px rgba(0, 74, 173, 0.5);
 }
 
 @layer base {
