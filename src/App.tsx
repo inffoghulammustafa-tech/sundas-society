@@ -15,7 +15,8 @@ import {
   MapPin,
   Heart,
   ChevronRight,
-  CreditCard
+  CreditCard,
+  Activity
 } from 'lucide-react';
 
 const Navbar = ({ onDonate, onAbout, onHome, onCauses, onContact }: { onDonate: () => void, onAbout: () => void, onHome: () => void, onCauses: () => void, onContact: () => void }) => {
@@ -157,7 +158,7 @@ const AboutPage = ({ onBack }: { onBack: () => void }) => {
     <div className="bg-white min-h-screen font-sans">
       <section className="relative h-[350px] md:h-[450px] overflow-hidden">
         <img 
-          src="https://images.unsplash.com/photo-1599045918138-b3ac6ffc58a4?q=80&w=1600&auto=format&fit=crop" 
+          src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=1600&auto=format&fit=crop" 
           alt="About Sundas Foundation" 
           className="absolute inset-0 w-full h-full object-cover"
           referrerPolicy="no-referrer"
@@ -294,7 +295,7 @@ const CausesPage = ({ onBack, onLearnMore }: { onBack: () => void, onLearnMore: 
     <div className="bg-white min-h-screen font-sans">
       <section className="relative h-[350px] md:h-[450px] overflow-hidden">
         <img 
-          src="https://images.unsplash.com/photo-1536856424708-518d2279269d?q=80&w=1600&auto=format&fit=crop" 
+          src="https://sundas.org/images/gallery_3.jpg" 
           alt="Our Causes" 
           className="absolute inset-0 w-full h-full object-cover"
           referrerPolicy="no-referrer"
@@ -359,7 +360,7 @@ const ContactPage = ({ onBack }: { onBack: () => void }) => {
     <div className="bg-white min-h-screen font-sans pt-20">
       <section className="relative h-[300px] md:h-[400px] overflow-hidden">
         <img 
-          src="https://images.unsplash.com/photo-1534536281715-e28d76689b4d?q=80&w=1600&auto=format&fit=crop" 
+          src="https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?q=80&w=1600&auto=format&fit=crop" 
           alt="Contact Us" 
           className="absolute inset-0 w-full h-full object-cover"
           referrerPolicy="no-referrer"
@@ -1276,7 +1277,7 @@ const Contact = () => {
   );
 };
 
-const Footer = () => {
+const Footer = ({ onContact }: { onContact: () => void }) => {
   return (
     <footer className="bg-sundas-blue text-white pt-24 pb-12 px-6 relative overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-sundas-blue via-sundas-red to-sundas-blue glow-red opacity-50"></div>
@@ -1377,6 +1378,7 @@ const Footer = () => {
             <div className="flex gap-2 p-1 bg-white/5 rounded-xl border border-white/10 focus-within:border-sundas-red focus-within:glow-red transition-all">
               <input type="email" placeholder="Email" className="bg-transparent px-4 py-2 rounded-lg outline-none w-full text-white" />
               <motion.button 
+                onClick={onContact}
                 whileHover={{ scale: 1.1, boxShadow: "0 0 15px rgba(203,0,0,0.5)" }}
                 whileTap={{ scale: 0.9 }}
                 className="bg-sundas-red p-2 rounded-lg hover:bg-sundas-red/80 transition-colors shrink-0"
@@ -1509,6 +1511,7 @@ export default function App() {
     setShowAboutPage(false);
     setShowCausesPage(false);
     setShowContactPage(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   if (showDonatePage) {
@@ -1529,7 +1532,7 @@ export default function App() {
         >
           <DonatePage onBack={() => setShowDonatePage(false)} />
         </motion.div>
-        <Footer />
+        <Footer onContact={() => { resetViews(); setShowContactPage(true); }} />
         <WhatsAppButton />
       </div>
     );
@@ -1553,7 +1556,7 @@ export default function App() {
         >
           <AboutPage onBack={() => setShowAboutPage(false)} />
         </motion.div>
-        <Footer />
+        <Footer onContact={() => { resetViews(); setShowContactPage(true); }} />
         <WhatsAppButton />
       </div>
     );
@@ -1577,7 +1580,7 @@ export default function App() {
         >
           <CausesPage onBack={() => setShowCausesPage(false)} onLearnMore={(id) => setSelectedCause(id)} />
         </motion.div>
-        <Footer />
+        <Footer onContact={() => { resetViews(); setShowContactPage(true); }} />
         <WhatsAppButton />
       </div>
     );
@@ -1601,7 +1604,7 @@ export default function App() {
         >
           <ContactPage onBack={() => setShowContactPage(false)} />
         </motion.div>
-        <Footer />
+        <Footer onContact={() => setShowContactPage(true)} />
         <WhatsAppButton />
       </div>
     );
@@ -1625,7 +1628,7 @@ export default function App() {
         >
           <CauseDetail causeId={selectedCause} onBack={() => setSelectedCause(null)} />
         </motion.div>
-        <Footer />
+        <Footer onContact={() => { resetViews(); setShowContactPage(true); }} />
         <WhatsAppButton />
       </div>
     );
@@ -1729,6 +1732,84 @@ export default function App() {
           </div>
         </section>
 
+        {/* New Fighting Blood Disorders Section */}
+        <section className="py-24 bg-white overflow-hidden">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="grid md:grid-cols-2 gap-16 items-center">
+              
+              <motion.div 
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="relative group"
+              >
+                <div className="absolute -bottom-8 -right-8 w-full h-full bg-gradient-to-br from-sundas-red/10 to-sundas-red/5 rounded-[40px] z-0 transition-all duration-300 group-hover:translate-x-3 group-hover:translate-y-3"></div>
+                
+                <img 
+                  src="https://images.unsplash.com/photo-1631049035182-249067d7618e?q=80&w=1200&auto=format&fit=crop" 
+                  alt="Blood Donation for Thalassemia Child" 
+                  className="relative z-10 w-full h-[520px] object-cover rounded-[40px] shadow-2xl border-4 border-white transition-transform duration-500 group-hover:scale-[1.02]"
+                  referrerPolicy="no-referrer"
+                />
+                
+                <div className="absolute top-8 left-8 z-20 bg-white/95 backdrop-blur-sm p-5 rounded-2xl shadow-xl flex items-center gap-4 border border-sundas-red/10">
+                  <div className="bg-sundas-red/10 p-3 rounded-full text-sundas-red">
+                    <Activity size={24} />
+                  </div>
+                  <div>
+                    <p className="text-[10px] uppercase font-bold text-sundas-blue/50 tracking-wider">Your Donation</p>
+                    <p className="text-xl font-black text-sundas-blue">Saves a Life</p>
+                  </div>
+                </div>
+              </motion.div>
+
+              <motion.div 
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="space-y-8"
+              >
+                <div className="inline-flex items-center gap-2 bg-sundas-red/10 text-sundas-red text-xs font-black px-6 py-2 rounded-full uppercase tracking-[0.2em]">
+                  <Droplets size={14} /> Serving Humanity
+                </div>
+                
+                <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-extrabold text-sundas-blue leading-tight">
+                  Fighting <span className="text-sundas-red italic">Blood Disorders</span> across Pakistan
+                </h2>
+                
+                <p className="text-lg text-sundas-blue/70 leading-relaxed font-medium">
+                  Sundas Foundation is dedicated to providing free blood transfusions and comprehensive treatment to children suffering from Thalassemia, Hemophilia, and other serious blood diseases. We believe every child deserves a chance at a healthy life.
+                </p>
+                
+                <div className="grid grid-cols-3 gap-6 pt-10 border-t border-sundas-blue/5">
+                  <div className="text-center">
+                    <p className="text-4xl font-black text-sundas-red mb-1">25+</p>
+                    <p className="text-[10px] uppercase font-bold text-sundas-blue/40 tracking-widest">Years of Service</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-4xl font-black text-sundas-blue mb-1">12</p>
+                    <p className="text-[10px] uppercase font-bold text-sundas-blue/40 tracking-widest">Centers Nationwide</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-4xl font-black text-sundas-blue mb-1">1M+</p>
+                    <p className="text-[10px] uppercase font-bold text-sundas-blue/40 tracking-widest">Lives Impacted</p>
+                  </div>
+                </div>
+
+                <div className="pt-4">
+                  <button 
+                    onClick={() => setIsDonateModalOpen(true)}
+                    className="group flex items-center gap-3 text-sundas-red font-bold text-lg hover:gap-5 transition-all"
+                  >
+                    Learn about our impact <ArrowRight size={20} />
+                  </button>
+                </div>
+              </motion.div>
+
+            </div>
+          </div>
+        </section>
+
         <Causes onLearnMore={(id) => setSelectedCause(id)} />
         
         {/* CTA Section */}
@@ -1795,30 +1876,10 @@ export default function App() {
           </div>
         </section>
 
-        {/* Google Map Section */}
-        <section className="py-20 bg-white">
-          <div className="max-w-7xl mx-auto px-6 mb-12 text-center">
-            <h2 className="text-4xl font-display font-extrabold text-sundas-blue mb-4">Find Our <span className="text-sundas-red">Centers</span></h2>
-            <p className="text-sundas-blue/60 text-lg">Visit us at our main center in Lahore or any of our regional facilities.</p>
-          </div>
-          <div className="h-[500px] w-full border-y border-sundas-blue/10 grayscale hover:grayscale-0 transition-all duration-700 shadow-inner overflow-hidden">
-            <iframe 
-               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3400.3225219213!2d74.32986831514838!3d31.543232981362624!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391904b73b22e705%3A0xc6c7d9a1059f13c3!2sSundas%20Foundation!5e0!3m2!1sen!2s!4v1650000000000!5m2!1sen!2s" 
-               width="100%" 
-               height="100%" 
-               style={{ border: 0 }} 
-               allowFullScreen={true} 
-               loading="lazy" 
-               referrerPolicy="no-referrer-when-downgrade"
-               title="Sundas Foundation Main Office"
-            ></iframe>
-          </div>
-        </section>
-
         <Contact />
       </motion.main>
 
-      <Footer />
+      <Footer onContact={() => { resetViews(); setShowContactPage(true); }} />
       <WhatsAppButton />
       
       <DonateModal 
