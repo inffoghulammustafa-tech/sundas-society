@@ -18,7 +18,7 @@ import {
   CreditCard
 } from 'lucide-react';
 
-const Navbar = ({ onDonate, onAbout, onHome, onCauses }: { onDonate: () => void, onAbout: () => void, onHome: () => void, onCauses: () => void }) => {
+const Navbar = ({ onDonate, onAbout, onHome, onCauses, onContact }: { onDonate: () => void, onAbout: () => void, onHome: () => void, onCauses: () => void, onContact: () => void }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -38,11 +38,14 @@ const Navbar = ({ onDonate, onAbout, onHome, onCauses }: { onDonate: () => void,
   return (
     <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white/90 backdrop-blur-md py-3 shadow-sm' : 'bg-transparent py-5'}`}>
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-        <div className="flex items-center gap-3">
+        <div 
+          onClick={onHome}
+          className="flex items-center gap-3 cursor-pointer group"
+        >
           <img 
             src="https://static.vecteezy.com/system/resources/previews/017/765/065/non_2x/community-care-logo-on-letter-s-template-teamwork-heart-people-family-care-love-logos-charity-foundation-creative-charity-donation-sign-free-vector.jpg" 
             alt="Sundas Logo" 
-            className="h-12 w-12 rounded-full object-cover border-2 border-white/20 shadow-lg"
+            className="h-12 w-12 rounded-full object-cover border-2 border-white/20 shadow-lg group-hover:scale-110 transition-transform"
             referrerPolicy="no-referrer"
           />
           <div className={`text-2xl font-display font-extrabold tracking-tighter ${isScrolled ? 'text-sundas-blue' : 'text-white'}`}>
@@ -58,6 +61,7 @@ const Navbar = ({ onDonate, onAbout, onHome, onCauses }: { onDonate: () => void,
                 onClick={() => {
                   if (link.name === 'About Us') onAbout();
                   else if (link.name === 'Our Causes') onCauses();
+                  else if (link.name === 'Contact') onContact();
                   else if (link.name === 'Home') onHome();
                   else {
                     const element = document.getElementById(link.href.substring(1));
@@ -109,6 +113,7 @@ const Navbar = ({ onDonate, onAbout, onHome, onCauses }: { onDonate: () => void,
                     onClick={() => {
                       if (link.name === 'About Us') onAbout();
                       else if (link.name === 'Our Causes') onCauses();
+                      else if (link.name === 'Contact') onContact();
                       else if (link.name === 'Home') onHome();
                       else {
                         const element = document.getElementById(link.href.substring(1));
@@ -340,6 +345,146 @@ const CausesPage = ({ onBack, onLearnMore }: { onBack: () => void, onLearnMore: 
             Start Your Contribution Today
           </button>
         </div>
+      </section>
+    </div>
+  );
+};
+
+const ContactPage = ({ onBack }: { onBack: () => void }) => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  return (
+    <div className="bg-white min-h-screen font-sans pt-20">
+      <section className="relative h-[300px] md:h-[400px] overflow-hidden">
+        <img 
+          src="https://images.unsplash.com/photo-1534536281715-e28d76689b4d?q=80&w=1600&auto=format&fit=crop" 
+          alt="Contact Us" 
+          className="absolute inset-0 w-full h-full object-cover"
+          referrerPolicy="no-referrer"
+        />
+        <div className="absolute inset-0 bg-sundas-blue/80 flex items-center justify-center text-center">
+            <div className="container mx-auto px-6">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                >
+                  <h1 className="text-5xl md:text-6xl font-black text-white leading-tight uppercase tracking-tight">
+                      Contact <span className="text-sundas-red">Us</span>
+                  </h1>
+                  <div className="w-24 h-2 bg-sundas-red mx-auto mt-4 rounded-full shadow-lg shadow-sundas-red/40"></div>
+                </motion.div>
+            </div>
+        </div>
+      </section>
+
+      <section className="py-20 bg-white">
+          <div className="container mx-auto px-6">
+              <button 
+                onClick={onBack}
+                className="flex items-center gap-2 text-sundas-blue font-bold mb-12 hover:gap-4 transition-all"
+              >
+                <ArrowRight className="rotate-180" size={20} /> Back to Home
+              </button>
+              
+              <div className="grid lg:grid-cols-2 gap-16 items-start">
+                  
+                  <div className="space-y-8 text-left">
+                      <div>
+                          <h2 className="text-4xl font-bold text-sundas-blue">Get In <span className="text-sundas-red">Touch</span></h2>
+                          <div className="w-20 h-1.5 bg-sundas-red mt-4 rounded-full"></div>
+                          <p className="text-sundas-blue/70 mt-6 text-lg">
+                              Hamari team 24/7 aapki madad ke liye maujood hai. Blood donation ya kisi bhi maloomat ke liye niche diye gaye tareeqon se raabta karein.
+                          </p>
+                      </div>
+
+                      <div className="space-y-6">
+                          <div className="flex items-start">
+                              <div className="bg-sundas-red/10 p-4 rounded-2xl text-sundas-red mr-5">
+                                  <MapPin size={24} />
+                              </div>
+                              <div>
+                                  <h4 className="text-xl font-bold text-sundas-blue">Main Office Address</h4>
+                                  <p className="text-sundas-blue/60">880 Shadman-1, Near Crescent Girls School, Lahore, Pakistan.</p>
+                              </div>
+                          </div>
+
+                          <div className="flex items-start">
+                              <div className="bg-sundas-red/10 p-4 rounded-2xl text-sundas-red mr-5">
+                                  <Phone size={24} />
+                              </div>
+                              <div>
+                                  <h4 className="text-xl font-bold text-sundas-blue">Phone & UAN</h4>
+                                  <p className="text-sundas-blue/60">UAN: +92 42 111-786-327</p>
+                                  <p className="text-sundas-blue/60">Tel: (+92) 423 7422 131</p>
+                              </div>
+                          </div>
+
+                          <div className="flex items-start">
+                              <div className="bg-sundas-red/10 p-4 rounded-2xl text-sundas-red mr-5">
+                                  <Mail size={24} />
+                              </div>
+                              <div>
+                                  <h4 className="text-xl font-bold text-sundas-blue">Email Address</h4>
+                                  <p className="text-sundas-blue/60">info@sundas.org</p>
+                              </div>
+                          </div>
+                      </div>
+
+                      <div className="rounded-3xl overflow-hidden shadow-2xl h-64 border border-sundas-blue/10 relative">
+                          <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3400.3225219213!2d74.32986831514838!3d31.543232981362624!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391904b73b22e705%3A0xc6c7d9a1059f13c3!2sSundas%20Foundation!5e0!3m2!1sen!2s!4v1650000000000!5m2!1sen!2s" 
+                            width="100%" 
+                            height="100%" 
+                            style={{ border: 0 }} 
+                            allowFullScreen={true} 
+                            loading="lazy" 
+                            referrerPolicy="no-referrer-when-downgrade"
+                            title="Sundas Foundation Location"
+                            className="grayscale hover:grayscale-0 transition-all duration-500"
+                          ></iframe>
+                      </div>
+                  </div>
+
+                  <div className="bg-sundas-blue/5 p-8 md:p-12 rounded-3xl shadow-xl border border-sundas-blue/10 text-left">
+                      <h3 className="text-2xl font-bold text-sundas-blue mb-8 text-center">Send Us a Message</h3>
+                      <form action="#" className="space-y-5">
+                          <div className="grid md:grid-cols-2 gap-5">
+                              <div className="space-y-2 text-left">
+                                  <label className="text-sm font-bold text-sundas-blue/70 ml-1">Full Name</label>
+                                  <input type="text" placeholder="Ahmad Ali" className="w-full bg-white border border-sundas-blue/20 p-4 rounded-xl outline-none focus:border-sundas-red focus:ring-2 focus:ring-sundas-red/10 transition" />
+                              </div>
+                              <div className="space-y-2 text-left">
+                                  <label className="text-sm font-bold text-sundas-blue/70 ml-1">Email</label>
+                                  <input type="email" placeholder="example@mail.com" className="w-full bg-white border border-sundas-blue/20 p-4 rounded-xl outline-none focus:border-sundas-red focus:ring-2 focus:ring-sundas-red/10 transition" />
+                              </div>
+                          </div>
+
+                          <div className="space-y-2 text-left">
+                              <label className="text-sm font-bold text-sundas-blue/70 ml-1">Subject</label>
+                              <select className="w-full bg-white border border-sundas-blue/20 p-4 rounded-xl outline-none focus:border-sundas-red focus:ring-2 focus:ring-sundas-red/10 transition appearance-none cursor-pointer">
+                                  <option>Blood Donation Inquiry</option>
+                                  <option>Zakat/Donation Help</option>
+                                  <option>Volunteer Registration</option>
+                                  <option>General Message</option>
+                              </select>
+                          </div>
+
+                          <div className="space-y-2 text-left">
+                              <label className="text-sm font-bold text-sundas-blue/70 ml-1">Message</label>
+                              <textarea rows={5} placeholder="Write your message here..." className="w-full bg-white border border-sundas-blue/20 p-4 rounded-xl outline-none focus:border-sundas-red focus:ring-2 focus:ring-sundas-red/10 transition"></textarea>
+                          </div>
+
+                          <button type="submit" className="w-full bg-sundas-red text-white font-bold py-4 rounded-xl shadow-lg hover:bg-sundas-red/90 transform hover:scale-[1.01] transition-all flex items-center justify-center gap-2">
+                              Send Message <ArrowRight size={20} />
+                          </button>
+                      </form>
+                  </div>
+
+              </div>
+          </div>
       </section>
     </div>
   );
@@ -1356,12 +1501,14 @@ export default function App() {
   const [showDonatePage, setShowDonatePage] = useState(false);
   const [showAboutPage, setShowAboutPage] = useState(false);
   const [showCausesPage, setShowCausesPage] = useState(false);
+  const [showContactPage, setShowContactPage] = useState(false);
 
   const resetViews = () => {
     setShowDonatePage(false);
     setSelectedCause(null);
     setShowAboutPage(false);
     setShowCausesPage(false);
+    setShowContactPage(false);
   };
 
   if (showDonatePage) {
@@ -1372,6 +1519,7 @@ export default function App() {
           onAbout={() => { resetViews(); setShowAboutPage(true); }}
           onHome={() => resetViews()}
           onCauses={() => { resetViews(); setShowCausesPage(true); }}
+          onContact={() => { resetViews(); setShowContactPage(true); }}
         />
         <motion.div
           initial={{ opacity: 0, x: 20 }}
@@ -1395,6 +1543,7 @@ export default function App() {
           onAbout={() => setShowAboutPage(true)}
           onHome={() => resetViews()}
           onCauses={() => { resetViews(); setShowCausesPage(true); }}
+          onContact={() => { resetViews(); setShowContactPage(true); }}
         />
         <motion.div
            initial={{ opacity: 0, y: 20 }}
@@ -1418,6 +1567,7 @@ export default function App() {
           onAbout={() => { resetViews(); setShowAboutPage(true); }}
           onHome={() => resetViews()}
           onCauses={() => setShowCausesPage(true)}
+          onContact={() => { resetViews(); setShowContactPage(true); }}
         />
         <motion.div
            initial={{ opacity: 0, y: 20 }}
@@ -1433,6 +1583,30 @@ export default function App() {
     );
   }
 
+  if (showContactPage) {
+    return (
+      <div className="min-h-screen bg-sundas-blue/5 font-sans text-sundas-blue selection:bg-sundas-red/10 selection:text-sundas-red">
+        <Navbar 
+          onDonate={() => { resetViews(); setShowDonatePage(true); }} 
+          onAbout={() => { resetViews(); setShowAboutPage(true); }}
+          onHome={() => resetViews()}
+          onCauses={() => { resetViews(); setShowCausesPage(true); }}
+          onContact={() => setShowContactPage(true)}
+        />
+        <motion.div
+           initial={{ opacity: 0, scale: 1.1 }}
+           animate={{ opacity: 1, scale: 1 }}
+           exit={{ opacity: 0, scale: 0.9 }}
+           transition={{ duration: 0.5 }}
+        >
+          <ContactPage onBack={() => setShowContactPage(false)} />
+        </motion.div>
+        <Footer />
+        <WhatsAppButton />
+      </div>
+    );
+  }
+
   if (selectedCause) {
     return (
       <div className="min-h-screen bg-sundas-blue/5 font-sans text-sundas-blue selection:bg-sundas-red/10 selection:text-sundas-red">
@@ -1441,6 +1615,7 @@ export default function App() {
           onAbout={() => { resetViews(); setShowAboutPage(true); }}
           onHome={() => resetViews()}
           onCauses={() => { resetViews(); setShowCausesPage(true); }}
+          onContact={() => { resetViews(); setShowContactPage(true); }}
         />
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
@@ -1463,6 +1638,7 @@ export default function App() {
         onAbout={() => setShowAboutPage(true)}
         onHome={() => resetViews()}
         onCauses={() => setShowCausesPage(true)}
+        onContact={() => setShowContactPage(true)}
       />
       
       <motion.main
@@ -1568,6 +1744,74 @@ export default function App() {
             <button className="bg-white text-sundas-red px-12 py-5 rounded-full font-bold text-xl hover:bg-gray-100 transition-all shadow-2xl">
               Register as a Donor
             </button>
+          </div>
+        </section>
+
+        {/* Our Global Presence Section */}
+        <section className="py-24 bg-sundas-blue/5 overflow-hidden">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-display font-extrabold text-sundas-blue">Our <span className="text-sundas-red">Presence</span> & Support</h2>
+              <p className="text-sundas-blue/60 mt-4 text-lg">Connecting donors and supporters from across the globe to save lives in Pakistan.</p>
+            </div>
+            
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="relative rounded-[40px] overflow-hidden shadow-2xl border-4 border-white aspect-[21/9] md:aspect-[3/1]"
+            >
+              <img 
+                src="https://images.unsplash.com/photo-1521295121783-8a321d551ad2?q=80&w=1600&auto=format&fit=crop" 
+                alt="World Map Presence" 
+                className="w-full h-full object-cover"
+                referrerPolicy="no-referrer"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-sundas-blue/60 to-transparent flex items-end justify-center pb-12">
+                <div className="text-white text-center">
+                  <div className="flex justify-center gap-8 md:gap-20">
+                    <div className="bg-white/10 backdrop-blur-md px-6 py-4 rounded-2xl border border-white/20">
+                      <div className="text-3xl font-black">25+</div>
+                      <div className="text-xs uppercase tracking-widest opacity-80 mt-1">Centers</div>
+                    </div>
+                    <div className="bg-white/10 backdrop-blur-md px-6 py-4 rounded-2xl border border-white/20">
+                      <div className="text-3xl font-black">100k+</div>
+                      <div className="text-xs uppercase tracking-widest opacity-80 mt-1">Donors</div>
+                    </div>
+                    <div className="bg-white/10 backdrop-blur-md px-6 py-4 rounded-2xl border border-white/20">
+                      <div className="text-3xl font-black">1M+</div>
+                      <div className="text-xs uppercase tracking-widest opacity-80 mt-1">Lives Saved</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Pulsing Dots for Map Pins effect */}
+              <div className="absolute top-[40%] left-[65%] w-4 h-4 bg-sundas-red rounded-full shadow-[0_0_0_8px_rgba(239,68,68,0.3)] animate-pulse"></div>
+              <div className="absolute top-[35%] left-[25%] w-3 h-3 bg-white rounded-full shadow-[0_0_0_6px_rgba(255,255,255,0.3)] animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+              <div className="absolute top-[50%] left-[80%] w-3 h-3 bg-white rounded-full shadow-[0_0_0_6px_rgba(255,255,255,0.3)] animate-pulse" style={{ animationDelay: '1s' }}></div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Google Map Section */}
+        <section className="py-20 bg-white">
+          <div className="max-w-7xl mx-auto px-6 mb-12 text-center">
+            <h2 className="text-4xl font-display font-extrabold text-sundas-blue mb-4">Find Our <span className="text-sundas-red">Centers</span></h2>
+            <p className="text-sundas-blue/60 text-lg">Visit us at our main center in Lahore or any of our regional facilities.</p>
+          </div>
+          <div className="h-[500px] w-full border-y border-sundas-blue/10 grayscale hover:grayscale-0 transition-all duration-700 shadow-inner overflow-hidden">
+            <iframe 
+               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3400.3225219213!2d74.32986831514838!3d31.543232981362624!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391904b73b22e705%3A0xc6c7d9a1059f13c3!2sSundas%20Foundation!5e0!3m2!1sen!2s!4v1650000000000!5m2!1sen!2s" 
+               width="100%" 
+               height="100%" 
+               style={{ border: 0 }} 
+               allowFullScreen={true} 
+               loading="lazy" 
+               referrerPolicy="no-referrer-when-downgrade"
+               title="Sundas Foundation Main Office"
+            ></iframe>
           </div>
         </section>
 
