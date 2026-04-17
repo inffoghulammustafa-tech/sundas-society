@@ -1746,7 +1746,7 @@ export default function App() {
                 <div className="absolute -bottom-8 -right-8 w-full h-full bg-gradient-to-br from-sundas-red/10 to-sundas-red/5 rounded-[40px] z-0 transition-all duration-300 group-hover:translate-x-3 group-hover:translate-y-3"></div>
                 
                 <img 
-                  src="https://images.unsplash.com/photo-1631049035182-249067d7618e?q=80&w=1200&auto=format&fit=crop" 
+                  src="https://c8.alamy.com/comp/2BMC71Y/lahore-pakistan-08th-may-2020-582020-pakistani-children-affected-by-thalassemia-being-treated-by-blood-transfusion-at-sundas-foundation-center-as-blood-for-thalassaemia-patients-is-too-short-due-to-pandemic-covid-19-and-ramzan-ul-mubarak-while-world-observe-international-thalassaemia-day-in-lahore-thalassemia-is-a-genetic-disease-of-the-blood-where-patients-cannot-produce-enough-hemoglobin-the-substance-in-red-blood-cells-that-transport-oxygen-from-the-lungs-photo-by-rana-sajid-hussainpacific-presssipa-usa-credit-sipa-usaalamy-live-news-2BMC71Y.jpg" 
                   alt="Blood Donation for Thalassemia Child" 
                   className="relative z-10 w-full h-[520px] object-cover rounded-[40px] shadow-2xl border-4 border-white transition-transform duration-500 group-hover:scale-[1.02]"
                   referrerPolicy="no-referrer"
