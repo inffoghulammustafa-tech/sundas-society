@@ -18,7 +18,7 @@ import {
   CreditCard
 } from 'lucide-react';
 
-const Navbar = ({ onDonate }: { onDonate: () => void }) => {
+const Navbar = ({ onDonate, onAbout, onHome, onCauses }: { onDonate: () => void, onAbout: () => void, onHome: () => void, onCauses: () => void }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -54,12 +54,20 @@ const Navbar = ({ onDonate }: { onDonate: () => void }) => {
         <ul className="hidden md:flex space-x-10 font-medium">
           {navLinks.map((link) => (
             <li key={link.name}>
-              <a 
-                href={link.href} 
+              <button 
+                onClick={() => {
+                  if (link.name === 'About Us') onAbout();
+                  else if (link.name === 'Our Causes') onCauses();
+                  else if (link.name === 'Home') onHome();
+                  else {
+                    const element = document.getElementById(link.href.substring(1));
+                    if (element) element.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
                 className={`transition-colors duration-200 hover:text-sundas-red ${isScrolled ? 'text-sundas-blue' : 'text-white/90'}`}
               >
                 {link.name}
-              </a>
+              </button>
             </li>
           ))}
         </ul>
@@ -97,13 +105,23 @@ const Navbar = ({ onDonate }: { onDonate: () => void }) => {
             <ul className="px-6 py-6 space-y-4">
               {navLinks.map((link) => (
                 <li key={link.name}>
-                  <a 
-                    href={link.href} 
+                  <button 
+                    onClick={() => {
+                      if (link.name === 'About Us') onAbout();
+                      else if (link.name === 'Our Causes') onCauses();
+                      else if (link.name === 'Home') onHome();
+                      else {
+                        const element = document.getElementById(link.href.substring(1));
+                        if (element) {
+                          element.scrollIntoView({ behavior: 'smooth' });
+                        }
+                      }
+                      setIsMobileMenuOpen(false);
+                    }}
                     className="block text-lg font-medium text-sundas-blue hover:text-sundas-red"
-                    onClick={() => setIsMobileMenuOpen(false)}
                   >
                     {link.name}
-                  </a>
+                  </button>
                 </li>
               ))}
               <li>
@@ -122,6 +140,208 @@ const Navbar = ({ onDonate }: { onDonate: () => void }) => {
         )}
       </AnimatePresence>
     </nav>
+  );
+};
+
+const AboutPage = ({ onBack }: { onBack: () => void }) => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  return (
+    <div className="bg-white min-h-screen font-sans">
+      <section className="relative h-[350px] md:h-[450px] overflow-hidden">
+        <img 
+          src="https://images.unsplash.com/photo-1599045918138-b3ac6ffc58a4?q=80&w=1600&auto=format&fit=crop" 
+          alt="About Sundas Foundation" 
+          className="absolute inset-0 w-full h-full object-cover"
+          referrerPolicy="no-referrer"
+        />
+           
+        <div className="absolute inset-0 bg-gray-900/70 flex items-center justify-center text-center">
+            <div className="container mx-auto px-6">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                >
+                  <h1 className="text-5xl md:text-6xl font-black text-white leading-tight uppercase tracking-tight">
+                      About <span className="text-sundas-red">Us</span>
+                  </h1>
+                  <div className="w-24 h-2 bg-sundas-red mx-auto mt-4 rounded-full shadow-lg shadow-sundas-red/40"></div>
+                  <p className="text-xl md:text-2xl text-gray-200 mt-6 max-w-2xl mx-auto font-medium leading-relaxed">
+                      Know more about our mission, vision, and the incredible journey of serving humanity.
+                  </p>
+                </motion.div>
+            </div>
+        </div>
+      </section>
+
+      <div className="max-w-7xl mx-auto px-6 py-20">
+        <button 
+          onClick={onBack}
+          className="flex items-center gap-2 text-sundas-blue font-bold mb-12 hover:gap-4 transition-all"
+        >
+          <ArrowRight className="rotate-180" size={20} /> Back to Home
+        </button>
+
+        <div className="grid lg:grid-cols-2 gap-20 items-center mb-32">
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-sundas-blue mb-8">
+              Our <span className="text-sundas-red">Historical</span> Journey
+            </h2>
+            <div className="space-y-6 text-sundas-blue/80 text-lg leading-relaxed">
+              <p>
+                Founded in 1998 by the visionary poet and intellectual, Munnoo Bhai (Late), Sundas Foundation began with a simple yet powerful goal: to ensure no child in Pakistan suffers from blood-related disorders due to a lack of resources.
+              </p>
+              <p>
+                What started as a small initiative has grown into a nationwide network of blood transfusion centers and medical facilities, serving thousands of patients suffering from Thalassemia, Hemophilia, and other blood disorders.
+              </p>
+              <p>
+                We believe in the sanctity of human life and work tirelessly to provide state-of-the-art medical care, psychological support, and a community for those who face these challenges daily.
+              </p>
+            </div>
+          </motion.div>
+          <motion.div
+             initial={{ opacity: 0, scale: 0.9 }}
+             whileInView={{ opacity: 1, scale: 1 }}
+             viewport={{ once: true }}
+             className="relative"
+          >
+            <img 
+              src="https://sundas.org/images/gallery_2.jpg" 
+              alt="Sundas Activities" 
+              className="rounded-3xl shadow-2xl relative z-10 w-full object-cover aspect-video"
+              referrerPolicy="no-referrer"
+            />
+            <div className="absolute -top-10 -right-10 w-64 h-64 bg-sundas-blue/5 rounded-full blur-3xl -z-10"></div>
+          </motion.div>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-10 text-center">
+          {[
+            { 
+              title: "Our Mission", 
+              desc: "To provide world-class healthcare and blood transfusion services to non-affording patients without any distinction of caste, creed, or status.",
+              icon: <Droplets className="mx-auto text-sundas-red mb-6" size={48} />
+            },
+            { 
+              title: "Our Vision", 
+              desc: "A society where every patient with a blood disorder has access to the best medical care and lives a healthy, productive life.",
+              icon: <HeartHandshake className="mx-auto text-sundas-blue mb-6" size={48} />
+            },
+            { 
+              title: "Our Values", 
+              desc: "Compassion, Transparency, and Excellence in everything we do. We are committed to serving humanity with utmost integrity.",
+              icon: <Hospital className="mx-auto text-sundas-red mb-6" size={48} />
+            }
+          ].map((item, i) => (
+            <motion.div 
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              className="bg-sundas-blue/5 p-10 rounded-3xl border border-sundas-blue/10"
+            >
+              {item.icon}
+              <h3 className="text-2xl font-display font-bold text-sundas-blue mb-4">{item.title}</h3>
+              <p className="text-sundas-blue/70">
+                {item.desc}
+              </p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      <section className="py-24 bg-sundas-blue text-white overflow-hidden relative">
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-sundas-blue via-sundas-red to-sundas-blue opacity-30"></div>
+        <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
+          <h2 className="text-3xl md:text-5xl font-display font-bold mb-8 italic">
+            "Sunder Sapnay, Sundas Foundation"
+          </h2>
+          <p className="text-xl text-white/80 mb-12 font-medium">
+            Join the legacy of Munnoo Bhai. Your donation is a gift of life to those who need it most.
+          </p>
+          <button 
+             onClick={onBack}
+             className="bg-white text-sundas-blue px-10 py-4 rounded-full font-bold text-lg hover:bg-sundas-red hover:text-white transition-all shadow-xl"
+          >
+            Become a Part of Our Journey
+          </button>
+        </div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl -mb-48 -mr-48"></div>
+      </section>
+    </div>
+  );
+};
+
+const CausesPage = ({ onBack, onLearnMore }: { onBack: () => void, onLearnMore: (id: string) => void }) => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  return (
+    <div className="bg-white min-h-screen font-sans">
+      <section className="relative h-[350px] md:h-[450px] overflow-hidden">
+        <img 
+          src="https://images.unsplash.com/photo-1536856424708-518d2279269d?q=80&w=1600&auto=format&fit=crop" 
+          alt="Our Causes" 
+          className="absolute inset-0 w-full h-full object-cover"
+          referrerPolicy="no-referrer"
+        />
+           
+        <div className="absolute inset-0 bg-gray-950/70 flex items-center justify-center text-center">
+            <div className="container mx-auto px-6">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                >
+                  <h1 className="text-5xl md:text-6xl font-black text-white leading-tight uppercase tracking-tight">
+                      Our <span className="text-sundas-red">Causes</span>
+                  </h1>
+                  <div className="w-24 h-2 bg-sundas-red mx-auto mt-4 rounded-full shadow-lg shadow-sundas-red/40"></div>
+                  <p className="text-xl md:text-2xl text-gray-200 mt-6 max-w-2xl mx-auto font-medium leading-relaxed">
+                      Explore the critical healthcare areas where your support transforms lives every day.
+                  </p>
+                </motion.div>
+            </div>
+        </div>
+      </section>
+
+      <div className="max-w-7xl mx-auto px-6 py-12">
+        <button 
+          onClick={onBack}
+          className="flex items-center gap-2 text-sundas-blue font-bold mb-8 hover:gap-4 transition-all"
+        >
+          <ArrowRight className="rotate-180" size={20} /> Back to Home
+        </button>
+      </div>
+
+      <Causes onLearnMore={onLearnMore} />
+
+      <section className="py-24 bg-sundas-red text-white overflow-hidden relative">
+        <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
+          <h2 className="text-3xl md:text-5xl font-display font-bold mb-8">
+            Every Donation Counts
+          </h2>
+          <p className="text-xl opacity-90 mb-10">
+            Join thousands of donors in providing safe blood and medical care to those who need it most.
+          </p>
+          <button 
+             onClick={onBack}
+             className="bg-white text-sundas-red px-12 py-4 rounded-full font-bold text-lg hover:bg-sundas-blue hover:text-white transition-all shadow-xl"
+          >
+            Start Your Contribution Today
+          </button>
+        </div>
+      </section>
+    </div>
   );
 };
 
@@ -1134,11 +1354,25 @@ export default function App() {
   const [isDonateModalOpen, setIsDonateModalOpen] = useState(false);
   const [selectedCause, setSelectedCause] = useState<string | null>(null);
   const [showDonatePage, setShowDonatePage] = useState(false);
+  const [showAboutPage, setShowAboutPage] = useState(false);
+  const [showCausesPage, setShowCausesPage] = useState(false);
+
+  const resetViews = () => {
+    setShowDonatePage(false);
+    setSelectedCause(null);
+    setShowAboutPage(false);
+    setShowCausesPage(false);
+  };
 
   if (showDonatePage) {
     return (
       <div className="min-h-screen bg-sundas-blue/5 font-sans text-sundas-blue selection:bg-sundas-red/10 selection:text-sundas-red">
-        <Navbar onDonate={() => setShowDonatePage(true)} />
+        <Navbar 
+          onDonate={() => setShowDonatePage(true)} 
+          onAbout={() => { resetViews(); setShowAboutPage(true); }}
+          onHome={() => resetViews()}
+          onCauses={() => { resetViews(); setShowCausesPage(true); }}
+        />
         <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -1153,10 +1387,61 @@ export default function App() {
     );
   }
 
+  if (showAboutPage) {
+    return (
+      <div className="min-h-screen bg-sundas-blue/5 font-sans text-sundas-blue selection:bg-sundas-red/10 selection:text-sundas-red">
+        <Navbar 
+          onDonate={() => { resetViews(); setShowDonatePage(true); }} 
+          onAbout={() => setShowAboutPage(true)}
+          onHome={() => resetViews()}
+          onCauses={() => { resetViews(); setShowCausesPage(true); }}
+        />
+        <motion.div
+           initial={{ opacity: 0, y: 20 }}
+           animate={{ opacity: 1, y: 0 }}
+           exit={{ opacity: 0, y: -20 }}
+           transition={{ duration: 0.5 }}
+        >
+          <AboutPage onBack={() => setShowAboutPage(false)} />
+        </motion.div>
+        <Footer />
+        <WhatsAppButton />
+      </div>
+    );
+  }
+
+  if (showCausesPage) {
+    return (
+      <div className="min-h-screen bg-sundas-blue/5 font-sans text-sundas-blue selection:bg-sundas-red/10 selection:text-sundas-red">
+        <Navbar 
+          onDonate={() => { resetViews(); setShowDonatePage(true); }} 
+          onAbout={() => { resetViews(); setShowAboutPage(true); }}
+          onHome={() => resetViews()}
+          onCauses={() => setShowCausesPage(true)}
+        />
+        <motion.div
+           initial={{ opacity: 0, y: 20 }}
+           animate={{ opacity: 1, y: 0 }}
+           exit={{ opacity: 0, y: -20 }}
+           transition={{ duration: 0.5 }}
+        >
+          <CausesPage onBack={() => setShowCausesPage(false)} onLearnMore={(id) => setSelectedCause(id)} />
+        </motion.div>
+        <Footer />
+        <WhatsAppButton />
+      </div>
+    );
+  }
+
   if (selectedCause) {
     return (
       <div className="min-h-screen bg-sundas-blue/5 font-sans text-sundas-blue selection:bg-sundas-red/10 selection:text-sundas-red">
-        <Navbar onDonate={() => setShowDonatePage(true)} />
+        <Navbar 
+          onDonate={() => { resetViews(); setShowDonatePage(true); }} 
+          onAbout={() => { resetViews(); setShowAboutPage(true); }}
+          onHome={() => resetViews()}
+          onCauses={() => { resetViews(); setShowCausesPage(true); }}
+        />
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -1173,7 +1458,12 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-sundas-blue/5 font-sans text-sundas-blue selection:bg-sundas-red/10 selection:text-sundas-red">
-      <Navbar onDonate={() => setShowDonatePage(true)} />
+      <Navbar 
+        onDonate={() => setShowDonatePage(true)} 
+        onAbout={() => setShowAboutPage(true)}
+        onHome={() => resetViews()}
+        onCauses={() => setShowCausesPage(true)}
+      />
       
       <motion.main
         initial={{ opacity: 0 }}
