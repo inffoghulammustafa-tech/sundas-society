@@ -56,13 +56,13 @@ const Navbar = ({ onDonate, onAbout, onHome, onCauses, onContact, onAboutSubPage
             { name: 'Fareeda Yaseen', href: '#fareeda-yaseen' },
           ]
         },
+        { name: 'News', href: '#news' },
       ]
     },
     { 
       name: 'Media', 
       href: '#media',
       subLinks: [
-        { name: 'News', href: '#news' },
         { name: 'Events', href: '#events' },
         { name: 'Blog', href: '#blog' },
         { name: 'Certificates', href: '#certificates' },
@@ -643,6 +643,56 @@ const AboutPage = ({ onBack, subPage }: { onBack: () => void, subPage: string | 
                   </p>
                 </div>
               </div>
+            </div>
+          </motion.div>
+        ) : subPage === 'News' ? (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-32"
+          >
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-display font-bold text-sundas-blue">
+                Latest <span className="text-sundas-red">News</span>
+              </h2>
+              <p className="text-sundas-blue/60 mt-4 max-w-3xl mx-auto text-lg leading-relaxed">
+                Social Services community centers and settlement houses that provide integrated services for local communities.
+              </p>
+              <div className="w-24 h-1 bg-sundas-red mx-auto mt-6 rounded-full"></div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+              {[
+                { date: "10-02-2023", title: "Prof. Dr. Javed Akra..." },
+                { date: "14-01-2023", title: "Senator Ejaz Ahmad C..." },
+                { date: "29-11-2022", title: "Inspection team of P..." },
+                { date: "28-11-2022", title: "Commissioner Lahore ..." },
+                { date: "31-08-2022", title: "...سیلاب زدگان کے لیے س", rtl: true },
+                { date: "02-08-2022", title: "Blood Donation Camp ..." }
+              ].map((news, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.1 }}
+                  className="bg-white p-8 shadow-lg shadow-sundas-blue/5 hover:shadow-xl transition-all duration-300 relative group border border-sundas-blue/10 rounded-2xl"
+                >
+                  <div className="absolute top-0 left-0 bg-sundas-red text-white px-5 py-2 flex items-center text-sm font-semibold rounded-tl-2xl rounded-br-2xl">
+                    <span className="mr-2 opacity-80 decoration-none">📅</span> {news.date}
+                  </div>
+                  <div className="mt-10 pt-4">
+                    <h3 className={`text-xl font-bold text-sundas-blue line-clamp-2 ${news.rtl ? 'text-right' : ''}`} dir={news.rtl ? 'rtl' : 'ltr'}>
+                      {news.title}
+                    </h3>
+                    <div className="flex justify-between items-center mt-8">
+                       <a href="#" className="inline-flex items-center gap-1 text-sundas-red text-xs font-bold uppercase tracking-widest hover:gap-2 transition-all group">
+                         Read More <ArrowRight size={14} />
+                       </a>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
             </div>
           </motion.div>
         ) : !subPage ? (
