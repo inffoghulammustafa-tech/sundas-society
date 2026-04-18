@@ -15,13 +15,15 @@ import {
   MapPin,
   Heart,
   ChevronRight,
+  ChevronDown,
   CreditCard,
   Activity
 } from 'lucide-react';
 
-const Navbar = ({ onDonate, onAbout, onHome, onCauses, onContact }: { onDonate: () => void, onAbout: () => void, onHome: () => void, onCauses: () => void, onContact: () => void }) => {
+const Navbar = ({ onDonate, onAbout, onHome, onCauses, onContact, onAboutSubPage, onMediaSubPage }: { onDonate: () => void, onAbout: () => void, onHome: () => void, onCauses: () => void, onContact: () => void, onAboutSubPage?: (sub: string) => void, onMediaSubPage?: (sub: string) => void }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeMobileSub, setActiveMobileSub] = useState<string | null>(null);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -31,10 +33,46 @@ const Navbar = ({ onDonate, onAbout, onHome, onCauses, onContact }: { onDonate: 
 
   const navLinks = [
     { name: 'Home', href: '#' },
-    { name: 'About Us', href: '#about' },
+    { 
+      name: 'About Us', 
+      href: '#about',
+      subLinks: [
+        { name: 'Chairman', href: '#chairman' },
+        { name: 'Patron', href: '#patron' },
+        { 
+          name: 'Our Philanthoropists', 
+          href: '#philanthoropists',
+          subLinks: [
+            { name: 'Sohail Ahmad', href: '#sohail-ahmad' },
+            { name: 'Khalid Abbas', href: '#khalid-abbas' },
+          ]
+        },
+        { name: 'Office Bearers', href: '#office-bearers' },
+        { 
+          name: 'Executive Management', 
+          href: '#executive',
+          subLinks: [
+            { name: 'Muhammad Yaseen Khan', href: '#yaseen-khan' },
+            { name: 'Fareeda Yaseen', href: '#fareeda-yaseen' },
+          ]
+        },
+      ]
+    },
+    { 
+      name: 'Media', 
+      href: '#media',
+      subLinks: [
+        { name: 'News', href: '#news' },
+        { name: 'Events', href: '#events' },
+        { name: 'Blog', href: '#blog' },
+        { name: 'Certificates', href: '#certificates' },
+      ]
+    },
     { name: 'Our Causes', href: '#causes' },
     { name: 'Contact', href: '#contact' },
   ];
+
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
 
   return (
     <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white/90 backdrop-blur-md py-3 shadow-sm' : 'bg-transparent py-5'}`}>
@@ -55,24 +93,78 @@ const Navbar = ({ onDonate, onAbout, onHome, onCauses, onContact }: { onDonate: 
         </div>
 
         {/* Desktop Nav */}
-        <ul className="hidden md:flex space-x-10 font-medium">
+        <ul className="hidden md:flex space-x-8 font-medium">
           {navLinks.map((link) => (
-            <li key={link.name}>
+            <li 
+              key={link.name} 
+              className="relative group"
+              onMouseEnter={() => link.subLinks && setActiveDropdown(link.name)}
+              onMouseLeave={() => setActiveDropdown(null)}
+            >
               <button 
                 onClick={() => {
                   if (link.name === 'About Us') onAbout();
                   else if (link.name === 'Our Causes') onCauses();
                   else if (link.name === 'Contact') onContact();
                   else if (link.name === 'Home') onHome();
-                  else {
-                    const element = document.getElementById(link.href.substring(1));
-                    if (element) element.scrollIntoView({ behavior: 'smooth' });
-                  }
                 }}
-                className={`transition-colors duration-200 hover:text-sundas-red ${isScrolled ? 'text-sundas-blue' : 'text-white/90'}`}
+                className={`flex items-center gap-1 transition-colors duration-200 hover:text-sundas-red py-2 ${isScrolled ? 'text-sundas-blue' : 'text-white/90'}`}
               >
                 {link.name}
+                {link.subLinks && <ChevronDown size={16} className={`transition-transform duration-200 ${activeDropdown === link.name ? 'rotate-180' : ''}`} />}
               </button>
+
+              {link.subLinks && (
+                <AnimatePresence>
+                  {activeDropdown === link.name && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      className="absolute top-full left-0 w-64 bg-white shadow-2xl rounded-2xl py-4 border border-sundas-blue/5"
+                    >
+                      {link.subLinks.map((sub) => (
+                        <div key={sub.name} className="relative group/sub">
+                          <button
+                            onClick={() => {
+                              if (!sub.subLinks) {
+                                if (link.name === 'About Us') {
+                                  if (onAboutSubPage) onAboutSubPage(sub.name);
+                                  else onAbout();
+                                } else if (link.name === 'Media') {
+                                  if (onMediaSubPage) onMediaSubPage(sub.name);
+                                  else onHome();
+                                }
+                                setActiveDropdown(null);
+                              }
+                            }}
+                            className="w-full text-left px-6 py-3 text-sm text-sundas-blue hover:bg-sundas-blue/5 hover:text-sundas-red border-l-4 border-transparent hover:border-sundas-red transition-all flex items-center justify-between"
+                          >
+                            {sub.name}
+                            {sub.subLinks && <ChevronRight size={14} className="text-sundas-blue/30 group-hover/sub:text-sundas-red transition-colors" />}
+                          </button>
+                          {sub.subLinks && (
+                            <div className="absolute top-0 left-full w-48 bg-white shadow-xl rounded-xl py-2 hidden group-hover/sub:block border border-sundas-blue/5">
+                              {sub.subLinks.map((inner) => (
+                                <button 
+                                  key={inner.name}
+                                  onClick={() => {
+                                    if (onAboutSubPage) onAboutSubPage(inner.name);
+                                    setActiveDropdown(null);
+                                  }}
+                                  className="w-full text-left px-4 py-2 text-xs text-sundas-blue hover:text-sundas-red transition-all"
+                                >
+                                  {inner.name}
+                                </button>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              )}
             </li>
           ))}
         </ul>
@@ -107,30 +199,88 @@ const Navbar = ({ onDonate, onAbout, onHome, onCauses, onContact }: { onDonate: 
             exit={{ opacity: 0, height: 0 }}
             className="md:hidden bg-white border-t border-sundas-blue/10 overflow-hidden"
           >
-            <ul className="px-6 py-6 space-y-4">
+            <ul className="px-6 py-6 space-y-2">
               {navLinks.map((link) => (
                 <li key={link.name}>
                   <button 
                     onClick={() => {
-                      if (link.name === 'About Us') onAbout();
-                      else if (link.name === 'Our Causes') onCauses();
-                      else if (link.name === 'Contact') onContact();
-                      else if (link.name === 'Home') onHome();
-                      else {
-                        const element = document.getElementById(link.href.substring(1));
-                        if (element) {
-                          element.scrollIntoView({ behavior: 'smooth' });
-                        }
+                      if (link.subLinks) {
+                        setActiveDropdown(activeDropdown === link.name ? null : link.name);
+                      } else {
+                        if (link.name === 'Our Causes') onCauses();
+                        else if (link.name === 'Contact') onContact();
+                        else if (link.name === 'Home') onHome();
+                        setIsMobileMenuOpen(false);
                       }
-                      setIsMobileMenuOpen(false);
                     }}
-                    className="block text-lg font-medium text-sundas-blue hover:text-sundas-red"
+                    className="flex items-center justify-between w-full py-3 text-lg font-medium text-sundas-blue hover:text-sundas-red"
                   >
                     {link.name}
+                    {link.subLinks && <ChevronDown size={20} className={`transition-transform duration-200 ${activeDropdown === link.name ? 'rotate-180' : ''}`} />}
                   </button>
+
+                  <AnimatePresence>
+                    {link.subLinks && activeDropdown === link.name && (
+                      <motion.ul
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="pl-6 space-y-2 border-l-2 border-sundas-red/20 mb-4"
+                      >
+                        {link.subLinks.map((sub) => (
+                          <li key={sub.name} className="space-y-2">
+                            <button
+                              onClick={() => {
+                                if (sub.subLinks) {
+                                  setActiveMobileSub(activeMobileSub === sub.name ? null : sub.name);
+                                } else {
+                                  if (link.name === 'About Us') {
+                                    if (onAboutSubPage) onAboutSubPage(sub.name);
+                                    else onAbout();
+                                  } else if (link.name === 'Media') {
+                                    if (onMediaSubPage) onMediaSubPage(sub.name);
+                                    else onHome();
+                                  }
+                                  setIsMobileMenuOpen(false);
+                                  setActiveDropdown(null);
+                                }
+                              }}
+                              className="flex items-center justify-between w-full py-2 text-base text-sundas-blue/70 hover:text-sundas-red"
+                            >
+                              {sub.name}
+                              {sub.subLinks && <ChevronDown size={16} className={`transition-transform duration-200 ${activeMobileSub === sub.name ? 'rotate-180' : ''}`} />}
+                            </button>
+                            {sub.subLinks && activeMobileSub === sub.name && (
+                               <motion.ul 
+                                  initial={{ opacity: 0, height: 0 }}
+                                  animate={{ opacity: 1, height: 'auto' }}
+                                  className="pl-4 space-y-2 border-l border-sundas-blue/10 mb-2 overflow-hidden"
+                               >
+                                  {sub.subLinks.map(inner => (
+                                     <li key={inner.name}>
+                                        <button 
+                                           onClick={() => {
+                                              if (onAboutSubPage) onAboutSubPage(inner.name);
+                                              setIsMobileMenuOpen(false);
+                                              setActiveDropdown(null);
+                                              setActiveMobileSub(null);
+                                           }}
+                                           className="block py-1 text-sm text-sundas-blue/60 hover:text-sundas-red"
+                                        >
+                                           {inner.name}
+                                        </button>
+                                     </li>
+                                  ))}
+                               </motion.ul>
+                            )}
+                          </li>
+                        ))}
+                      </motion.ul>
+                    )}
+                  </AnimatePresence>
                 </li>
               ))}
-              <li>
+              <li className="pt-4">
                 <button 
                   onClick={() => {
                     onDonate();
@@ -149,10 +299,10 @@ const Navbar = ({ onDonate, onAbout, onHome, onCauses, onContact }: { onDonate: 
   );
 };
 
-const AboutPage = ({ onBack }: { onBack: () => void }) => {
+const AboutPage = ({ onBack, subPage }: { onBack: () => void, subPage: string | null }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+  }, [subPage]);
 
   return (
     <div className="bg-white min-h-screen font-sans">
@@ -167,16 +317,25 @@ const AboutPage = ({ onBack }: { onBack: () => void }) => {
         <div className="absolute inset-0 bg-gray-900/70 flex items-center justify-center text-center">
             <div className="container mx-auto px-6">
                 <motion.div
+                  key={subPage || 'about'}
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6 }}
                 >
                   <h1 className="text-5xl md:text-6xl font-black text-white leading-tight uppercase tracking-tight">
-                      About <span className="text-sundas-red">Us</span>
+                      {subPage ? (
+                        <>
+                          {subPage.split(' ')[0]} <span className="text-sundas-red">{subPage.split(' ').slice(1).join(' ') || ''}</span>
+                        </>
+                      ) : (
+                        <>
+                          About <span className="text-sundas-red">Us</span>
+                        </>
+                      )}
                   </h1>
                   <div className="w-24 h-2 bg-sundas-red mx-auto mt-4 rounded-full shadow-lg shadow-sundas-red/40"></div>
                   <p className="text-xl md:text-2xl text-gray-200 mt-6 max-w-2xl mx-auto font-medium leading-relaxed">
-                      Know more about our mission, vision, and the incredible journey of serving humanity.
+                      {subPage ? `Dedicated to excellence in ${subPage.toLowerCase()} activities.` : "Know more about our mission, vision, and the incredible journey of serving humanity."}
                   </p>
                 </motion.div>
             </div>
@@ -191,42 +350,372 @@ const AboutPage = ({ onBack }: { onBack: () => void }) => {
           <ArrowRight className="rotate-180" size={20} /> Back to Home
         </button>
 
-        <div className="grid lg:grid-cols-2 gap-20 items-center mb-32">
+        {subPage === 'Chairman' ? (
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-32"
           >
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-sundas-blue mb-8">
-              Our <span className="text-sundas-red">Historical</span> Journey
-            </h2>
-            <div className="space-y-6 text-sundas-blue/80 text-lg leading-relaxed">
-              <p>
-                Founded in 1998 by the visionary poet and intellectual, Munnoo Bhai (Late), Sundas Foundation began with a simple yet powerful goal: to ensure no child in Pakistan suffers from blood-related disorders due to a lack of resources.
-              </p>
-              <p>
-                What started as a small initiative has grown into a nationwide network of blood transfusion centers and medical facilities, serving thousands of patients suffering from Thalassemia, Hemophilia, and other blood disorders.
-              </p>
-              <p>
-                We believe in the sanctity of human life and work tirelessly to provide state-of-the-art medical care, psychological support, and a community for those who face these challenges daily.
-              </p>
+            <div className="grid lg:grid-cols-5 gap-16 items-start">
+              <div className="lg:col-span-2">
+                 <div className="relative group">
+                    <img 
+                      src="https://sundas.org/images/board-members/Munoo-bhai.jpeg" 
+                      alt="Munnu Bhai (Late)" 
+                      className="rounded-3xl shadow-2xl w-full object-cover aspect-[3/4] grayscale group-hover:grayscale-0 transition-all duration-700"
+                      referrerPolicy="no-referrer"
+                    />
+                    <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-sundas-red/10 rounded-full blur-2xl -z-10"></div>
+                 </div>
+              </div>
+              <div className="lg:col-span-3 space-y-8">
+                <div className="relative">
+                  <h2 className="text-4xl md:text-5xl font-display font-bold text-sundas-blue mb-2">
+                    Munnu <span className="text-sundas-red">Bhai (Late)</span>
+                  </h2>
+                  <p className="text-xl font-bold text-sundas-red uppercase tracking-widest">Chairman</p>
+                  <div className="absolute -top-10 -right-10 text-9xl text-sundas-blue/5 font-serif select-none">"</div>
+                </div>
+                <div className="space-y-6 text-sundas-blue/80 text-lg leading-relaxed text-justify relative">
+                  <p>
+                    Munnu Bhai was a celebrated journalist, poet, columnist, and one of Pakistan's most cherished writers. His journey began as a translator for an Urdu newspaper, but his extraordinary talent soon led him to the world of drama and literature. As a playwright, he became a cornerstone of Pakistan Television Corporation (PTV), writing some of its most iconic works. His timeless drama Sona Chandi (1982) remains a classic, alongside other notable creations such as Ashiana, Dasht, and the environmental documentary Before It’s Too Late.
+                  </p>
+                  <p>
+                    He also wrote Tamanna, a UK-Pakistani film featuring Rahat Fateh Ali Khan's music, showcasing his ability to craft narratives that resonate deeply. Munnu Bhai's Punjabi poetry is widely regarded as a masterpiece of modern Punjabi literature. As a columnist for Daily Jang, his insightful and fearless writing earned him a place among Pakistan's finest voices.
+                  </p>
+                  <p>
+                    For his exceptional contributions to literature and society, he was honored with the Pride of Performance Award in 2007 and the Hilal-i-Imtiaz (Crescent of Excellence) posthumously in 2018. Beyond his literary brilliance, Munnu Bhai's compassion knew no bounds. His love for humanity inspired the creation of Sundas Foundation, a light of hope for patients battling Thalassemia and other blood disorders.
+                  </p>
+                  <p>
+                    His life's work reflected his profound empathy for society's struggles and his unwavering commitment to justice and truth. Munnu Bhai had an unmatched ability to illuminate societal flaws through his writings, giving voice to the voiceless. He passed away on 19 January 2018 in Lahore at the age of 84, but his legacy stays in his timeless works and the countless lives he touched. Munnu Bhai’s life was a testament to selflessness, resilience, and an enduring love for humanity. Through his words and actions, he remains an inspiration for generations to come.
+                  </p>
+                </div>
+              </div>
             </div>
           </motion.div>
+        ) : subPage === 'Muhammad Yaseen Khan' ? (
           <motion.div
-             initial={{ opacity: 0, scale: 0.9 }}
-             whileInView={{ opacity: 1, scale: 1 }}
-             viewport={{ once: true }}
-             className="relative"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-32"
           >
-            <img 
-              src="https://sundas.org/images/gallery_2.jpg" 
-              alt="Sundas Activities" 
-              className="rounded-3xl shadow-2xl relative z-10 w-full object-cover aspect-video"
-              referrerPolicy="no-referrer"
-            />
-            <div className="absolute -top-10 -right-10 w-64 h-64 bg-sundas-blue/5 rounded-full blur-3xl -z-10"></div>
+            <div className="grid lg:grid-cols-5 gap-16 items-start">
+              <div className="lg:col-span-2">
+                 <div className="relative group">
+                    <img 
+                      src="https://sundas.org/images/board-members/yaseen-khan.jpg" 
+                      alt="Muhammad Yaseen Khan" 
+                      className="rounded-3xl shadow-2xl w-full object-cover aspect-[3/4] grayscale group-hover:grayscale-0 transition-all duration-700"
+                      referrerPolicy="no-referrer"
+                    />
+                    <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-sundas-red/10 rounded-full blur-2xl -z-10"></div>
+                 </div>
+              </div>
+              <div className="lg:col-span-3 space-y-8">
+                <div className="relative">
+                  <h2 className="text-4xl md:text-5xl font-display font-bold text-sundas-blue mb-2">
+                    Muhammad <span className="text-sundas-red">Yaseen Khan</span>
+                  </h2>
+                  <p className="text-xl font-bold text-sundas-red uppercase tracking-widest">Founder / President</p>
+                  <div className="absolute -top-10 -right-10 text-9xl text-sundas-blue/5 font-serif select-none">"</div>
+                </div>
+                <div className="space-y-6 text-sundas-blue/80 text-lg leading-relaxed text-justify relative">
+                  <p>
+                    Mr. Yaseen Khan is a highly respected name in social work and philanthropy in Pakistan. In 1998, he founded Sundas Foundation with a mission to overcome the impact of Thalassemia and Hemophilia in Pakistan while providing free, high-quality care to those in need. Under his leadership, Sundas Foundation has grown into a symbol of hope, offering excellent patient care and advocating for stronger corporate and governmental support to further its cause.
+                  </p>
+                  <p>
+                    Mr. Khan’s journey in social work spans over 30 years, beginning as the Head of the Blood Management Department at Fatimid Foundation. During his time, he witnessed the hardships faced by patients traveling from distant areas to receive care. Determined to ease their suffering, he established a facility in Gujranwala named after a Thalassemia patient, Sundas, giving birth to Sundas Foundation.
+                  </p>
+                  <p>
+                    In response to the rising number of Thalassemia patients, Mr. Khan played a pivotal role in founding additional institutions such as Noor Thalassemia Foundation, Jado Jehad Foundation in Lahore, Amna Hematological Services & Blood Bank in Multan, and Pakistan Thalassemia Center in Islamabad. His dedication extended beyond healthcare, as he was instrumental in establishing Pakistan Sweet Homes in 2011, a sanctuary for over 4,000 orphans affected by terrorism in Khyber Pakhtunkhwa and Balochistan.
+                  </p>
+                  <p>
+                    Currently serving as the President of Pakistan Civil Society, Mr. Khan continues to champion the rights of marginalized and underserved communities. His tireless efforts and unwavering commitment to social justice have transformed countless lives, making him a beacon of hope for the vulnerable and a role model for future generations.
+                  </p>
+                  <div className="pt-4 border-t border-sundas-blue/10">
+                    <p className="font-bold text-sundas-blue">Yaseen Khan</p>
+                    <p className="text-sm text-sundas-blue/60">Founder / President, Sundas Foundation</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </motion.div>
-        </div>
+        ) : subPage === 'Fareeda Yaseen' ? (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-32"
+          >
+            <div className="grid lg:grid-cols-5 gap-16 items-start">
+              <div className="lg:col-span-2">
+                 <div className="relative group">
+                    <img 
+                      src="https://sundas.org/images/board-members/farida-yaseen.jpg" 
+                      alt="Fareeda Yaseen" 
+                      className="rounded-3xl shadow-2xl w-full object-cover aspect-[3/4] grayscale group-hover:grayscale-0 transition-all duration-700"
+                      referrerPolicy="no-referrer"
+                    />
+                    <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-sundas-blue/10 rounded-full blur-2xl -z-10"></div>
+                 </div>
+              </div>
+              <div className="lg:col-span-3 space-y-8">
+                <div className="relative">
+                  <h2 className="text-4xl md:text-5xl font-display font-bold text-sundas-blue mb-2">
+                    Fareeda <span className="text-sundas-red">Yaseen</span>
+                  </h2>
+                  <p className="text-xl font-bold text-sundas-red uppercase tracking-widest">CEO</p>
+                  <div className="absolute -top-10 -right-10 text-9xl text-sundas-blue/5 font-serif select-none">"</div>
+                </div>
+                <div className="space-y-6 text-sundas-blue/80 text-lg leading-relaxed text-justify relative">
+                  <p>
+                    Fareeda Yaseen brings over 30 years of experience in the Thalassemia and Hemophilia healthcare sector. She began her career at Fatimid Foundation Pakistan before joining Sundas Foundation, where she played a key role in managing various departments from the very start of its operations in Punjab.
+                  </p>
+                  <p>
+                    Her efforts, driven by a positive and visionary approach, have been instrumental in establishing the foundation as one of the leading organizations in its field. As the CEO of Sundas Foundation, Fareeda Yaseen continues to oversee critical management tasks, making her an invaluable asset to the organization.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        ) : subPage === 'Sohail Ahmad' ? (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-32"
+          >
+            <div className="grid lg:grid-cols-5 gap-16 items-start">
+              <div className="lg:col-span-2">
+                 <div className="relative group">
+                    <img 
+                      src="https://sundas.org/images/board-members/sohail-ahmad.jpg" 
+                      alt="Sohail Ahmad" 
+                      className="rounded-3xl shadow-2xl w-full object-cover aspect-[3/4] grayscale group-hover:grayscale-0 transition-all duration-700"
+                      referrerPolicy="no-referrer"
+                    />
+                    <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-sundas-blue/10 rounded-full blur-2xl -z-10"></div>
+                 </div>
+              </div>
+              <div className="lg:col-span-3 space-y-8">
+                <div className="relative">
+                  <h2 className="text-4xl md:text-5xl font-display font-bold text-sundas-blue mb-2">
+                    Sohail <span className="text-sundas-red">Ahmed (Azizi)</span>
+                  </h2>
+                  <p className="text-xl font-bold text-sundas-red uppercase tracking-widest">Director</p>
+                  <div className="absolute -top-10 -right-10 text-9xl text-sundas-blue/5 font-serif select-none">"</div>
+                </div>
+                <div className="space-y-6 text-sundas-blue/80 text-lg leading-relaxed text-justify relative">
+                  <p>
+                    Sohail Ahmed, widely known as Azizi, is a celebrated Pakistani comedian and actor, best recognized for his role in the popular Dunya TV show Hasb-e-Haal. Through his witty and insightful commentary, Azizi tackles social, political, and local issues, offering both entertainment and clarity to his viewers. Born on 1 May 1963 in Gujranwala, Punjab, Azizi is proud of his roots in a city renowned for its food and culture.
+                  </p>
+                  <p>
+                    His father, Mian Muhammad Akram, was a DSP, and his grandfather, Dr. Fakeer Muhammad, was a renowned philanthropist and the author of over 40 books in Punjabi. Sohail Ahmed's talent goes beyond performance; he has skillfully embraced a range of versatile roles, setting new standards in the entertainment industry. As an active member of the Punjab Arts Council, he has been a strong advocate for clean, meaningful stage performances, opposing vulgarity and obscenity in drama.
+                  </p>
+                  <p>
+                    Sohail Ahmed has also been an invaluable part of Sundas Foundation for many years, currently serving as the Director. His dedication and service to the foundation have made a significant impact and continue to inspire the community.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        ) : subPage === 'Khalid Abbas' ? (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-32"
+          >
+            <div className="grid lg:grid-cols-5 gap-16 items-start">
+              <div className="lg:col-span-2">
+                 <div className="relative group">
+                    <img 
+                      src="https://sundas.org/images/board-members/khalid-abbas-dar.jpg" 
+                      alt="Khalid Abbas Dar" 
+                      className="rounded-3xl shadow-2xl w-full object-cover aspect-[3/4] grayscale group-hover:grayscale-0 transition-all duration-700"
+                      referrerPolicy="no-referrer"
+                    />
+                    <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-sundas-red/10 rounded-full blur-2xl -z-10"></div>
+                 </div>
+              </div>
+              <div className="lg:col-span-3 space-y-8">
+                <div className="relative">
+                  <h2 className="text-4xl md:text-5xl font-display font-bold text-sundas-blue mb-2">
+                    Khalid <span className="text-sundas-red">Abbas Dar</span>
+                  </h2>
+                  <p className="text-xl font-bold text-sundas-red uppercase tracking-widest">Director</p>
+                  <div className="absolute -top-10 -right-10 text-9xl text-sundas-blue/5 font-serif select-none">"</div>
+                </div>
+                <div className="space-y-6 text-sundas-blue/80 text-lg leading-relaxed text-justify relative">
+                  <p>
+                    Born in 1942, Mr. Khalid Abbas Dar is a renowned actor, playwright, director, mimic, and television host, with a career spanning over five decades. His contributions to Pakistan's entertainment industry have earned him prestigious awards, including the Presidential Pride of Performance in 1999, Sitara-e-Imtiaz in 2006-07, and Hilal-e-Imtiaz in 2013 from the Government of Pakistan.
+                  </p>
+                  <p>
+                    Starting his career as a child performer on Radio Pakistan in 1955, Khalid Abbas Dar became the first-ever "One Man Show" performer on PTV in 1964. He has also worked closely with the Federal Ministry of Health to raise awareness about crucial health issues such as Polio, Hepatitis, and HIV/AIDS. 
+                  </p>
+                  <p>
+                    Mr. Dar has been a dedicated member of Sundas Foundation for many years, currently serving as its Director. His unwavering support and tireless efforts in supporting the foundation's mission make him an invaluable asset. Despite his busy schedule, he consistently participates in key events, helping drive the foundation's success.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        ) : subPage === 'Office Bearers' ? (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-32"
+          >
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-display font-bold text-sundas-blue">
+                Office <span className="text-sundas-red">Bearers</span>
+              </h2>
+              <div className="w-24 h-1.5 bg-sundas-red mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-8 max-w-6xl mx-auto">
+              {[
+                { name: "Muhammad Yaseen Khan", role: "Founder / President", img: "https://sundas.org/images/OfficeBearers/YaseenKhan_P_MBG.png" },
+                { name: "Shahid Hassan Sheikh", role: "Vice President - I", img: "https://sundas.org/images/OfficeBearers/ShahidHassanSheikh_VP_MBG.png" },
+                { name: "Aalia Tayyaba", role: "Vice President - II", img: "https://sundas.org/images/OfficeBearers/AliaTayyaba_VP_MBG.png" },
+                { name: "Sajjad Ahmed Cheema", role: "General Secretary", img: "https://sundas.org/images/OfficeBearers/Dr_SajjadCheema_GS_MBG.png" },
+                { name: "Naeem Ahmad", role: "Finance Secretary", img: "https://sundas.org/images/board-members/Naeem-Ahmad.jpg" },
+                { name: "Tayyab Saleem", role: "Joint Secretary", img: "https://sundas.org/images/OfficeBearers/TayyabSaleem_JS_MBG.png" },
+                { name: "Bushra Saddique", role: "Information Secretary", img: "https://sundas.org/images/OfficeBearers/BushraSaddique_IS_MBG.png", colStart: true }
+              ].map((member, idx) => (
+                <motion.div 
+                  key={idx}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.1 }}
+                  className={`text-center group ${member.colStart ? 'lg:col-start-2' : ''}`}
+                >
+                  <div className="w-48 h-64 mx-auto mb-6 overflow-hidden rounded-t-full bg-[#8b3d3d] border-4 border-white shadow-xl group-hover:scale-105 transition-transform duration-500">
+                    <img 
+                      src={member.img} 
+                      alt={member.name} 
+                      className="w-full h-full object-cover"
+                      referrerPolicy="no-referrer"
+                    />
+                  </div>
+                  <h3 className="font-bold text-sundas-blue uppercase tracking-wide text-lg">{member.name}</h3>
+                  <p className="text-xs text-sundas-red font-bold mt-2 uppercase tracking-widest">{member.role}</p>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        ) : subPage === 'Patron' ? (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-32"
+          >
+            <div className="grid lg:grid-cols-5 gap-16 items-start">
+              <div className="lg:col-span-2">
+                 <div className="relative group">
+                    <img 
+                      src="https://sundas.org/images/board-members/SuhailWarraich_Pattern.png" 
+                      alt="Suhail Warraich" 
+                      className="rounded-3xl shadow-2xl w-full object-cover aspect-[3/4] grayscale group-hover:grayscale-0 transition-all duration-700"
+                      referrerPolicy="no-referrer"
+                    />
+                    <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-sundas-blue/10 rounded-full blur-2xl -z-10"></div>
+                 </div>
+              </div>
+              <div className="lg:col-span-3 space-y-8">
+                <div className="relative">
+                  <h2 className="text-4xl md:text-5xl font-display font-bold text-sundas-blue mb-2">
+                    Suhail <span className="text-sundas-red">Warraich</span>
+                  </h2>
+                  <p className="text-xl font-bold text-sundas-red uppercase tracking-widest">Patron</p>
+                  <div className="absolute -top-10 -right-10 text-9xl text-sundas-blue/5 font-serif select-none">"</div>
+                </div>
+                <div className="space-y-6 text-sundas-blue/80 text-lg leading-relaxed text-justify relative">
+                  <p>
+                    Suhail Warraich is a renowned Pakistani journalist, television host, analyst, and media personality. He is widely recognized for hosting Aik Din Geo Kay Sath on Geo News which is a profile-based talk show. Suhail Warraich was born on November 8, 1961, in Jauharabad, Khushab. He earned a master’s degree in English literature from the University of the Punjab.
+                  </p>
+                  <p>
+                    His journalism career started in print media in December 1985, and he has been associated with GEO TV since its launch. He gained immense popularity as the host of Ek Din Geo K Sath, a profile-based TV program showcasing the lifestyles of celebrities. Additionally, he hosted Left Right, a political debate show featuring right-wing and left-wing perspectives, where he advocated for left-wing viewpoints.
+                  </p>
+                  <p>
+                    Beyond his media career, Suhail Warraich is actively engaged in humanitarian work. As the Patron of Sundas Foundation, he supports the welfare of Thalassemia and Hemophilia patients across Pakistan. He plays a key role in raising awareness about blood disorders and advocating for upgraded treatment facilities. His efforts have strengthened Sundas Foundation’s mission to provide free blood transfusions, medical aid, and better healthcare services to those in need.
+                  </p>
+                  <p>
+                    Warraich is also a strong advocate for human rights, contributing to Amnesty International Pakistan’s Human Rights Project. His dedication to journalism and social welfare continues to leave a lasting impact on society. In 2024, he was honored with the President’s Pride of Performance award for his contributions to society.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        ) : !subPage ? (
+          <>
+            <div className="grid lg:grid-cols-2 gap-20 items-center mb-32">
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+              >
+                <h2 className="text-3xl md:text-4xl font-display font-bold text-sundas-blue mb-8">
+                  Our <span className="text-sundas-red">Historical</span> Journey
+                </h2>
+                <div className="space-y-6 text-sundas-blue/80 text-lg leading-relaxed">
+                  <p>
+                    Founded in 1998 by the visionary poet and intellectual, Munnoo Bhai (Late), Sundas Foundation began with a simple yet powerful goal: to ensure no child in Pakistan suffers from blood-related disorders due to a lack of resources.
+                  </p>
+                  <p>
+                    What started as a small initiative has grown into a nationwide network of blood transfusion centers and medical facilities, serving thousands of patients suffering from Thalassemia, Hemophilia, and other blood disorders.
+                  </p>
+                  <p>
+                    We believe in the sanctity of human life and work tirelessly to provide state-of-the-art medical care, psychological support, and a community for those who face these challenges daily.
+                  </p>
+                </div>
+              </motion.div>
+              <motion.div
+                 initial={{ opacity: 0, scale: 0.9 }}
+                 whileInView={{ opacity: 1, scale: 1 }}
+                 viewport={{ once: true }}
+                 className="relative"
+              >
+                <img 
+                  src="https://sundas.org/images/gallery_2.jpg" 
+                  alt="Sundas Activities" 
+                  className="rounded-3xl shadow-2xl relative z-10 w-full object-cover aspect-video"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute -top-10 -right-10 w-64 h-64 bg-sundas-blue/5 rounded-full blur-3xl -z-10"></div>
+              </motion.div>
+            </div>
+          </>
+        ) : (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="py-20 text-center"
+          >
+            <h2 className="text-4xl font-display font-bold text-sundas-blue mb-8">
+              Welcome to the <span className="text-sundas-red">{subPage}</span> Section
+            </h2>
+            <div className="max-w-3xl mx-auto p-12 bg-sundas-blue/5 rounded-3xl border border-sundas-blue/10">
+              <p className="text-xl text-sundas-blue/70 leading-relaxed mb-10">
+                This section provides detailed information about our {subPage.toLowerCase()} and their contribution to the mission of Sundas Foundation.
+              </p>
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="bg-white p-8 rounded-2xl shadow-sm border border-sundas-blue/5">
+                  <div className="w-12 h-12 bg-sundas-red/10 text-sundas-red rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Activity size={24} />
+                  </div>
+                  <h4 className="font-bold mb-2">Key Role</h4>
+                  <p className="text-sm text-sundas-blue/50">Strategic direction and governance support for foundation activities.</p>
+                </div>
+                <div className="bg-white p-8 rounded-2xl shadow-sm border border-sundas-blue/5">
+                  <div className="w-12 h-12 bg-sundas-blue/10 text-sundas-blue rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Heart size={24} />
+                  </div>
+                  <h4 className="font-bold mb-2">Commitment</h4>
+                  <p className="text-sm text-sundas-blue/50">Welfare of humanity and providing free medical care to the needy.</p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
 
         <div className="grid md:grid-cols-3 gap-10 text-center">
           {[
@@ -281,6 +770,126 @@ const AboutPage = ({ onBack }: { onBack: () => void }) => {
           </button>
         </div>
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl -mb-48 -mr-48"></div>
+      </section>
+    </div>
+  );
+};
+
+const MediaPage = ({ onBack, subPage }: { onBack: () => void, subPage: string | null }) => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [subPage]);
+
+  return (
+    <div className="bg-white min-h-screen font-sans">
+      <section className="relative h-[350px] md:h-[450px] overflow-hidden">
+        <img 
+          src="https://images.unsplash.com/photo-1492724441997-5dc865305da7?q=80&w=1600&auto=format&fit=crop" 
+          alt="Sundas Media Center" 
+          className="absolute inset-0 w-full h-full object-cover"
+          referrerPolicy="no-referrer"
+        />
+           
+        <div className="absolute inset-0 bg-sundas-blue/80 flex items-center justify-center text-center">
+            <div className="container mx-auto px-6">
+                <motion.div
+                  key={subPage || 'media'}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                >
+                  <h1 className="text-5xl md:text-6xl font-black text-white leading-tight uppercase tracking-tight">
+                      {subPage ? (
+                        <>
+                          {subPage.split(' ')[0]} <span className="text-sundas-red">{subPage.split(' ').slice(1).join(' ') || ''}</span>
+                        </>
+                      ) : (
+                        <>
+                          Media <span className="text-sundas-red">Center</span>
+                        </>
+                      )}
+                  </h1>
+                  <div className="w-24 h-2 bg-sundas-red mx-auto mt-4 rounded-full shadow-lg shadow-sundas-red/40"></div>
+                  <p className="text-xl md:text-2xl text-gray-200 mt-6 max-w-2xl mx-auto font-medium leading-relaxed">
+                      {subPage ? `Latest updates and information regarding ${subPage.toLowerCase()} activities.` : "Stay updated with our latest news, events, and meaningful stories."}
+                  </p>
+                </motion.div>
+            </div>
+        </div>
+      </section>
+
+      <div className="max-w-7xl mx-auto px-6 py-20">
+        <button 
+          onClick={onBack}
+          className="flex items-center gap-2 text-sundas-blue font-bold mb-12 hover:gap-4 transition-all"
+        >
+          <ArrowRight className="rotate-180" size={20} /> Back to Home
+        </button>
+
+        <motion.div
+          key={subPage || 'media-content'}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="py-10"
+        >
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-display font-bold text-sundas-blue mb-6">
+              {subPage ? `Our ${subPage}` : "Sundas News & Updates"}
+            </h2>
+            <p className="text-xl text-sundas-blue/60 max-w-3xl mx-auto">
+              {subPage 
+                ? `Explore our documented ${subPage.toLowerCase()} highlighting the impact of your support and our core activities.`
+                : "Explore our media gallery and news reports covering the foundation's journey from 1998 to present."}
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[1, 2, 3, 4, 5, 6].map((item) => (
+              <motion.div
+                key={item}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: item * 0.1 }}
+                className="group relative bg-white rounded-3xl overflow-hidden shadow-lg border border-sundas-blue/5 hover:shadow-2xl transition-all duration-500"
+              >
+                <div className="aspect-video overflow-hidden">
+                  <img 
+                    src={`https://picsum.photos/seed/${subPage || 'media'}${item}/800/600`}
+                    alt="Media Thumbnail"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    referrerPolicy="no-referrer"
+                  />
+                </div>
+                <div className="p-6">
+                  <div className="flex items-center gap-2 text-xs font-bold text-sundas-red uppercase tracking-widest mb-3">
+                    <Activity size={14} /> 2026 Archive
+                  </div>
+                  <h4 className="text-xl font-bold text-sundas-blue mb-3 group-hover:text-sundas-red transition-colors">
+                    {subPage ? `${subPage} Item #${item}` : `Media Update #${item}`}
+                  </h4>
+                  <p className="text-sm text-sundas-blue/60 line-clamp-2">
+                    A brief description of this {subPage?.toLowerCase() || 'news'} item highlighting the core event or update.
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+      </div>
+
+      <section className="py-24 bg-sundas-blue/5 border-y border-sundas-blue/10">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+            <div className="w-16 h-16 bg-sundas-red text-white rounded-full flex items-center justify-center mx-auto mb-8 shadow-xl">
+                <Mail size={32} />
+            </div>
+            <h3 className="text-3xl font-display font-bold text-sundas-blue mb-6">Subscribe to Our Newsletter</h3>
+            <p className="text-lg text-sundas-blue/70 mb-10">Get the latest news and event updates delivered straight to your inbox.</p>
+            <div className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
+                <input type="email" placeholder="Your email address" className="flex-1 px-6 py-4 rounded-full border border-sundas-blue/20 outline-none focus:border-sundas-red focus:ring-4 focus:ring-sundas-red/10 transition-all font-medium" />
+                <button className="bg-sundas-red text-white px-8 py-4 rounded-full font-bold hover:bg-sundas-blue transition-all shadow-lg hover:shadow-sundas-blue/20">Subscribe</button>
+            </div>
+        </div>
       </section>
     </div>
   );
@@ -492,17 +1101,38 @@ const ContactPage = ({ onBack }: { onBack: () => void }) => {
 };
 
 const Hero = ({ onDonate }: { onDonate: () => void }) => {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const images = [
+    "https://sundas.org/images/gallery_4.jpg",
+    "https://sundas.org/Images/NewsandEvents/Events/26-Dec-2025_01-52-04_605150152_1293209289507958_3706831559144245765_n.jpg"
+  ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % images.length);
+    }, 7000);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Image */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105"
-        style={{ backgroundImage: 'url("https://sundas.org/images/gallery_4.jpg")' }}
-      ></div>
+      {/* Background Slider */}
+      <AnimatePresence>
+        <motion.div 
+          key={currentImageIndex}
+          initial={{ opacity: 0, scale: 1.1 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 2, ease: "easeInOut" }}
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url("${images[currentImageIndex]}")` }}
+        />
+      </AnimatePresence>
+      
       {/* Overlay */}
       <div className="absolute inset-0 bg-black/40"></div>
       
-      <div className="relative z-10 max-w-5xl mx-auto px-6 text-center text-white">
+      <div className="relative z-10 max-w-5xl mx-auto px-6 text-center text-white transform translate-y-24 md:translate-y-32">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -1504,6 +2134,9 @@ export default function App() {
   const [showAboutPage, setShowAboutPage] = useState(false);
   const [showCausesPage, setShowCausesPage] = useState(false);
   const [showContactPage, setShowContactPage] = useState(false);
+  const [showMediaPage, setShowMediaPage] = useState(false);
+  const [aboutSubPage, setAboutSubPage] = useState<string | null>(null);
+  const [mediaSubPage, setMediaSubPage] = useState<string | null>(null);
 
   const resetViews = () => {
     setShowDonatePage(false);
@@ -1511,7 +2144,22 @@ export default function App() {
     setShowAboutPage(false);
     setShowCausesPage(false);
     setShowContactPage(false);
+    setShowMediaPage(false);
+    setAboutSubPage(null);
+    setMediaSubPage(null);
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleAboutSubPage = (sub: string) => {
+    resetViews();
+    setShowAboutPage(true);
+    setAboutSubPage(sub);
+  };
+
+  const handleMediaSubPage = (sub: string) => {
+    resetViews();
+    setShowMediaPage(true);
+    setMediaSubPage(sub);
   };
 
   if (showDonatePage) {
@@ -1520,6 +2168,8 @@ export default function App() {
         <Navbar 
           onDonate={() => setShowDonatePage(true)} 
           onAbout={() => { resetViews(); setShowAboutPage(true); }}
+          onAboutSubPage={handleAboutSubPage}
+          onMediaSubPage={handleMediaSubPage}
           onHome={() => resetViews()}
           onCauses={() => { resetViews(); setShowCausesPage(true); }}
           onContact={() => { resetViews(); setShowContactPage(true); }}
@@ -1544,17 +2194,47 @@ export default function App() {
         <Navbar 
           onDonate={() => { resetViews(); setShowDonatePage(true); }} 
           onAbout={() => setShowAboutPage(true)}
+          onAboutSubPage={handleAboutSubPage}
+          onMediaSubPage={handleMediaSubPage}
           onHome={() => resetViews()}
           onCauses={() => { resetViews(); setShowCausesPage(true); }}
           onContact={() => { resetViews(); setShowContactPage(true); }}
         />
         <motion.div
+           key={aboutSubPage || 'about'}
            initial={{ opacity: 0, y: 20 }}
            animate={{ opacity: 1, y: 0 }}
            exit={{ opacity: 0, y: -20 }}
            transition={{ duration: 0.5 }}
         >
-          <AboutPage onBack={() => setShowAboutPage(false)} />
+          <AboutPage onBack={() => setShowAboutPage(false)} subPage={aboutSubPage} />
+        </motion.div>
+        <Footer onContact={() => { resetViews(); setShowContactPage(true); }} />
+        <WhatsAppButton />
+      </div>
+    );
+  }
+
+  if (showMediaPage) {
+    return (
+      <div className="min-h-screen bg-sundas-blue/5 font-sans text-sundas-blue selection:bg-sundas-red/10 selection:text-sundas-red">
+        <Navbar 
+          onDonate={() => { resetViews(); setShowDonatePage(true); }} 
+          onAbout={() => { resetViews(); setShowAboutPage(true); }}
+          onAboutSubPage={handleAboutSubPage}
+          onMediaSubPage={handleMediaSubPage}
+          onHome={() => resetViews()}
+          onCauses={() => { resetViews(); setShowCausesPage(true); }}
+          onContact={() => { resetViews(); setShowContactPage(true); }}
+        />
+        <motion.div
+           key={mediaSubPage || 'media'}
+           initial={{ opacity: 0, y: 20 }}
+           animate={{ opacity: 1, y: 0 }}
+           exit={{ opacity: 0, y: -20 }}
+           transition={{ duration: 0.5 }}
+        >
+          <MediaPage onBack={() => setShowMediaPage(false)} subPage={mediaSubPage} />
         </motion.div>
         <Footer onContact={() => { resetViews(); setShowContactPage(true); }} />
         <WhatsAppButton />
@@ -1568,6 +2248,8 @@ export default function App() {
         <Navbar 
           onDonate={() => { resetViews(); setShowDonatePage(true); }} 
           onAbout={() => { resetViews(); setShowAboutPage(true); }}
+          onAboutSubPage={handleAboutSubPage}
+          onMediaSubPage={handleMediaSubPage}
           onHome={() => resetViews()}
           onCauses={() => setShowCausesPage(true)}
           onContact={() => { resetViews(); setShowContactPage(true); }}
@@ -1592,6 +2274,8 @@ export default function App() {
         <Navbar 
           onDonate={() => { resetViews(); setShowDonatePage(true); }} 
           onAbout={() => { resetViews(); setShowAboutPage(true); }}
+          onAboutSubPage={handleAboutSubPage}
+          onMediaSubPage={handleMediaSubPage}
           onHome={() => resetViews()}
           onCauses={() => { resetViews(); setShowCausesPage(true); }}
           onContact={() => setShowContactPage(true)}
@@ -1638,10 +2322,12 @@ export default function App() {
     <div className="min-h-screen bg-sundas-blue/5 font-sans text-sundas-blue selection:bg-sundas-red/10 selection:text-sundas-red">
       <Navbar 
         onDonate={() => setShowDonatePage(true)} 
-        onAbout={() => setShowAboutPage(true)}
+        onAbout={() => { resetViews(); setShowAboutPage(true); }}
+        onAboutSubPage={handleAboutSubPage}
+        onMediaSubPage={handleMediaSubPage}
         onHome={() => resetViews()}
-        onCauses={() => setShowCausesPage(true)}
-        onContact={() => setShowContactPage(true)}
+        onCauses={() => { resetViews(); setShowCausesPage(true); }}
+        onContact={() => { resetViews(); setShowContactPage(true); }}
       />
       
       <motion.main
