@@ -826,9 +826,534 @@ const AboutPage = ({ onBack, subPage }: { onBack: () => void, subPage: string | 
 };
 
 const MediaPage = ({ onBack, subPage }: { onBack: () => void, subPage: string | null }) => {
+  const [selectedBlog, setSelectedBlog] = useState<string | null>(null);
+
   useEffect(() => {
     window.scrollTo(0, 0);
+    setSelectedBlog(null);
   }, [subPage]);
+
+  if (selectedBlog === 'hajj-2026') {
+    return (
+      <div className="bg-white min-h-screen font-sans">
+        <section className="pt-32 pb-20">
+          <div className="max-w-4xl mx-auto px-6">
+            <button 
+              onClick={() => setSelectedBlog(null)}
+              className="flex items-center gap-2 text-sundas-blue font-bold mb-10 hover:gap-4 transition-all"
+            >
+              <ArrowRight className="rotate-180" size={20} /> Back to Blog
+            </button>
+            
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              <img 
+                src="https://t3.ftcdn.net/jpg/08/25/18/44/360_F_825184434_EmMHOJQ4wVSbZw4NhqmQkLMCxelxlzsJ.jpg" 
+                alt="Hajj 2026" 
+                className="w-full h-[450px] object-cover rounded-3xl mb-12 shadow-2xl"
+                referrerPolicy="no-referrer"
+              />
+            </motion.div>
+            
+            <h1 className="text-4xl md:text-6xl font-display font-extrabold text-sundas-blue mb-8 leading-tight">
+              When is Hajj 2026? <span className="text-sundas-red">Arafah Day, Eid al-Adha 2026 Dates</span>
+            </h1>
+            
+            <div className="prose prose-lg max-w-none text-sundas-blue/80 space-y-8 leading-relaxed text-justify">
+              <p>Hajj is one of the five pillars of Islam. Performing Hajj is compulsory for every eligible Muslim at least once in their lifetime. Every year, Hajj takes place during the same period, in the month of Dhul Hijjah. Hajj starts from the 8th of Dhul Hijjah and lasts until the 12th of Dhul Hijjah.</p>
+
+              <p>This article is a detailed account of Hajj in 2026. Let’s explore when the Hajj is in 2026 and how to perform the Hajj with complete rituals. As well as this, we will also discuss the mistakes every pilgrim must avoid during Hajj to have a safe and memorable Hajj experience. So, let’s begin understanding Hajj here:</p>
+
+              <h2 className="text-3xl font-display font-bold text-sundas-blue pt-4">What is Hajj?</h2>
+              <p>Among the five pillars of Islam, Hajj is marked as the fifth one. It is a sacred activity in Islam that Muslims perform every year at the Holy Masjid of Al-Haram in Makkah, Saudi Arabia. A financially stable Muslim must perform Hajj at least once in his lifetime. If someone is wealthy enough that he can perform Hajj more than once, he is permitted to do so. However, their intention to perform Hajj must be purely for the cause of Allah or to seek Allah’s forgiveness and pleasure. There are three different types of Hajj in Islam, including;</p>
+
+              <ul className="list-decimal pl-6 space-y-2 font-medium">
+                <li><strong>Hajj Al-Ifrad (Solo Hajj):</strong> It is the phenomenon in which Muslims perform only Hajj without Umrah.</li>
+                <li><strong>Hajj Al-Qiran (Combined Hajj and Umrah):</strong> In this type of Hajj, Muslims perform Hajj and Umrah together without a break in Ihram.</li>
+                <li><strong>Hajj Al-Tamattu (Relaxed Hajj):</strong> It is a type in which Muslims first perform Umrah, then take a break, and then perform Hajj.</li>
+              </ul>
+
+              <h2 className="text-3xl font-display font-bold text-sundas-blue pt-4">When is Hajj 2026?</h2>
+              <p>In 2026, it is expected that Hajj will be performed on 25th May, 2026. However, the exact Hajj schedule depends on the moon sighting in Saudi Arabia. Remember that the Hajj event will start on the 8th of Dhul Hijjah according to the Saudi calendar. Usually, the Hajj is completed in 5 or 6 days and comprises a series of rites and rituals.</p>
+
+              <h2 className="text-3xl font-display font-bold text-sundas-blue pt-4">Hajj Applications in Pakistan 2026?</h2>
+              <p>Every year, candidates from Pakistan who wish to perform Hajj apply for the Hajj through a government Hajj scheme. You can find a complete Hajj Details 2026 for Pakistanis proposed by the government of Pakistan or the Ministry of Religious Affairs and Interfaith Harmony. Through this government portal, Hajj Zaireen can get important updates regarding Hajj registration, Hajj application status, Hajj flight schedule 2026, and Hajj Policy 2026.</p>
+
+              <h2 className="text-3xl font-display font-bold text-sundas-blue pt-4">Who is Eligible for Hajj?</h2>
+              <p>To perform Hajj, the candidates or Zaireen must fulfill the following conditions:</p>
+              <ul className="list-decimal pl-6 space-y-2">
+                <li><strong>Be an Adult Muslim:</strong> The first and foremost condition to perform Hajj is that the candidate must be an adult Muslim. Hajj is not obligatory for kids or the underage.</li>
+                <li><strong>Must be a Sane Person:</strong> To perform Hajj, the candidates or Zaireen must be sane or mentally well.</li>
+                <li><strong>Must be a Free Person:</strong> To perform Hajj, the person must be free, as slaves are not liable for Hajj.</li>
+                <li><strong>A Financially Stable Person:</strong> To perform Hajj, one must be financially strong to bear the expenses of Hajj without any problem.</li>
+                <li><strong>Hajj for Women:</strong> For women, it is advised to perform Hajj with their Mahram, such as husband, father, son, brother, nephew, uncle, etc.</li>
+              </ul>
+
+              <h2 className="text-3xl font-display font-bold text-sundas-blue pt-4">How to Perform Hajj?</h2>
+              <p>The duration of Hajj is five or six days, comprising several activities to perform to complete it. Below are the must-do activities during Hajj to complete this obligation. However, one must perform each activity carefully to avoid mistakes:</p>
+              <div className="bg-sundas-blue/5 p-8 rounded-3xl space-y-4">
+                {[
+                  { t: "Prepare for Hajj", d: "Ensure you have a valid visa, financial readiness, and good physical and mental health." },
+                  { t: "Enter Ihram", d: "Wear simple, modest clothing and make the intention to perform Hajj. Men wear two white cloths, while women wear modest clothing." },
+                  { t: "Arriving in Makkah (Tawaf al-Qudum)", d: "Perform Tawaf (seven circles around the Kaaba) upon arrival and pray two rak’ahs near Maqam Ibrahim." },
+                  { t: "Sa’i (Walking between Safa and Marwah)", d: "Walk seven times between the hills of Safa and Marwah as part of the pilgrimage." },
+                  { t: "Travel to Mina", d: "On the 8th day of Dhul-Hijjah, travel to Mina, where you will stay overnight and pray." },
+                  { t: "Arafat (The Day of Arafah)", d: "Spend the day at Arafat praying and supplicating, asking Allah for forgiveness." },
+                  { t: "Muzdalifah (Night under the Stars)", d: "Spend the night in Muzdalifah, pray Maghrib and Isha together, and collect pebbles for the next ritual." },
+                  { t: "Jamarat (Stoning the Devil)", d: "Throw seven pebbles at the largest pillar in Mina to reject Satan’s temptations." },
+                  { t: "Sacrifice and Tahallul (Shaving/Cutting Hair)", d: "After stoning, perform a sacrifice (usually a sheep or goat) and either shave your head (for men) or trim your hair (for women)." },
+                  { t: "Tawaf al-Ifadah", d: "Perform Tawaf around the Kaaba again, then offer two rak’ahs at Maqam Ibrahim." },
+                  { t: "Stoning the Jamarat Again", d: "On the 11th and 12th day, throw seven pebbles at each of the three pillars." },
+                  { t: "Tawaf al-Wada (Farewell Tawaf)", d: "Before leaving Makkah, make a final Tawaf around the Kaaba." }
+                ].map((step, i) => (
+                  <div key={i} className="flex gap-4">
+                    <span className="flex-shrink-0 w-8 h-8 bg-sundas-red text-white flex items-center justify-center rounded-full font-bold text-sm">{i + 1}</span>
+                    <div>
+                      <h4 className="font-bold text-sundas-blue">{step.t}</h4>
+                      <p className="text-sm opacity-80">{step.d}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <h2 className="text-3xl font-display font-bold text-sundas-blue pt-4">Mistakes to Avoid While Performing Hajj?</h2>
+              <div className="grid md:grid-cols-2 gap-6 pt-2">
+                {[
+                  { t: "Not Learning rituals", d: "Muslims do not learn the rituals and get disturbed during Hajj. Learn everything before performing Hajj." },
+                  { t: "Wearing Ihram Incorrectly", d: "Safety pins and stitched clothes are not allowed for Ihram. You must also learn everything else before wearing Ihram." },
+                  { t: "Control Your Emotions", d: "You may face a long walk, heat, and a crowd, causing frustration. But you must control your anger and emotions." },
+                  { t: "Getting Lost", d: "Commonly, people get lost from the group. Keep your ID badge with your name, hotel and group name." }
+                ].map((m, i) => (
+                  <div key={i} className="p-6 bg-sundas-red/5 border border-sundas-red/10 rounded-2xl">
+                    <h4 className="font-bold text-sundas-red mb-2">{m.t}</h4>
+                    <p className="text-sm opacity-80">{m.d}</p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="bg-sundas-blue text-white p-10 rounded-3xl text-center shadow-xl">
+                 <h2 className="text-3xl font-display font-bold mb-6 italic">"Give Your Donations to Sundas Foundation This Dhul Hijjah"</h2>
+                 <p className="text-lg opacity-90 mb-8">Those who are going to perform Hajj this year, may Allah accept their Hajj. However, those who are not going are advised to do good deeds on this day. Muslims can donate on this day to seek Allah’s forgiveness and pleasure. Give your donations to Sundas Foundation on Hajj day and help us treat the poor patients suffering from Thalassemia, Hemophilia, and other blood disorders.</p>
+                 <button className="bg-sundas-red px-10 py-4 rounded-full font-bold hover:bg-white hover:text-sundas-blue transition-all">Donate Now</button>
+              </div>
+
+              <div className="space-y-6">
+                <h2 className="text-3xl font-display font-bold text-sundas-blue pt-4">Frequently Asked Questions</h2>
+                <div className="space-y-4">
+                  <div className="border-b border-sundas-blue/10 pb-4">
+                    <h4 className="font-bold text-sundas-blue">When is Hajj in 2026?</h4>
+                    <p className="opacity-80">It is estimated that the Hajj 2026 will be performed on May 25th, 2026. However, the final date will be decided based on the moon sighting in Saudi Arabia.</p>
+                  </div>
+                  <div className="border-b border-sundas-blue/10 pb-4">
+                    <h4 className="font-bold text-sundas-blue">Who can perform Hajj?</h4>
+                    <p className="opacity-80">Every adult Muslim who is sane and financially stable must perform Hajj once in a lifetime.</p>
+                  </div>
+                  <div className="border-b border-sundas-blue/10 pb-4">
+                    <h4 className="font-bold text-sundas-blue">What is the Dua that Hajj pilgrims offer?</h4>
+                    <p className="font-serif italic opacity-90 text-lg">"Labbaik, Allahumma Labbaik, Labbaik La Sharika laka Labbaik. Inn-al-Hamda Wan-Ni'mata Laka wal-Mulk, La Sharika Lak.”</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="mt-20 pt-10 border-t border-sundas-blue/10 flex flex-wrap gap-2 justify-center">
+               {['Hajj 2026', 'Eid ul adha', 'Hajj Date'].map(tag => (
+                 <span key={tag} className="px-4 py-2 bg-sundas-blue/5 text-sundas-blue/60 text-xs font-bold rounded-full">{tag}</span>
+               ))}
+            </div>
+          </div>
+        </section>
+      </div>
+    );
+  }
+
+  if (selectedBlog === 'eid-ul-adha-2026') {
+    return (
+      <div className="bg-white min-h-screen font-sans">
+        <section className="pt-32 pb-20">
+          <div className="max-w-4xl mx-auto px-6">
+            <button 
+              onClick={() => setSelectedBlog(null)}
+              className="flex items-center gap-2 text-sundas-blue font-bold mb-10 hover:gap-4 transition-all"
+            >
+              <ArrowRight className="rotate-180" size={20} /> Back to Blog
+            </button>
+            
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              <img 
+                src="https://cdn1.wionews.com/prod/wion/images/2025/20250606/image-1749225002177.jpg?rect=(1,0,405,304)&imwidth=800&imheight=600&format=webp&quality=medium" 
+                alt="Eid Ul-Adha 2026" 
+                className="w-full h-[450px] object-cover rounded-3xl mb-12 shadow-2xl"
+                referrerPolicy="no-referrer"
+              />
+            </motion.div>
+            
+            <h1 className="text-4xl md:text-6xl font-display font-extrabold text-sundas-blue mb-8 leading-tight">
+              Eid Ul-Adha 2026 - <span className="text-sundas-red">Date, Importance, and Holidays</span>
+            </h1>
+            
+            <div className="prose prose-lg max-w-none text-sundas-blue/80 space-y-8 leading-relaxed text-justify">
+              <p>Eid ul Adha is one of the major Islamic festivals celebrated by Muslims across the world. The festival is celebrated on the 10th of Dhul Hijjah, the last month of the Islamic calendar. Eid ul Adha comes with a range of festivities.</p>
+
+              <p>Muslims offer prayer, say Eid ul-Adha Takbeerat, slaughter animals, distribute meat, and arrange dinner parties with their family and friends. Another best activity is not to ignore those who are poor and looking for your support to celebrate the Eid’s festivities. Look into your surroundings and help poor people with money, clothes, sacrifice meat, and other charity.</p>
+
+              <p>This article is a detailed account of when Eid Ul Adha 2026 will be celebrated. As well as this, we will shed light on the ideas of how to celebrate Eid to not only experience happy moments but also to get Allah’s pleasure.</p>
+
+              <h2 className="text-3xl font-display font-bold text-sundas-blue pt-4">When is Eid ul Adha 2026?</h2>
+              <p>The actual day of celebration is decided based on the Eid ul-Adha moon sighting in Pakistan. Ruet-e-Hilal Committee is a dedicated organization that serves to see the moon for Eid ul-Adha. The committee sees moons on its own and sometimes makes a decision based on witnesses collected from across the country.</p>
+
+              <p>In 2026, the Committee will gather on the 16th or 17th of May to sight the moon. However, Eid ul Adha is celebrated on the 10th of Dhul Hijjah, which means the Eid will be celebrated on 26th or 27th May in 2026. However, the final Eid date will be announced by the Committee once the moon is sighted.</p>
+
+              <h2 className="text-3xl font-display font-bold text-sundas-blue pt-4">Why do Muslims Celebrate Eid ul Adha?</h2>
+              <p>Muslims celebrate Eid ul Adha and do Qurbani as it is the Sunnah of Hazrat Ibrahim (AS). Allah (SWT) came to Hazrat Ibarhim’s dream and instructed him to sacrifice the most valuable thing, his son Hazrat ISmail (AS).</p>
+
+              <p>Both Hazrat Ibrahim and Hazrat Ismail agreed to fulfill Allah’s order, without any hesitation. To obey Allah’s order, Hazrat Ibrahim AS went on Mount Arafat with Hazrat Islamil (AS). He bound Ismali (AS) with a rope to prevent him from struggling. On the other hand, Hazrat Ibrahim blindfolded himself so as not to see the suffering of his son.</p>
+
+              <p>When Ibrahim (AS) finished slaughtering, he removed his blindfold and saw Hazrat Ismail (AS) standing in front of him. Hazrat Ismail (AS) was alive and well, and a slaughtered ram lay in place of him. Allah (SWT) saved Ismail’s life and rewarded both Hazrat Ibrahim and Ismail (AS) for obeying Allah’s order.</p>
+
+              <p>So, Muslims celebrate Eid ul Adha to commemorate the event of Hazrat Ibrahim (AS). Muslims throughout the world sacrifice animals based on their affordability and distribute meat among deserving people to get Allah’s pleasure.</p>
+
+              <h2 className="text-3xl font-display font-bold text-sundas-blue pt-4">Eid ul Adha 2026 Holidays in Pakistan</h2>
+              <p>As Eid ul-Adha is one of the major festivals in Pakistan, during the festival, the government announces public holidays. However, Eid ul-Adha vacations in Pakistan will be announced by the government of Pakistan once the Eid days are confirmed. Three-day holidays are confirmed; however, the substitute holidays will be confirmed soon by the officials.</p>
+
+              <h2 className="text-3xl font-display font-bold text-sundas-blue pt-4">Eid ul Adha and Qurbani</h2>
+              <p>Eid ul Adha is also known as Qurbani Eid in Pakistan. Eligible Muslims, based on their affordability, sacrifice animals and distribute the meat among others to celebrate this day. However, there are certain rules and regulations to offer Qurbani and distribute the meat after Qurbani.</p>
+
+              <h3 className="text-2xl font-display font-bold text-sundas-blue pt-2">Who is Eligible to Offer Qurbani</h3>
+              <ul className="list-disc pl-6 space-y-2">
+                <li><strong>Mature and Sane Muslims:</strong> Any mature and sane Muslim can perform Qurbani.</li>
+                <li><strong>Non-Traveling Person:</strong> To perform Qurbani, you must not be involved in travelling for the three days of Eid.</li>
+                <li><strong>Meet the Nisba:</strong> Muslims who own wealth equal to or above the Nisab (87.48 grams of gold or 612.36 grams of silver) are eligible to perform Qurbani.</li>
+              </ul>
+
+              <h3 className="text-2xl font-display font-bold text-sundas-blue pt-2">How to Distribute Qurbani Meat</h3>
+              <p>The recommended way to distribute Qurbani meat is to divide it into three equal categories:</p>
+              <ul className="list-decimal pl-6 space-y-2">
+                <li><strong>Qurbani Performer:</strong> Islam teaches us to keep one equal part of meat for those who perform Qurbani.</li>
+                <li><strong>Family and Friends:</strong> The second part must be distributed among your family and friends. Ensure that you distribute meat among those relatives and friends who need it most.</li>
+                <li><strong>Poor or Needy:</strong> The third part is for the poor and needy people. Keep looking around and distribute meat to those with low incomes who cannot afford to eat meat daily.</li>
+              </ul>
+
+              <h2 className="text-3xl font-display font-bold text-sundas-blue pt-4">Key Rituals of Eid ul-Adha</h2>
+              <div className="bg-sundas-blue/5 p-8 rounded-3xl space-y-4">
+                {[
+                  { t: "Get Prepared for Eid", d: "Muslims get prepared for the Eid event early in the morning. They wear new clothes to celebrate and be thankful." },
+                  { t: "Offer Prayer", d: "They gather in the Masjid and perform Eid ul-Adha, which is a special prayer." },
+                  { t: "Offer Takbeerat", d: "Special Eid ul-Adha dua and Takbeerat are offered. 'Allah is the greatest, and to Allah belongs all praise'." },
+                  { t: "Perform Qurbani/Help Others", d: "After offering prayers, eligible Muslims perform Qurbani." },
+                  { t: "Distribute Meat", d: "Muslims who perform Qurbani distribute meat among their acquaintances and needy Muslims." },
+                  { t: "Give Sadaqah and Charity", d: "Giving Sadaqah or charity is also considered the best practice to do on Eid." }
+                ].map((step, i) => (
+                  <div key={i} className="flex gap-4">
+                    <span className="flex-shrink-0 w-8 h-8 bg-sundas-red text-white flex items-center justify-center rounded-full font-bold text-sm">{i + 1}</span>
+                    <div>
+                      <h4 className="font-bold text-sundas-blue">{step.t}</h4>
+                      <p className="text-sm opacity-80">{step.d}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="bg-sundas-blue text-white p-10 rounded-3xl text-center shadow-xl">
+                 <h2 className="text-3xl font-display font-bold mb-6 italic">"Give Your Donations to the Sundas Foundation this Eid!"</h2>
+                 <p className="text-lg opacity-90 mb-8">On this Eid ul-Adha, do not forget those who are suffering from bad health conditions. Give your donations to Sundas Foundation and help us in the life-saving missions. Your donations are used to treat patients for those suffering from Hemophilia, Thalassemia, and other blood disorders.</p>
+                 <button className="bg-sundas-red px-10 py-4 rounded-full font-bold hover:bg-white hover:text-sundas-blue transition-all">Donate Now</button>
+              </div>
+
+              <div className="space-y-6">
+                <h2 className="text-3xl font-display font-bold text-sundas-blue pt-4">Frequently Asked Questions</h2>
+                <div className="space-y-4">
+                  <div className="border-b border-sundas-blue/10 pb-4">
+                    <h4 className="font-bold text-sundas-blue">1. When is Eid ul Adha 2026?</h4>
+                    <p className="opacity-80">It is estimated that Eid ul Adha 2026 will be celebrated from 26th or 27th May.</p>
+                  </div>
+                  <div className="border-b border-sundas-blue/10 pb-4">
+                    <h4 className="font-bold text-sundas-blue">2. Who Must Offer Qurbani?</h4>
+                    <p className="opacity-80">Muslims who are adults, sane, not travelling, and possess wealth above the Nisab are required to perform Qurbani.</p>
+                  </div>
+                  <div className="border-b border-sundas-blue/10 pb-4">
+                    <h4 className="font-bold text-sundas-blue">3. What is the best time to perform Qurbani?</h4>
+                    <p className="opacity-80">Qurbani can be performed from the 10th to the 12th of Dhul Hijjah after Eid prayer.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    );
+  }
+
+  if (selectedBlog === 'itikaf-ramadan') {
+    return (
+      <div className="bg-white min-h-screen font-sans">
+        <section className="pt-32 pb-20">
+          <div className="max-w-4xl mx-auto px-6">
+            <button 
+              onClick={() => setSelectedBlog(null)}
+              className="flex items-center gap-2 text-sundas-blue font-bold mb-10 hover:gap-4 transition-all"
+            >
+              <ArrowRight className="rotate-180" size={20} /> Back to Blog
+            </button>
+            
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              <img 
+                src="https://www.islamandihsan.com/uploads/2021/09/itikaf.jpg" 
+                alt="Itikaf in Ramadan" 
+                className="w-full h-[450px] object-cover rounded-3xl mb-12 shadow-2xl"
+                referrerPolicy="no-referrer"
+              />
+            </motion.div>
+            
+            <h1 className="text-4xl md:text-6xl font-display font-extrabold text-sundas-blue mb-8 leading-tight">
+              Itikaf in Ramadan - <span className="text-sundas-red">Everything You Need to Know</span>
+            </h1>
+            
+            <div className="prose prose-lg max-w-none text-sundas-blue/80 space-y-8 leading-relaxed text-justify">
+              <p>Itikaf is a form of worship Muslims perform in the last Ashrah of Ramadan. As Ikikaf is done by the Holy Prophet (Peace Be Upon Him), it is considered a Sunnah to be performed by the Muslim Ummah.</p>
+
+              <p>Muslims from across the world perform Itikaf in Ramadan. During this period, Muslims remain in isolation and worship Allah. The only cause to perform Itikaf is to please Allah and draw His closeness.</p>
+
+              <p>This article highlights everything about Itikaf. We will discuss what Itikaf is, who can perform it, what to do during Itikaf, and what can nullify your Itikaf. So, let’s start understanding Itikaf before you appear to perform it in Ramadan 2026.</p>
+
+              <h2 className="text-3xl font-display font-bold text-sundas-blue pt-4">What is Itikaf in Ramadan?</h2>
+              <p>Itikaf is a Sunnah and is performed in the last ten days or the last Ashrah of Ramadan. It is a way to worship Allah in isolation while keeping yourself disconnected from the world. For men, it is advisable to perform Itikaf in the Masjid and learn Islamic values from Islamic scholars throughout this Itikaf period. However, for women, it is advised to perform Itikaf in their home and must not be involved in the household activities.</p>
+
+              <h2 className="text-3xl font-display font-bold text-sundas-blue pt-4">Who Can Perform Itikaf In Ramadan?</h2>
+              <p>Every Muslim, including men and women, can perform Itikaf under the following conditions.</p>
+              <ul className="list-disc pl-6 space-y-2">
+                <li><strong>Adult Muslims:</strong> Itikaf can be done by adult and sane Muslims who can understand the purpose of worship.</li>
+                <li><strong>Men and Women:</strong> Both men and women can perform Itikaf. Men in Masajid, women at home in isolation.</li>
+                <li><strong>Proper Nyyah:</strong> Muslims who want to perform Itikaf must take the intention or Nyyah to dedicate this time purely for the worship of Allah.</li>
+                <li><strong>Physical health:</strong> Muslims who want to perform this practice must be physically fit and able to complete this duration.</li>
+              </ul>
+
+              <h2 className="text-3xl font-display font-bold text-sundas-blue pt-4">What to do during Itikaf?</h2>
+              <div className="bg-sundas-blue/5 p-8 rounded-3xl space-y-4">
+                {[
+                  { t: "Offer Prayers and Voluntary Ibadah", d: "Offer obligatory prayers, Traweeh, and special Nawafil/Salat al Khair." },
+                  { t: "Recite the Holy Quran", d: "Recite as much as possible, preferably with translation to understand Allah's message." },
+                  { t: "Make Duas", d: "Pray for yourself, family, and the Ummah. Laylatul Qadr is a special chance." },
+                  { t: "Do Dhikr", d: "Recite Allah’s name and offer Darood to the Prophet (PBUH)." },
+                  { t: "Learn More about Islam", d: "Attend teaching sessions in Masajid and read recommended Islamic books." },
+                  { t: "Seek Forgiveness", d: "This is a special chance to seek Allah's mercy and repentance." }
+                ].map((step, i) => (
+                  <div key={i} className="flex gap-4">
+                    <span className="flex-shrink-0 w-8 h-8 bg-sundas-red text-white flex items-center justify-center rounded-full font-bold text-sm">{i + 1}</span>
+                    <div>
+                      <h4 className="font-bold text-sundas-blue">{step.t}</h4>
+                      <p className="text-sm opacity-80">{step.d}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <h2 className="text-3xl font-display font-bold text-sundas-blue pt-4">What can Nullify Your Itikaf?</h2>
+              <p>Remember that there are some practices that can nullify your Itikaf. For example, leaving your Itikaf place without any reason and getting involved in unwanted companies can nullify your Itikaf. You must avoid making gatherings without any reason or for nonsense, as it will distract you from your aim to get Allah’s pleasure and forgiveness.</p>
+
+              <div className="bg-sundas-blue text-white p-10 rounded-3xl text-center shadow-xl">
+                 <h2 className="text-3xl font-display font-bold mb-6 italic">"Give Your Donations to Sundas Foundation This Ramadan!"</h2>
+                 <p className="text-lg opacity-90 mb-8">Muslims who wish to perform Itikaf during Ramadan 2026, may Allah accept their Itikaf and fast of Ramadan. If you want to give donations before sitting for Itikaf, give your donations to Sundas Foundation.</p>
+                 <button className="bg-sundas-red px-10 py-4 rounded-full font-bold hover:bg-white hover:text-sundas-blue transition-all">Donate Now</button>
+              </div>
+
+              <div className="space-y-6">
+                <h2 className="text-3xl font-display font-bold text-sundas-blue pt-4">Frequently Asked Questions</h2>
+                <div className="space-y-4">
+                  <div className="border-b border-sundas-blue/10 pb-4">
+                    <h4 className="font-bold text-sundas-blue">How many days of Itikaf should I perform?</h4>
+                    <p className="opacity-80">The Sunnah Itikaf is performed for the last ten days of Ramadan.</p>
+                  </div>
+                  <div className="border-b border-sundas-blue/10 pb-4">
+                    <h4 className="font-bold text-sundas-blue">How long does Itikaf run?</h4>
+                    <p className="opacity-80">It lasts until the end of Ramadan or when the moon of Shawal is sighted.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    );
+  }
+
+  if (selectedBlog === 'eid-al-fitr-2026') {
+    return (
+      <div className="bg-white min-h-screen font-sans">
+        <section className="pt-32 pb-20">
+          <div className="max-w-4xl mx-auto px-6">
+            <button 
+              onClick={() => setSelectedBlog(null)}
+              className="flex items-center gap-2 text-sundas-blue font-bold mb-10 hover:gap-4 transition-all"
+            >
+              <ArrowRight className="rotate-180" size={20} /> Back to Blog
+            </button>
+            
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              <img 
+                src="https://d34vm3j4h7f97z.cloudfront.net/original/4X/1/0/e/10edc692398b345ea4bd47397002bcb7a4699593.jpeg" 
+                alt="Eid al Fitr 2026" 
+                className="w-full h-[450px] object-cover rounded-3xl mb-12 shadow-2xl"
+                referrerPolicy="no-referrer"
+              />
+            </motion.div>
+            
+            <h1 className="text-4xl md:text-6xl font-display font-extrabold text-sundas-blue mb-8 leading-tight">
+              Eid al Fitr 2026 - <span className="text-sundas-red">How to Celebrate it?</span>
+            </h1>
+            
+            <div className="prose prose-lg max-w-none text-sundas-blue/80 space-y-8 leading-relaxed text-justify">
+              <p>Eid al-Fitr is a celebration that marks the end of Ramadan. Eid al-Fitr is celebrated on the 1st of Shawal, and Muslims throughout the world celebrate this event with great joy, passion, and generosity.</p>
+
+              <p>This event is considered a reward or celebration from Allah for Muslims as they fasted for the whole month of Ramadan. On this special occasion, Muslims offer prayers, give Sadaqah, prepare and distribute food, and spend time with their families and friends.</p>
+
+              <p>This article highlights the meaning and importance of Eid. Additionally, we will discuss what to do and how to celebrate Eid al-Fitr. So, let’s begin understanding the joy of Eid al-Fitr!</p>
+
+              <h2 className="text-3xl font-display font-bold text-sundas-blue pt-4">What is Eid al-Fitr?</h2>
+              <p>Eid al-Fitr is one of the two major festivals celebrated by Muslims from across the world. Muslims complete the practice of fasting when the Shawal moon is sighted and start celebrating Eid al-Fitr, which lasts for three days.</p>
+
+              <p>This three-day celebration comes with joy, gratitude, passion, and kindness. The celebration starts with the Eid prayer, which is a gesture or worshipping and thanking Allah for having this celebration. Throughout the day, Muslims greet each other with a special gesture, distribute food and cash (Eidi), and arrange gatherings and parties.</p>
+
+              <h2 className="text-3xl font-display font-bold text-sundas-blue pt-4">When is Eid al-Fitr in 2026?</h2>
+              <p>It is expected that Eid al-Fitr will be celebrated in Pakistan on March 20th or March 21st, 2026, depending on the moon sighting. Sometimes, Ramadan ends in 29 days, and sometimes it ends in 30 days. So, every year, the actual Eid day is not confirmed until the Shawal moon is sighted and the officials announce the Eid calendar.</p>
+
+              <h2 className="text-3xl font-display font-bold text-sundas-blue pt-4">How to Prepare for Eid Prayer?</h2>
+              <p>On Eid al-Fitr, one of the major things to do is to offer Eid prayer. It is considered that without the Eid prayer, Eid is not said to be completed. However, different scholars give different opinions about the Eid prayer.</p>
+
+              <div className="bg-sundas-blue/5 p-8 rounded-3xl space-y-4">
+                {[
+                  { t: "Perform Ghusl", d: "Perform ghusl to purify yourself before attending Eid prayer." },
+                  { t: "Wear new clothes", d: "Wear new or clean clothes before going to appear for Eid prayer." },
+                  { t: "Put on fragrances", d: "As it is the time to greet others, it is recommended to put attar or fragrances on Eid day." },
+                  { t: "Eat dates", d: "Before leaving your home for Eid prayer, eat dates, as it is Sunnah. The Prophet (s.a.w) used to eat an odd number of dates." }
+                ].map((step, i) => (
+                  <div key={i} className="flex gap-4">
+                    <span className="flex-shrink-0 w-8 h-8 bg-sundas-red text-white flex items-center justify-center rounded-full font-bold text-sm">{i + 1}</span>
+                    <div>
+                      <h4 className="font-bold text-sundas-blue">{step.t}</h4>
+                      <p className="text-sm opacity-80">{step.d}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <h2 className="text-3xl font-display font-bold text-sundas-blue pt-4">How to Celebrate Eid al-Fitr?</h2>
+              <div className="space-y-6">
+                <div>
+                  <h4 className="font-bold text-sundas-blue text-xl mb-2">Give Charity</h4>
+                  <p>The beauty of the Eid celebration is that it must not be celebrated by yourself only. You have to include others in this celebration who are poor and needy. This can happen by giving Sadaqah or charity on Eid days. It is advisable to donate Sadaqah before Eid day, as it helps the poor to get prepared for Eid. It is advisable to offer your Zakat, Fitrana, and other charities voluntarily.</p>
+                </div>
+                <div>
+                  <h4 className="font-bold text-sundas-blue text-xl mb-2">Visit Family and Friends</h4>
+                  <p>After offering the Eid prayer, usually Muslims visit their family members, relatives, or friends. It is a way to greet them and make them happy on this special day. Eid is considered a day to let go of resentments. Unfortunately, if someone is angry with you, it is the time to embrace them and create a lasting bond with them.</p>
+                </div>
+                <div>
+                  <h4 className="font-bold text-sundas-blue text-xl mb-2">Prepare and Distribute Special Meals</h4>
+                  <p>Among the best practices Muslims follow across the globe is to prepare and distribute special meals on Eid day. In Pakistan, people usually prepare and distribute sweets, which is considered a gesture of happiness. Besides this, people prepare meals and invite their loved ones to consume the meals together.</p>
+                </div>
+                <div>
+                  <h4 className="font-bold text-sundas-blue text-xl mb-2">Engage in Festivities</h4>
+                  <p>In almost all the major areas, communities organize Eid fairs and other activities. You must visit these carnivals with your family, kids, or friends to be engaged in some cultural and festive activities on Eid day.</p>
+                </div>
+              </div>
+
+              <div className="bg-sundas-blue text-white p-10 rounded-3xl text-center shadow-xl">
+                 <h2 className="text-3xl font-display font-bold mb-6 italic">"Give Your Donations to Sundas Foundation on This Eid!"</h2>
+                 <p className="text-lg opacity-90 mb-8">On this Eid, do not forget those who are looking for your help. At Sundas Foundation, hundreds of patients suffering from blood disorders get free treatment. Your donations enable us to manage blood supply, medications, and blood transfusion equipment for Thalassemia and Hemophilia patients. So, this Eid, give your donations to Sundas Foundation and support patients who really need your help to live a better life.</p>
+                 <button className="bg-sundas-red px-10 py-4 rounded-full font-bold hover:bg-white hover:text-sundas-blue transition-all">Donate Now</button>
+              </div>
+
+              <div className="space-y-6">
+                <h2 className="text-3xl font-display font-bold text-sundas-blue pt-4">Frequently Asked Questions</h2>
+                <div className="space-y-4">
+                  <div className="border-b border-sundas-blue/10 pb-4">
+                    <h4 className="font-bold text-sundas-blue">When is Eid al-Fitr 2026?</h4>
+                    <p className="opacity-80">It is expected that Eid al-Fitr will be celebrated on March 20th or 21st, 2026, in Pakistan, depending on the moon sighting.</p>
+                  </div>
+                  <div className="border-b border-sundas-blue/10 pb-4">
+                    <h4 className="font-bold text-sundas-blue">Why is Eid al-Fitr celebrated?</h4>
+                    <p className="opacity-80">Eid al-Fitr is celebrated as a gratitude on the end of Ramadan. It is a reward from Allah to Muslims for fasting and being patient throughout the Holy month of Ramadan.</p>
+                  </div>
+                  <div className="border-b border-sundas-blue/10 pb-4">
+                    <h4 className="font-bold text-sundas-blue">Is Fitrana obligatory to pay before Eid al-Fitr?</h4>
+                    <p className="opacity-80">Yes, Fitrana is obligatory to be paid before Eid al-Fitr. If you are eligible, then you must pay it to deserving people to include them in the Eid celebration.</p>
+                  </div>
+                  <div className="border-b border-sundas-blue/10 pb-4">
+                    <h4 className="font-bold text-sundas-blue">How much Fitrana is required to pay in 2026?</h4>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                       <div className="p-4 bg-sundas-blue/5 rounded-xl border border-sundas-blue/10">
+                          <span className="block text-xs font-bold text-sundas-red uppercase">Wheat Flour</span>
+                          <span className="text-xl font-bold text-sundas-blue">300 PKR <span className="text-sm font-normal opacity-60">/ head</span></span>
+                       </div>
+                       <div className="p-4 bg-sundas-blue/5 rounded-xl border border-sundas-blue/10">
+                          <span className="block text-xs font-bold text-sundas-red uppercase">Barley</span>
+                          <span className="text-xl font-bold text-sundas-blue">1550 PKR <span className="text-sm font-normal opacity-60">/ head</span></span>
+                       </div>
+                       <div className="p-4 bg-sundas-blue/5 rounded-xl border border-sundas-blue/10">
+                          <span className="block text-xs font-bold text-sundas-red uppercase">Dates</span>
+                          <span className="text-xl font-bold text-sundas-blue">2100 PKR <span className="text-sm font-normal opacity-60">/ head</span></span>
+                       </div>
+                       <div className="p-4 bg-sundas-blue/5 rounded-xl border border-sundas-blue/10">
+                          <span className="block text-xs font-bold text-sundas-red uppercase">Raisins</span>
+                          <span className="text-xl font-bold text-sundas-blue">4550 PKR <span className="text-sm font-normal opacity-60">/ head</span></span>
+                       </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    );
+  }
+
+  const items = subPage === 'Blog' ? [
+    {
+      id: 'hajj-2026',
+      title: 'When is Hajj 2026? Arafah Day, Eid al-Adha 2026 Dates',
+      description: 'Hajj is one of the five pillars of Islam. Performing Hajj is compulsory for every eligible Muslim at least once in their lifetime.',
+      img: 'https://t3.ftcdn.net/jpg/08/25/18/44/360_F_825184434_EmMHOJQ4wVSbZw4NhqmQkLMCxelxlzsJ.jpg',
+      date: '2026 Archive'
+    },
+    {
+      id: 'eid-ul-adha-2026',
+      title: 'Eid Ul-Adha 2026 - Date, Importance, and Holidays',
+      description: 'Eid ul Adha is one of the major Islamic festivals celebrated by Muslims across the world.',
+      img: 'https://cdn1.wionews.com/prod/wion/images/2025/20250606/image-1749225002177.jpg?rect=(1,0,405,304)&imwidth=800&imheight=600&format=webp&quality=medium',
+      date: '2026 Archive'
+    },
+    {
+      id: 'itikaf-ramadan',
+      title: 'Itikaf in Ramadan - Everything You Need to Know',
+      description: 'Itikaf is a form of worship Muslims perform in the last Ashrah of Ramadan.',
+      img: 'https://www.islamandihsan.com/uploads/2021/09/itikaf.jpg',
+      date: '2026 Archive'
+    },
+    {
+      id: 'eid-al-fitr-2026',
+      title: 'Eid al Fitr 2026 - How to Celebrate it?',
+      description: 'Eid al-Fitr is a celebration that marks the end of Ramadan, celebrated on the 1st of Shawal.',
+      img: 'https://d34vm3j4h7f97z.cloudfront.net/original/4X/1/0/e/10edc692398b345ea4bd47397002bcb7a4699593.jpeg',
+      date: '2026 Archive'
+    },
+    { id: 5 }, { id: 6 }
+  ] : [1, 2, 3, 4, 5, 6].map(i => ({ id: i }));
 
   return (
     <div className="bg-white min-h-screen font-sans">
@@ -894,18 +1419,19 @@ const MediaPage = ({ onBack, subPage }: { onBack: () => void, subPage: string | 
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[1, 2, 3, 4, 5, 6].map((item) => (
+            {items.map((item: any, idx) => (
               <motion.div
-                key={item}
+                key={item.id}
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ delay: item * 0.1 }}
-                className="group relative bg-white rounded-3xl overflow-hidden shadow-lg border border-sundas-blue/5 hover:shadow-2xl transition-all duration-500"
+                transition={{ delay: idx * 0.1 }}
+                onClick={() => ['hajj-2026', 'eid-ul-adha-2026', 'itikaf-ramadan', 'eid-al-fitr-2026'].includes(item.id) && setSelectedBlog(item.id)}
+                className={`group relative bg-white rounded-3xl overflow-hidden shadow-lg border border-sundas-blue/5 hover:shadow-2xl transition-all duration-500 ${['hajj-2026', 'eid-ul-adha-2026', 'itikaf-ramadan', 'eid-al-fitr-2026'].includes(item.id) ? 'cursor-pointer' : ''}`}
               >
                 <div className="aspect-video overflow-hidden">
                   <img 
-                    src={`https://picsum.photos/seed/${subPage || 'media'}${item}/800/600`}
+                    src={item.img || `https://picsum.photos/seed/${subPage || 'media'}${item.id}/800/600`}
                     alt="Media Thumbnail"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     referrerPolicy="no-referrer"
@@ -913,14 +1439,19 @@ const MediaPage = ({ onBack, subPage }: { onBack: () => void, subPage: string | 
                 </div>
                 <div className="p-6">
                   <div className="flex items-center gap-2 text-xs font-bold text-sundas-red uppercase tracking-widest mb-3">
-                    <Activity size={14} /> 2026 Archive
+                    <Activity size={14} /> {item.date || '2026 Archive'}
                   </div>
                   <h4 className="text-xl font-bold text-sundas-blue mb-3 group-hover:text-sundas-red transition-colors">
-                    {subPage ? `${subPage} Item #${item}` : `Media Update #${item}`}
+                    {item.title || (subPage ? `${subPage} Item #${item.id}` : `Media Update #${item.id}`)}
                   </h4>
                   <p className="text-sm text-sundas-blue/60 line-clamp-2">
-                    A brief description of this {subPage?.toLowerCase() || 'news'} item highlighting the core event or update.
+                    {item.description || `A brief description of this ${subPage?.toLowerCase() || 'news'} item highlighting the core event or update.`}
                   </p>
+                  {['hajj-2026', 'eid-ul-adha-2026', 'itikaf-ramadan', 'eid-al-fitr-2026'].includes(item.id) && (
+                    <div className="mt-4 flex items-center gap-2 text-sundas-red font-bold text-sm">
+                      Read Full Article <ArrowRight size={16} />
+                    </div>
+                  )}
                 </div>
               </motion.div>
             ))}
