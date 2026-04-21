@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence, useInView, animate } from 'motion/react';
 import { 
   Droplets, 
   HeartHandshake, 
@@ -19,6 +19,31 @@ import {
   CreditCard,
   Activity
 } from 'lucide-react';
+
+const Counter = ({ value, duration = 2 }: { value: string, duration?: number }) => {
+  const [count, setCount] = useState(0);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+  
+  const match = value.match(/(\d+)(.*)/);
+  const target = match ? parseInt(match[1]) : 0;
+  const suffix = match ? match[2] : "";
+
+  useEffect(() => {
+    if (isInView) {
+      const controls = animate(0, target, {
+        duration,
+        ease: "easeOut",
+        onUpdate: (latest) => {
+          setCount(Math.floor(latest));
+        },
+      });
+      return controls.stop;
+    }
+  }, [isInView, target, duration]);
+
+  return <span ref={ref}>{count}{suffix}</span>;
+};
 
 const Navbar = ({ onDonate, onAbout, onHome, onCauses, onContact, onAboutSubPage, onMediaSubPage }: { onDonate: () => void, onAbout: () => void, onHome: () => void, onCauses: () => void, onContact: () => void, onAboutSubPage?: (sub: string) => void, onMediaSubPage?: (sub: string) => void }) => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -833,6 +858,503 @@ const MediaPage = ({ onBack, subPage }: { onBack: () => void, subPage: string | 
     setSelectedBlog(null);
   }, [subPage]);
 
+  if (selectedBlog === 'nawaz-sharif-birthday') {
+    return (
+      <div className="bg-white min-h-screen font-sans">
+        <section className="pt-32 pb-20">
+          <div className="max-w-4xl mx-auto px-6">
+            <button 
+              onClick={() => setSelectedBlog(null)}
+              className="flex items-center gap-2 text-sundas-blue font-bold mb-10 hover:gap-4 transition-all"
+            >
+              <ArrowRight className="rotate-180" size={20} /> Back to Events
+            </button>
+            
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              <img 
+                src="https://sundas.org/Images/NewsandEvents/Events/26-Dec-2025_01-52-04_605150152_1293209289507958_3706831559144245765_n.jpg" 
+                alt="Nawaz Sharif Birthday" 
+                className="w-full h-[450px] object-cover rounded-3xl mb-12 shadow-2xl"
+                referrerPolicy="no-referrer"
+              />
+            </motion.div>
+            
+            <h1 className="text-3xl md:text-5xl font-display font-extrabold text-sundas-blue mb-8 leading-tight">
+              Provincial Education Minister Rana Sikandar Hayat Khan Celebrates <span className="text-sundas-red">Nawaz Sharif’s Birthday</span> with Thalassemia and Hemophilia Patients at Sundas Foundation
+            </h1>
+            
+            <div className="prose prose-lg max-w-none text-sundas-blue/80 space-y-8 leading-relaxed text-justify">
+              <div className="flex items-center gap-4 text-sundas-red font-bold uppercase tracking-widest text-sm mb-6 pb-4 border-b border-sundas-blue/10">
+                <Activity size={18} /> 12/25/2025 12:00:00 AM
+              </div>
+
+              <p className="font-bold text-xl italic text-sundas-blue">Provincial Education Minister Rana Sikandar Hayat Khan visited Sundas Foundation Lahore and celebrated the birthday of PML-N President Muhammad Nawaz Sharif with thalassemia and hemophilia patients, distributing gifts and appreciating the foundation’s welfare services.</p>
+
+              <p>Lahore: Provincial Minister for Education Rana Sikandar Hayat Khan visited Sundas Foundation Lahore on the occasion of the birthday of President Pakistan Muslim League (N), Muhammad Nawaz Sharif. He was warmly received by Founder and President of Sundas Foundation Muhammad Yasin Khan, Director Khalid Abbas Dar, Patron Sohail Warraich and the foundation’s management.</p>
+
+              <p>During the visit, the Provincial Education Minister cut a birthday cake with children suffering from thalassemia and hemophilia to celebrate the birthday of Muhammad Nawaz Sharif. Rana Sikandar Hayat Khan met the children, distributed gifts among them and expressed deep affection and encouragement. He also reviewed the medical facilities being provided to patients suffering from blood disorders at Sundas Foundation.</p>
+
+              <p>While speaking to the media, Rana Sikandar Hayat Khan said that the day was full of joy as Christmas was being celebrated alongside the birthdays of Mian Muhammad Nawaz Sharif and Quaid-e-Azam Muhammad Ali Jinnah (RA). He stated that these happy moments were shared with the children by celebrating together and cutting cakes on the occasion.</p>
+
+              <p>He further said that Sundas Foundation is a remarkable welfare organization that brings smiles to the faces of millions of Pakistanis and serves as a blessing especially for children suffering from thalassemia.</p>
+
+              <p>Rana Sikandar Hayat Khan also emphasized that minorities across Punjab and Pakistan enjoy complete protection and the government remains committed to ensuring equal rights for all citizens.</p>
+
+              <div className="bg-sundas-blue/5 p-10 rounded-3xl mt-12 border border-sundas-blue/10">
+                <h3 className="text-2xl font-display font-bold text-sundas-blue mb-4">Support Our Ongoing Efforts</h3>
+                <p className="mb-8">Your support enables us to continue hosting events that bring joy and critical care to children in need. Join hands with Sundas Foundation today.</p>
+                <button 
+                  onClick={() => {
+                    setSelectedBlog(null);
+                    const element = document.getElementById('causes');
+                    element?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="bg-sundas-red text-white px-10 py-4 rounded-full font-bold hover:bg-sundas-blue transition-all shadow-xl"
+                >
+                  Donate Now
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    );
+  }
+
+  if (selectedBlog === 'governor-kpk-visit') {
+    return (
+      <div className="bg-white min-h-screen font-sans">
+        <section className="pt-32 pb-20">
+          <div className="max-w-4xl mx-auto px-6">
+            <button 
+              onClick={() => setSelectedBlog(null)}
+              className="flex items-center gap-2 text-sundas-blue font-bold mb-10 hover:gap-4 transition-all"
+            >
+              <ArrowRight className="rotate-180" size={20} /> Back to Events
+            </button>
+            
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              <img 
+                src="https://sundas.org/Images/NewsandEvents/Events/19-Dec-2025_21-18-32_WhatsApp%20Image%202025-12-20%20at%2010.17.29%20AM.jpeg" 
+                alt="Governor KPK Visit" 
+                className="w-full h-[450px] object-cover rounded-3xl mb-12 shadow-2xl"
+                referrerPolicy="no-referrer"
+              />
+            </motion.div>
+            
+            <h1 className="text-3xl md:text-5xl font-display font-extrabold text-sundas-blue mb-8 leading-tight">
+              Governor Khyber Pakhtunkhwa <span className="text-sundas-red">Faisal Karim Kundi</span> Visits Sundas Foundation Lahore
+            </h1>
+            
+            <div className="prose prose-lg max-w-none text-sundas-blue/80 space-y-8 leading-relaxed text-justify">
+              <div className="flex items-center gap-4 text-sundas-red font-bold uppercase tracking-widest text-sm mb-6 pb-4 border-b border-sundas-blue/10">
+                <Activity size={18} /> 12/19/2025 12:00:00 AM
+              </div>
+
+              <p className="font-bold text-xl italic text-sundas-blue">Governor of Khyber Pakhtunkhwa Faisal Karim Kundi, visited Sundas Foundation Lahore, where he reviewed medical facilities, met children undergoing treatment for thalassemia and hemophilia and appreciated the foundation’s free healthcare services and international-standard blood management system.</p>
+
+              <p>Lahore: Governor of Khyber Pakhtunkhwa Faisal Karim Kundi, paid a visit to Sundas Foundation Lahore, where he was warmly received by the Founder and President of Sundas Foundation Mr. Muhammad Yasin Khan, Director Mr. Khalid Abbas Dar and the foundation’s management team.</p>
+
+              <p>During the visit, the Governor met children undergoing treatment at the foundation, distributed gifts among them and encouraged the young patients. He also reviewed the medical facilities being provided for the treatment of patients suffering from thalassemia, hemophilia, and other blood-related disorders.</p>
+
+              <p>On this occasion, Medical Director Dr. Adnan Gillani briefed the Governor in detail about the foundation’s medical services, advanced treatment methods, modern medical equipment and efficient blood management system. Dr. Adnan stated that Sundas Foundation provides free blood and medical treatment to thousands of patients every month and ensures international standards in healthcare services. He further added that the foundation is working on new programs based on genetic screening and research to enable early diagnosis and prevention of hereditary blood diseases.</p>
+
+              <p>While talking to the media, Governor Faisal Karim Kundi appreciated the services of Sundas Foundation and said that he was pleased to see the dedication and commitment of the staff in serving patients suffering from thalassemia, hemophilia and other blood disorders. He added that he thoroughly reviewed the medical facilities provided by the foundation and found its healthcare services, modern treatment methods, and blood management system to be in line with international standards.</p>
+
+              <p>The Governor emphasized that the Khyber Pakhtunkhwa government has always encouraged institutions working for social welfare and assured full cooperation with Sundas Foundation in the future to support its noble cause.</p>
+
+              <div className="bg-sundas-blue/5 p-10 rounded-3xl mt-12 border border-sundas-blue/10">
+                <h3 className="text-2xl font-display font-bold text-sundas-blue mb-4">Support Our Cause</h3>
+                <p className="mb-8">Your contribution helps us maintain international standards of care for children battling blood disorders.</p>
+                <button 
+                  onClick={() => {
+                    setSelectedBlog(null);
+                    const element = document.getElementById('causes');
+                    element?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="bg-sundas-red text-white px-10 py-4 rounded-full font-bold hover:bg-sundas-blue transition-all shadow-xl"
+                >
+                  Donate Now
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    );
+  }
+
+  if (selectedBlog === 'advisor-punjab-visit') {
+    return (
+      <div className="bg-white min-h-screen font-sans">
+        <section className="pt-32 pb-20">
+          <div className="max-w-4xl mx-auto px-6">
+            <button 
+              onClick={() => setSelectedBlog(null)}
+              className="flex items-center gap-2 text-sundas-blue font-bold mb-10 hover:gap-4 transition-all"
+            >
+              <ArrowRight className="rotate-180" size={20} /> Back to Events
+            </button>
+            
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              <img 
+                src="https://sundas.org/Images/NewsandEvents/Events/19-Nov-2025_04-41-17_WhatsApp%20Image%202025-11-19%20at%203.30.23%20PM.jpeg" 
+                alt="Advisor to CM Punjab Visit" 
+                className="w-full h-[450px] object-cover rounded-3xl mb-12 shadow-2xl"
+                referrerPolicy="no-referrer"
+              />
+            </motion.div>
+            
+            <h1 className="text-3xl md:text-5xl font-display font-extrabold text-sundas-blue mb-8 leading-tight">
+              Advisor to the Chief Minister Punjab for <span className="text-sundas-red">Zakat & Ushr Rashid Iqbal Nasrullah</span> Visits Sundas Foundation
+            </h1>
+            
+            <div className="prose prose-lg max-w-none text-sundas-blue/80 space-y-8 leading-relaxed text-justify">
+              <div className="flex items-center gap-4 text-sundas-red font-bold uppercase tracking-widest text-sm mb-6 pb-4 border-b border-sundas-blue/10">
+                <Activity size={18} /> 11/19/2025 12:00:00 AM
+              </div>
+
+              <p className="font-bold text-xl italic text-sundas-blue">Advisor to the Chief Minister Punjab for Zakat & Ushr Rashid Iqbal Nasrullah visited Sundas Foundation Lahore. Met children suffering from thalassemia, hemophilia and other blood disorders, Presented gifts and reviewed the foundation’s medical facilities.</p>
+
+              <p>Lahore: Advisor to the Chief Minister Punjab for Zakat & Ushr Rashid Iqbal Nasrullah visited Sundas Foundation Lahore where he met children suffering from thalassemia, hemophilia and other hereditary blood disorders. He encouraged the young patients, presented gifts to them and reviewed the treatment facilities and overall healthcare system of the foundation.</p>
+
+              <p>Founder and President of Sundas Foundation Muhammad Yaseen Khan and Foundation management warmly welcomed the guests. Medical Director Dr. Adnan Gillani briefed them in detail about the medical services, advanced treatment facilities, modern equipment and blood management system offered by the Foundation. He shared that Sundas Foundation provides free blood and treatment to hundreds of patients every month while maintaining global healthcare standards. Additionally, he highlighted the Foundation’s initiatives on genetic screening and new research programs aimed at prevention and early diagnosis.</p>
+
+              <p>While speaking to the media Mr. Rashid Iqbal Nasrullah praised the services of Sundas Foundation, stating “Sundas Foundation is truly a beacon of humanity. The high-quality medical care, exemplary child-care environment and modern treatment facilities here are impressive. This institution is not only a ray of hope but a true reflection of our society’s collective responsibility. Both the government and the public must extend full support to such organizations. I pay tribute to the tireless efforts of Sundas Foundation and assure all possible assistance.</p>
+
+              <p>The Advisor added that organizations like Sundas Foundation represent dedication, compassion and professional excellence in Pakistan’s healthcare sector, serving as a lifeline for thousands of families.</p>
+
+              <p>He further said that Chief Minister Maryam Nawaz holds this institution close to her heart and she will soon visit Sundas Foundation to meet the children herself.</p>
+
+              <div className="bg-sundas-blue/5 p-10 rounded-3xl mt-12 border border-sundas-blue/10">
+                <h3 className="text-2xl font-display font-bold text-sundas-blue mb-4">A Beacon of Humanity</h3>
+                <p className="mb-8">Your Zakat and Sadaqah support institutions that serve as a lifeline for thousands of families across Punjab.</p>
+                <button 
+                  onClick={() => {
+                    setSelectedBlog(null);
+                    const element = document.getElementById('causes');
+                    element?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="bg-sundas-red text-white px-10 py-4 rounded-full font-bold hover:bg-sundas-blue transition-all shadow-xl"
+                >
+                  Donate Now
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    );
+  }
+
+  if (selectedBlog === 'resham-nimra-visit') {
+    return (
+      <div className="bg-white min-h-screen font-sans">
+        <section className="pt-32 pb-20">
+          <div className="max-w-4xl mx-auto px-6">
+            <button 
+              onClick={() => setSelectedBlog(null)}
+              className="flex items-center gap-2 text-sundas-blue font-bold mb-10 hover:gap-4 transition-all"
+            >
+              <ArrowRight className="rotate-180" size={20} /> Back to Events
+            </button>
+            
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              <img 
+                src="https://sundas.org/Images/NewsandEvents/Events/03-Nov-2025_03-45-05_WhatsApp%20Image%202025-11-03%20at%2012.42.10%20PM.jpeg" 
+                alt="Resham and Nimra Mehra Visit" 
+                className="w-full h-[450px] object-cover rounded-3xl mb-12 shadow-2xl"
+                referrerPolicy="no-referrer"
+              />
+            </motion.div>
+            
+            <h1 className="text-3xl md:text-5xl font-display font-extrabold text-sundas-blue mb-8 leading-tight">
+              Film Star <span className="text-sundas-red">Resham</span> and Singer <span className="text-sundas-red">Nimra Mehra</span> Visit Sundas Foundation
+            </h1>
+            
+            <div className="prose prose-lg max-w-none text-sundas-blue/80 space-y-8 leading-relaxed text-justify">
+              <div className="flex items-center gap-4 text-sundas-red font-bold uppercase tracking-widest text-sm mb-6 pb-4 border-b border-sundas-blue/10">
+                <Activity size={18} /> 11/3/2025 12:00:00 AM
+              </div>
+
+              <p className="font-bold text-xl italic text-sundas-blue">Renowned film star Resham and singer Nimra Mehra visited Sundas Foundation where they met children suffering from thalassemia and hemophilia, distributed gifts and praised the foundation’s healthcare services. They lauded the staff’s dedication and urged the public to support the foundation’s humanitarian mission.</p>
+
+              <p>Lahore: Pakistan’s renowned film star Resham and popular singer Nimra Mehra visited Sundas Foundation, where they spent time with children suffering from thalassemia, hemophilia and other blood disorders. The guests distributed gifts among the children and reviewed the foundation’s medical facilities.</p>
+
+              <p>The visitors were warmly welcomed by Finance Director Ali Rauf, the management team of Sundas Foundation and media students from Punjab University. Director Khalid Abbas Dar was also present on the occasion.</p>
+
+              <p>Dr. Farhan briefed the guests about the foundation’s medical services, advanced treatment procedures, modern equipment and an efficient blood management system. He highlighted that Sundas Foundation provides free blood transfusions and treatment to thousands of patients every month, ensuring international standards of healthcare.</p>
+
+              <p>He further shared that the foundation is working on genetic screening and research-based programs aimed at the early diagnosis and prevention of hereditary blood diseases.</p>
+
+              <p>Expressing her feelings singer Nimra Mehra said that Sundas Foundation is truly serving humanity. “Seeing the smiles on these children’s faces fills my heart with joy,” she said, urging the public to donate generously to support the foundation’s mission of providing better lives for these children.</p>
+
+              <p>Appreciating the dedication of the staff film star Resham said, “Sundas Foundation is a ray of hope. The hard work and commitment of the team are truly commendable. We all must support them in this noble cause.”</p>
+
+              <div className="bg-sundas-blue/5 p-10 rounded-3xl mt-12 border border-sundas-blue/10">
+                <h3 className="text-2xl font-display font-bold text-sundas-blue mb-4">A Ray of Hope</h3>
+                <p className="mb-8">Your support brings smiles to the faces of children battling serious conditions. Share the joy of giving today.</p>
+                <button 
+                  onClick={() => {
+                    setSelectedBlog(null);
+                    const element = document.getElementById('causes');
+                    element?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="bg-sundas-red text-white px-10 py-4 rounded-full font-bold hover:bg-sundas-blue transition-all shadow-xl"
+                >
+                  Donate Now
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    );
+  }
+
+  if (selectedBlog === 'khawaja-imran-visit') {
+    return (
+      <div className="bg-white min-h-screen font-sans">
+        <section className="pt-32 pb-20">
+          <div className="max-w-4xl mx-auto px-6">
+            <button 
+              onClick={() => setSelectedBlog(null)}
+              className="flex items-center gap-2 text-sundas-blue font-bold mb-10 hover:gap-4 transition-all"
+            >
+              <ArrowRight className="rotate-180" size={20} /> Back to Events
+            </button>
+            
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              <img 
+                src="https://sundas.org/Images/NewsandEvents/Events/28-Oct-2025_23-26-47_571347790_1246929037469317_5390816052461761227_n.jpg" 
+                alt="Khawaja Imran Nazir Visit" 
+                className="w-full h-[450px] object-cover rounded-3xl mb-12 shadow-2xl"
+                referrerPolicy="no-referrer"
+              />
+            </motion.div>
+            
+            <h1 className="text-3xl md:text-5xl font-display font-extrabold text-sundas-blue mb-8 leading-tight">
+              Punjab Health Minister <span className="text-sundas-red">Khawaja Imran Nazir</span> Celebrates CM Maryam Nawaz Sharif’s Birthday
+            </h1>
+            
+            <div className="prose prose-lg max-w-none text-sundas-blue/80 space-y-8 leading-relaxed text-justify">
+              <div className="flex items-center gap-4 text-sundas-red font-bold uppercase tracking-widest text-sm mb-6 pb-4 border-b border-sundas-blue/10">
+                <Activity size={18} /> 10/28/2025 12:00:00 AM
+              </div>
+
+              <p className="font-bold text-xl italic text-sundas-blue">Punjab Health Minister Khawaja Imran Nazir Celebrates CM Maryam Nawaz Sharif’s Birthday with Thalassemia and Hemophilia Patients at Sundas Foundation. Punjab Health Minister Khawaja Imran Nazir distributed gifts interacted with the children and appreciated the foundation’s efforts in providing quality healthcare services.</p>
+
+              <p>Lahore: Punjab Minister for Health and Population, Khawaja Imran Nazir visited Sundas Foundation on the occasion of Chief Minister Punjab Maryam Nawaz Sharif’s birthday. The distinguished guest was warmly received by President of Sundas Foundation Mr. Yasin Khan.</p>
+
+              <p>During the visit the Minister celebrated the Chief Minister’s birthday by cutting a cake alongside children undergoing treatment for Thalassemia and Hemophilia. Khawaja Imran Nazir interacted with the children, presented gifts and expressed his affection and encouragement for them. He also reviewed the medical facilities being provided to patients suffering from blood disorders including Thalassemia and Hemophilia.</p>
+
+              <p>Speaking to the media the Health Minister said that Maryam Nawaz Sharif’s politics embodies service, leadership and progress. He added that she has transformed promises into reality and has made public service the essence of her political journey.</p>
+
+              <p>Khawaja Imran Nazir further stated that Maryam Nawaz Sharif is a beloved leader whose vision, political insight and people-friendly approach are acknowledged even by her critics. He said that her focus on transparency, good governance and development has ushered Punjab into a new era of progress and prosperity.</p>
+
+              <p>“Maryam Nawaz Sharif is the true symbol of change in Punjab,” he remarked, emphasizing that her leadership continues to inspire hope and confidence among the people of the province.</p>
+
+              <div className="bg-sundas-blue/5 p-10 rounded-3xl mt-12 border border-sundas-blue/10">
+                <h3 className="text-2xl font-display font-bold text-sundas-blue mb-4">A Symbol of Service</h3>
+                <p className="mb-8">Support the vision of health for all. Your contribution helps us provide quality care to blood disorder patients.</p>
+                <button 
+                  onClick={() => {
+                    setSelectedBlog(null);
+                    const element = document.getElementById('causes');
+                    element?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="bg-sundas-red text-white px-10 py-4 rounded-full font-bold hover:bg-sundas-blue transition-all shadow-xl"
+                >
+                  Donate Now
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    );
+  }
+
+  if (selectedBlog === 'salma-butt-visit') {
+    return (
+      <div className="bg-white min-h-screen font-sans">
+        <section className="pt-32 pb-20">
+          <div className="max-w-4xl mx-auto px-6">
+            <button 
+              onClick={() => setSelectedBlog(null)}
+              className="flex items-center gap-2 text-sundas-blue font-bold mb-10 hover:gap-4 transition-all"
+            >
+              <ArrowRight className="rotate-180" size={20} /> Back to Events
+            </button>
+            
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              <img 
+                src="https://sundas.org/Images/NewsandEvents/Events/23-Oct-2025_00-44-34_WhatsApp%20Image%202025-10-23%20at%2012.29.40%20PM%20(1).jpeg" 
+                alt="Salma Butt Visit" 
+                className="w-full h-[450px] object-cover rounded-3xl mb-12 shadow-2xl"
+                referrerPolicy="no-referrer"
+              />
+            </motion.div>
+            
+            <h1 className="text-3xl md:text-5xl font-display font-extrabold text-sundas-blue mb-8 leading-tight">
+              Special Assistant to CM Punjab <span className="text-sundas-red">Salma Butt</span> Visits Sundas Foundation Lahore
+            </h1>
+            
+            <div className="prose prose-lg max-w-none text-sundas-blue/80 space-y-8 leading-relaxed text-justify">
+              <div className="flex items-center gap-4 text-sundas-red font-bold uppercase tracking-widest text-sm mb-6 pb-4 border-b border-sundas-blue/10">
+                <Activity size={18} /> 10/23/2025 12:00:00 AM
+              </div>
+
+              <p className="font-bold text-xl italic text-sundas-blue">Chairperson of CM’s Task Force on Price Control Ms. Salma Butt visited Sundas Foundation Lahore met children receiving treatment for thalassemia and hemophilia distributed gifts and reviewed the foundation’s medical facilities. She praised the foundation’s humanitarian efforts and reaffirmed the Punjab Government’s commitment to improving healthcare for children with blood disorders.</p>
+
+              <p>Lahore: Chairperson of the Chief Minister’s Task Force on Price Control Ms. Salma Butt visited Sundas Foundation Lahore where she met children undergoing treatment, distributed gifts and reviewed the medical facilities provided to patients suffering from thalassemia, hemophilia and other blood disorders.</p>
+
+              <p>The distinguished guest was warmly received by the foundation's management. Consultant Hematologist Dr. Saira Mueen gave Ms. Salma Butt a detailed briefing on the foundation’s medical services, advanced treatment procedures, modern equipment and efficient blood management system.</p>
+
+              <p>Dr. Saira shared that Sundas Foundation provides free blood and treatment to thousands of patients every month ensuring international standards in healthcare are upheld.</p>
+
+              <p>She further informed that the foundation is actively working on genetic screening and new research-based programs to enable early diagnosis and prevention of inherited blood disorders.</p>
+
+              <p>At the conclusion of the visit Ms. Salma Butt spoke to the media commending Sundas Foundation for its outstanding humanitarian work in the treatment and care of children battling serious blood diseases like thalassemia and hemophilia.</p>
+
+              <p>She stated that over 12,000 children are currently receiving treatment at Sundas Foundation Lahore where in addition to blood transfusion services, patients are also provided with comprehensive medical care, including dental treatment.</p>
+
+              <p>Ms. Salma described the foundation as a beacon of hope and humanity, emphasizing that such institutions are a source of pride for society.</p>
+
+              <p>She further added that the Government of Punjab is taking concrete and coordinated steps for the treatment and prevention of thalassemia with the aim of providing timely and modern medical facilities to affected children.</p>
+
+              <p>She reiterated that it is the government's priority to ensure high-quality treatment, regular blood availability and improved facilities for children with blood disorders and that public-private partnerships will play a key role in achieving these goals.</p>
+
+              <p>At the end of the visit Sundas Foundation presented Ms. Salma Butt with an honorary shield in recognition of her continued support for healthcare and social welfare initiatives.</p>
+
+              <div className="bg-sundas-blue/5 p-10 rounded-3xl mt-12 border border-sundas-blue/10">
+                <h3 className="text-2xl font-display font-bold text-sundas-blue mb-4">Join Our Journey</h3>
+                <p className="mb-8">Be a source of hope for children battling thalassemia and hemophilia. Your support makes all possible.</p>
+                <button 
+                  onClick={() => {
+                    setSelectedBlog(null);
+                    const element = document.getElementById('causes');
+                    element?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="bg-sundas-red text-white px-10 py-4 rounded-full font-bold hover:bg-sundas-blue transition-all shadow-xl"
+                >
+                  Donate Now
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    );
+  }
+
+  if (selectedBlog === 'university-lahore-camp') {
+    return (
+      <div className="bg-white min-h-screen font-sans">
+        <section className="pt-32 pb-20">
+          <div className="max-w-4xl mx-auto px-6">
+            <button 
+              onClick={() => setSelectedBlog(null)}
+              className="flex items-center gap-2 text-sundas-blue font-bold mb-10 hover:gap-4 transition-all"
+            >
+              <ArrowRight className="rotate-180" size={20} /> Back to Events
+            </button>
+            
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              <img 
+                src="https://sundas.org/Images/NewsandEvents/Events/16-Oct-2025_00-05-19_DSC03914.JPG" 
+                alt="University of Lahore Camp" 
+                className="w-full h-[450px] object-cover rounded-3xl mb-12 shadow-2xl"
+                referrerPolicy="no-referrer"
+              />
+            </motion.div>
+            
+            <h1 className="text-3xl md:text-5xl font-display font-extrabold text-sundas-blue mb-8 leading-tight">
+              Sundas Foundation Organizes Successful Blood Donation Camp at <span className="text-sundas-red">University of Lahore</span>
+            </h1>
+            
+            <div className="prose prose-lg max-w-none text-sundas-blue/80 space-y-8 leading-relaxed text-justify">
+              <div className="flex items-center gap-4 text-sundas-red font-bold uppercase tracking-widest text-sm mb-6 pb-4 border-b border-sundas-blue/10">
+                <Activity size={18} /> 10/15/2025 12:00:00 AM
+              </div>
+
+              <p className="font-bold text-xl italic text-sundas-blue">Sundas Foundation in collaboration with the University of Lahore organized a successful blood donation camp to support thalassemia and hemophilia patients. Students enthusiastically participated resulting in the collection of 278 blood bags.</p>
+
+              <p>Lahore: In a heartfelt initiative to support children suffering from thalassemia and hemophilia. Sundas Foundation in collaboration with the University of Lahore successfully organized a blood donation camp on campus. The event received an overwhelming response from students who not only participated by donating blood but also actively promoted the cause by carrying banners and encouraging their fellow students to join the mission.</p>
+
+              <p>By the end of the camp an impressive 278 blood bags were collected a significant contribution toward saving the lives of children who require regular blood transfusions.</p>
+
+              <p>Students from diverse nationalities and backgrounds joined hands for this noble cause. Among them were:</p>
+
+              <div className="space-y-6">
+                <div className="p-6 bg-sundas-blue/5 rounded-2xl border-l-4 border-sundas-red">
+                  <p className="font-bold text-sundas-blue">Sheikh Hammad (Saudi Arabia):</p>
+                  <p>“Donating blood is a simple act for us but for the children who rely on it, it’s a matter of life and death. I’m honored to be part of this mission.”</p>
+                </div>
+
+                <div className="p-6 bg-sundas-blue/5 rounded-2xl border-l-4 border-sundas-red">
+                  <p className="font-bold text-sundas-blue">Haram (Iran):</p>
+                  <p>“It’s our moral responsibility to step up for humanity. It doesn’t matter where we’re from saving lives unites us all.”</p>
+                </div>
+
+                <div className="p-6 bg-sundas-blue/5 rounded-2xl border-l-4 border-sundas-red">
+                  <p className="font-bold text-sundas-blue">Laiba Amjad (MBBS Student):</p>
+                  <p>“Children suffering from thalassemia and hemophilia depend on regular blood donations. We can be the reason they live another day. I urge everyone to donate and spread awareness.”</p>
+                </div>
+              </div>
+
+              <p>Ahmad Aslam and Talha Saleem: both active volunteers at the camp appreciated the efforts of Sundas Foundation and encouraged others to participate regularly.</p>
+              <p>“This camp reminded us how much impact one small act can have. We hope this becomes a regular activity and more students get involved,” they shared.</p>
+
+              <div className="bg-sundas-blue/5 p-10 rounded-3xl mt-12 border border-sundas-blue/10">
+                <h3 className="text-2xl font-display font-bold text-sundas-blue mb-4">Be a Lifesaver</h3>
+                <p className="mb-8">Your regular blood donation is the lifeline for children with thalassemia. Join our mission and save a life today.</p>
+                <button 
+                  onClick={() => {
+                    setSelectedBlog(null);
+                    const element = document.getElementById('causes');
+                    element?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="bg-sundas-red text-white px-10 py-4 rounded-full font-bold hover:bg-sundas-blue transition-all shadow-xl"
+                >
+                  Donate Now
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    );
+  }
+
   if (selectedBlog === 'hajj-2026') {
     return (
       <div className="bg-white min-h-screen font-sans">
@@ -1323,6 +1845,229 @@ const MediaPage = ({ onBack, subPage }: { onBack: () => void, subPage: string | 
     );
   }
 
+  if (selectedBlog === 'fitrana-2026') {
+    return (
+      <div className="bg-white min-h-screen font-sans">
+        <section className="pt-32 pb-20">
+          <div className="max-w-4xl mx-auto px-6">
+            <button 
+              onClick={() => setSelectedBlog(null)}
+              className="flex items-center gap-2 text-sundas-blue font-bold mb-10 hover:gap-4 transition-all"
+            >
+              <ArrowRight className="rotate-180" size={20} /> Back to Blog
+            </button>
+            
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              <img 
+                src="https://shop.donatedirectly.com/cdn/shop/files/1_Pay_Your_Fitrana_-_Thumbnails_-_Ramadan_2026_-_Website_-_Donate_Directly_103f9593-d1c9-4d03-bdb2-71c52c422cdb.jpg?v=1772469187&width=1920" 
+                alt="Fitrana 2026" 
+                className="w-full h-[450px] object-cover rounded-3xl mb-12 shadow-2xl"
+                referrerPolicy="no-referrer"
+              />
+            </motion.div>
+            
+            <h1 className="text-4xl md:text-6xl font-display font-extrabold text-sundas-blue mb-8 leading-tight">
+              Fitrana in <span className="text-sundas-red">Ramadan 2026</span>
+            </h1>
+            
+            <div className="prose prose-lg max-w-none text-sundas-blue/80 space-y-8 leading-relaxed text-justify">
+              <p>The month of Ramadan comes with many blessings and rewards. It makes us closer to Allah and brings patience to our personality. At the same time, it also highlights a sense of giving charity or Sadaqah to those who really need our help to celebrate Ramadan and Eid.</p>
+
+              <p>Allah (SWT) makes it obligatory for Muslims to fast during Ramadan. At the same time, He also makes it necessary for wealthy Muslims to take care of the poor among their surroundings. For this purpose, Allah orders eligible Muslims to pay Fitrana in Ramadan and help the poor who are looking for our support.</p>
+
+              <p>This article highlights what Fitrana is and who needs to pay it. We will also discuss the best time to pay fitrana and how much fitrana is required to pay in Ramadan 2026. So, keep reading and clear all of your concepts related to Fitrana.</p>
+
+              <h2 className="text-3xl font-display font-bold text-sundas-blue pt-4">What is Fitrana?</h2>
+              <p>Fitrana is an obligatory form of charity that needs to be paid by every eligible Muslim in Ramadan. Remember that paying Fitrana is compulsory, and denying to pay it can be a sinful act. You need to pay it only to those who really deserve it. Well, sometimes it becomes difficult to find out the eligible persons among your surroundings.</p>
+
+              <p>First of all, you need to pay Fitrana to your relatives, then your neighbours, and then other needy people. If you do not have the poor in your relatives and neighbourhood, you can give it to the organisations that take care of the poor and feed them on a daily basis.</p>
+
+              <h2 className="text-3xl font-display font-bold text-sundas-blue pt-4">Who Needs to Pay Fitrana?</h2>
+              <p>Paying Fitrana is obligatory for every Muslim who can afford it. Remember that Muslims who possess wealth in excess of their daily living expenses or beyond what is needed for themselves or their dependents are subject to paying Fitrana. It is the responsibility of the head of the household to pay Fitrana on behalf of himself and dependents. Remember that if a baby is born just before the Eid prayer, you must pay Fitrana for the newborn as well.</p>
+
+              <h2 className="text-3xl font-display font-bold text-sundas-blue pt-4">What is the Best Time to Pay Fitrana?</h2>
+              <p>As it is a religious obligation to pay Fitrana, everyone must be aware of its rules and regulations. It is said that Fitrana must be paid before the Eid al-Fitr prayer. In Pakistan, it is expected that Eid al-Fitr will take place on either Thursday, 19th March or Friday, 20th March 2026, depending on the moon sighting. However, you must be aware of the exact Eid al-Fitr date in your region and pay Fitrana accordingly.</p>
+
+              <h2 className="text-3xl font-display font-bold text-sundas-blue pt-4">How Much is Fitrana in 2026?</h2>
+              <p>The amount of Fitrana is decided based on the items we consume on a daily basis. Below is the list of eatables along with their decided Fitrana amount per person.</p>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[
+                  { name: "Wheat Flour", amount: "300" },
+                  { name: "Barley", amount: "1550" },
+                  { name: "Dates", amount: "2100" },
+                  { name: "Raisins", amount: "4550" },
+                  { name: "Ajwa", amount: "3540" }
+                ].map((item, i) => (
+                  <div key={i} className="p-6 bg-sundas-blue/5 rounded-2xl border border-sundas-blue/10 flex flex-col items-center">
+                    <span className="text-xs font-black text-sundas-red uppercase tracking-widest mb-2">{item.name}</span>
+                    <span className="text-3xl font-display font-bold text-sundas-blue">Rs. {item.amount}</span>
+                    <span className="text-xs opacity-60 mt-1">Per Head</span>
+                  </div>
+                ))}
+              </div>
+
+              <h2 className="text-3xl font-display font-bold text-sundas-blue pt-4">The Importance of Paying Fitrana in Ramadan?</h2>
+              <p>Any act of charity, whether it is obligatory or voluntary, comes with extraordinary benefits:</p>
+              <div className="space-y-4">
+                <p><strong>a) It purifies the wealth and soul of givers:</strong> Paying Fitrana is a way to purify your wealth and soul. It is considered that this act of charity becomes a way for you to get Allah’s forgiveness if you have made any mistakes during Ramadan.</p>
+                <p><strong>b) It helps create a strong community:</strong> Paying Fitrana can help us build a strong community and bond. For example, it is necessary to offer Fitrana to your relatives first. It will surely create strong bonds and relationships with your relatives.</p>
+              </div>
+
+              <h2 className="text-3xl font-display font-bold text-sundas-blue pt-4">Fitrana vs. Fidya vs. Kaffarah vs. Zakat</h2>
+              <div className="overflow-x-auto rounded-3xl border border-sundas-blue/10">
+                <table className="w-full text-left border-collapse">
+                  <thead>
+                    <tr className="bg-sundas-blue text-white">
+                      <th className="p-4 border border-white/10 uppercase text-xs font-black">Feature</th>
+                      <th className="p-4 border border-white/10 uppercase text-xs font-black">Fitrana</th>
+                      <th className="p-4 border border-white/10 uppercase text-xs font-black">Fidya</th>
+                      <th className="p-4 border border-white/10 uppercase text-xs font-black">Kaffarah</th>
+                      <th className="p-4 border border-white/10 uppercase text-xs font-black">Zakat</th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-sm">
+                    <tr>
+                      <td className="p-4 border border-sundas-blue/10 font-bold">Category</td>
+                      <td className="p-4 border border-sundas-blue/10">Obligatory charity</td>
+                      <td className="p-4 border border-sundas-blue/10">Obligatory charity</td>
+                      <td className="p-4 border border-sundas-blue/10">Obligatory charity</td>
+                      <td className="p-4 border border-sundas-blue/10">Obligatory charity</td>
+                    </tr>
+                    <tr className="bg-sundas-blue/5">
+                      <td className="p-4 border border-sundas-blue/10 font-bold">Paid By</td>
+                      <td className="p-4 border border-sundas-blue/10">Wealth {'>'} basic needs</td>
+                      <td className="p-4 border border-sundas-blue/10">Missed fasts</td>
+                      <td className="p-4 border border-sundas-blue/10">Broken fasts deliberately</td>
+                      <td className="p-4 border border-sundas-blue/10">Wealth {'>'} Nisab</td>
+                    </tr>
+                    <tr>
+                      <td className="p-4 border border-sundas-blue/10 font-bold">Time</td>
+                      <td className="p-4 border border-sundas-blue/10">Before Eid</td>
+                      <td className="p-4 border border-sundas-blue/10">Ramadan/Afterward</td>
+                      <td className="p-4 border border-sundas-blue/10">Ramadan/Afterward</td>
+                      <td className="p-4 border border-sundas-blue/10">Anytime (Lunar)</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="bg-sundas-blue text-white p-10 rounded-3xl text-center shadow-xl">
+                 <h2 className="text-3xl font-display font-bold mb-6 italic">"Give Your Donations to Sundas Foundation This Ramadan!"</h2>
+                 <p className="text-lg opacity-90 mb-8">Do you want to pay Fitrana, Fidya, Kaffarah, and other donations in Ramadan? Give them to the Sundas Foundation. Your donations are used to manage the blood supply, medicines, and other equipment to support patients suffering from Thalassemia, Hemophilia, and other blood disorders.</p>
+                 <button className="bg-sundas-red px-10 py-4 rounded-full font-bold hover:bg-white hover:text-sundas-blue transition-all">Donate Now</button>
+              </div>
+
+              <div className="space-y-6">
+                <h2 className="text-3xl font-display font-bold text-sundas-blue pt-4">Frequently Asked Questions</h2>
+                <div className="space-y-4">
+                  <div className="border-b border-sundas-blue/10 pb-4">
+                    <h4 className="font-bold text-sundas-blue">What is the difference between Fitrana and Fidya?</h4>
+                    <p className="opacity-80">Fitrana is for Muslims with excess wealth/food. Fidya is compensation for missing fasts during Ramadan.</p>
+                  </div>
+                  <div className="border-b border-sundas-blue/10 pb-4">
+                    <h4 className="font-bold text-sundas-blue">What if I forgot to pay Fitrana?</h4>
+                    <p className="opacity-80">Pay it once you remember. After Eid prayer, it counts as Sadaqah, not obligatory Fitrana.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    );
+  }
+
+  if (selectedBlog === 'laylatul-qadr-2026') {
+    return (
+      <div className="bg-white min-h-screen font-sans">
+        <section className="pt-32 pb-20">
+          <div className="max-w-4xl mx-auto px-6">
+            <button 
+              onClick={() => setSelectedBlog(null)}
+              className="flex items-center gap-2 text-sundas-blue font-bold mb-10 hover:gap-4 transition-all"
+            >
+              <ArrowRight className="rotate-180" size={20} /> Back to Blog
+            </button>
+            
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              <img 
+                src="https://www.akramaid.org/wp-content/uploads/2026/01/AA-Laylatul-Qadr-night-Web-mobile.webp" 
+                alt="Laylatul Qadr 2026" 
+                className="w-full h-[450px] object-cover rounded-3xl mb-12 shadow-2xl"
+                referrerPolicy="no-referrer"
+              />
+            </motion.div>
+            
+            <h1 className="text-4xl md:text-6xl font-display font-extrabold text-sundas-blue mb-8 leading-tight">
+              Laylatul Qadr - <span className="text-sundas-red">The Night of Power</span>
+            </h1>
+            
+            <div className="prose prose-lg max-w-none text-sundas-blue/80 space-y-8 leading-relaxed text-justify">
+              <p>Laylatul Qadr, also known as the night of decree or the night of power, appears on one of the odd nights in the last Ashra of Ramadan. A single good act on this night is measured as the acts of thousands of months.</p>
+
+              <p>Muslims from across the world offer prayers and do good on this night to draw Allah’s closeness and forgiveness. This article highlights what the Laylatul Qadr is, its signs and significance.</p>
+
+              <h2 className="text-3xl font-display font-bold text-sundas-blue pt-4">What is Laylatul Qadr?</h2>
+              <p>Laylatul Qadr is a night in which the Holy Quran was first revealed completely on Prophet Muhammad (Peace Be Upon Him). Allah (SWT) explains its importance: <span className="italic">"The Night of Glory is better than a thousand months."</span></p>
+
+              <h2 className="text-3xl font-display font-bold text-sundas-blue pt-4">Signs of Layatul Qadr?</h2>
+              <div className="bg-sundas-blue/5 p-8 rounded-3xl space-y-4">
+                <p><strong>The Sun without Rays:</strong> On the morning following Laylatul Qadr, the sun rises without rays, like a brass dish.</p>
+                <p><strong>Calm and Pleasant:</strong> The night is calm, neither hot nor cold, with a feeble and red morning sun.</p>
+                <p><strong>Tranquility:</strong> A specialized sense of moderate temperature and peace in the atmosphere.</p>
+              </div>
+
+              <h2 className="text-3xl font-display font-bold text-sundas-blue pt-4">When is Laylatul Qadr 2026?</h2>
+              <p>Find Laylatul Qadr in the odd nights of the last Ashra. Estimated odd nights for 2026:</p>
+              <ul className="list-disc pl-6 grid grid-cols-2 gap-2 font-bold text-sundas-red">
+                <li>9th March (21st)</li>
+                <li>11th March (23rd)</li>
+                <li>13th March (25th)</li>
+                <li>15th March (27th)</li>
+                <li>17th March (29th)</li>
+              </ul>
+              <p>Many treat the <strong>27th night (15th March)</strong> as the primary focus in congregations.</p>
+
+              <h2 className="text-3xl font-display font-bold text-sundas-blue pt-4">What to do on Laylatul Qadr?</h2>
+              <div className="bg-white border-2 border-sundas-blue/10 p-8 rounded-3xl space-y-4 shadow-sm">
+                {[
+                  { t: "Vacation for Allah", d: "Purely focus on worship, avoiding worldly responsibilities." },
+                  { t: "Itikaf", d: "Engage in isolation at Masjid or home to draw closer to Allah." },
+                  { t: "Special Dua", d: "Allahumma innaka `afuwwun tuhibbul `afwa fa`fu `annee." },
+                  { t: "Recite Quran", d: "Preferably with translation for better understanding." },
+                  { t: "Night Prayers", d: "Attend Traweeh, Nawafil, and Khatam al Quran duas." }
+                ].map((step, i) => (
+                  <div key={i} className="flex gap-4 border-b border-sundas-blue/5 pb-4 last:border-0 last:pb-0">
+                    <span className="flex-shrink-0 w-8 h-8 bg-sundas-blue text-white flex items-center justify-center rounded-lg font-bold text-sm">{i + 1}</span>
+                    <div>
+                      <h4 className="font-bold text-sundas-blue">{step.t}</h4>
+                      <p className="text-sm opacity-80">{step.d}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="bg-sundas-red text-white p-10 rounded-3xl text-center shadow-xl">
+                 <h2 className="text-3xl font-display font-bold mb-6 italic">"Give Your Donations on Laylatul Qadr"</h2>
+                 <p className="text-lg opacity-90 mb-8">Doing good deeds on this night comes with multiple rewards. Give your donations to Sundas Foundation on Laylatul Qadr to treat poor patients suffering from Thalassemia, Hemophilia, and other blood disorders.</p>
+                 <button className="bg-white text-sundas-red px-10 py-4 rounded-full font-bold hover:bg-sundas-blue hover:text-white transition-all">Donate Now</button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    );
+  }
+
   const items = subPage === 'Blog' ? [
     {
       id: 'hajj-2026',
@@ -1352,8 +2097,72 @@ const MediaPage = ({ onBack, subPage }: { onBack: () => void, subPage: string | 
       img: 'https://d34vm3j4h7f97z.cloudfront.net/original/4X/1/0/e/10edc692398b345ea4bd47397002bcb7a4699593.jpeg',
       date: '2026 Archive'
     },
-    { id: 5 }, { id: 6 }
-  ] : [1, 2, 3, 4, 5, 6].map(i => ({ id: i }));
+    {
+      id: 'fitrana-2026',
+      title: 'Fitrana in Ramadan 2026',
+      description: 'Fitrana is an obligatory form of charity that needs to be paid by every eligible Muslim in Ramadan.',
+      img: 'https://shop.donatedirectly.com/cdn/shop/files/1_Pay_Your_Fitrana_-_Thumbnails_-_Ramadan_2026_-_Website_-_Donate_Directly_103f9593-d1c9-4d03-bdb2-71c52c422cdb.jpg?v=1772469187&width=1920',
+      date: '2026 Archive'
+    },
+    {
+      id: 'laylatul-qadr-2026',
+      title: 'Laylatul Qadr - The Night of Power',
+      description: 'Laylatul Qadr appears on one of the odd nights in the last Ashra of Ramadan.',
+      img: 'https://www.akramaid.org/wp-content/uploads/2026/01/AA-Laylatul-Qadr-night-Web-mobile.webp',
+      date: '2026 Archive'
+    }
+  ] : subPage === 'Certificates' ? [] : subPage === 'Events' ? [
+    {
+      id: 'nawaz-sharif-birthday',
+      title: 'Provincial Education Minister Rana Sikandar Hayat Khan Celebrates Nawaz Sharif’s Birthday with Thalassemia and Hemophilia Patients at Sundas Foundation',
+      description: 'Provincial Education Minister Rana Sikandar Hayat Khan visited Sundas Foundation Lahore and celebrated the birthday of PML-N President Muhammad Nawaz Sharif with thalassemia and hemophilia patients...',
+      img: 'https://sundas.org/Images/NewsandEvents/Events/26-Dec-2025_01-52-04_605150152_1293209289507958_3706831559144245765_n.jpg',
+      date: '12/25/2025'
+    },
+    {
+      id: 'governor-kpk-visit',
+      title: 'Governor Khyber Pakhtunkhwa Faisal Karim Kundi Visits Sundas Foundation Lahore',
+      description: 'Governor of Khyber Pakhtunkhwa Faisal Karim Kundi, visited Sundas Foundation Lahore, where he reviewed medical facilities...',
+      img: 'https://sundas.org/Images/NewsandEvents/Events/19-Dec-2025_21-18-32_WhatsApp%20Image%202025-12-20%20at%2010.17.29%20AM.jpeg',
+      date: '12/19/2025'
+    },
+    {
+      id: 'advisor-punjab-visit',
+      title: 'Advisor to the Chief Minister Punjab for Zakat & Ushr Rashid Iqbal Nasrullah Visits Sundas Foundation',
+      description: 'Advisor to the Chief Minister Punjab for Zakat & Ushr Rashid Iqbal Nasrullah visited Sundas Foundation Lahore...',
+      img: 'https://sundas.org/Images/NewsandEvents/Events/19-Nov-2025_04-41-17_WhatsApp%20Image%202025-11-19%20at%203.30.23%20PM.jpeg',
+      date: '11/19/2025'
+    },
+    {
+      id: 'resham-nimra-visit',
+      title: 'Film Star Resham and Singer Nimra Mehra Visit Sundas Foundation to Support Children Battling Blood Disorders',
+      description: 'Renowned film star Resham and singer Nimra Mehra visited Sundas Foundation where they met children suffering from thalassemia and hemophilia...',
+      img: 'https://sundas.org/Images/NewsandEvents/Events/03-Nov-2025_03-45-05_WhatsApp%20Image%202025-11-03%20at%2012.42.10%20PM.jpeg',
+      date: '11/03/2025'
+    },
+    {
+      id: 'khawaja-imran-visit',
+      title: 'Punjab Health Minister Khawaja Imran Nazir Celebrates CM Maryam Nawaz Sharif’s Birthday with Thalassemia and Hemophilia Patients at Sundas Foundation',
+      description: 'Punjab Health Minister Khawaja Imran Nazir Celebrates CM Maryam Nawaz Sharif’s Birthday with Thalassemia and Hemophilia Patients...',
+      img: 'https://sundas.org/Images/NewsandEvents/Events/28-Oct-2025_23-26-47_571347790_1246929037469317_5390816052461761227_n.jpg',
+      date: '10/28/2025'
+    },
+    {
+      id: 'salma-butt-visit',
+      title: 'Special Assistant to CM Punjab Salma Butt Visits Sundas Foundation Lahore',
+      description: 'Chairperson of CM’s Task Force on Price Control Ms. Salma Butt visited Sundas Foundation Lahore met children receiving treatment for thalassemia and hemophilia...',
+      img: 'https://sundas.org/Images/NewsandEvents/Events/23-Oct-2025_00-44-34_WhatsApp%20Image%202025-10-23%20at%2012.29.40%20PM%20(1).jpeg',
+      date: '10/23/2025'
+    },
+    {
+      id: 'university-lahore-camp',
+      title: 'Sundas Foundation Organizes Successful Blood Donation Camp at University of Lahore',
+      description: 'Sundas Foundation in collaboration with the University of Lahore organized a successful blood donation camp to support thalassemia and hemophilia patients...',
+      img: 'https://sundas.org/Images/NewsandEvents/Events/16-Oct-2025_00-05-19_DSC03914.JPG',
+      date: '10/15/2025'
+    }
+  ]
+  : [1, 2, 3, 4, 5, 6].map(i => ({ id: i }));
 
   return (
     <div className="bg-white min-h-screen font-sans">
@@ -1418,16 +2227,16 @@ const MediaPage = ({ onBack, subPage }: { onBack: () => void, subPage: string | 
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {items.map((item: any, idx) => (
+          <div className={`${items.length > 0 ? 'grid md:grid-cols-2 lg:grid-cols-3 gap-8' : 'flex flex-col items-center justify-center py-20 bg-sundas-blue/5 rounded-3xl border border-dashed border-sundas-blue/20'}`}>
+            {items.length > 0 ? items.map((item: any, idx) => (
               <motion.div
                 key={item.id}
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.1 }}
-                onClick={() => ['hajj-2026', 'eid-ul-adha-2026', 'itikaf-ramadan', 'eid-al-fitr-2026'].includes(item.id) && setSelectedBlog(item.id)}
-                className={`group relative bg-white rounded-3xl overflow-hidden shadow-lg border border-sundas-blue/5 hover:shadow-2xl transition-all duration-500 ${['hajj-2026', 'eid-ul-adha-2026', 'itikaf-ramadan', 'eid-al-fitr-2026'].includes(item.id) ? 'cursor-pointer' : ''}`}
+                onClick={() => ['hajj-2026', 'eid-ul-adha-2026', 'itikaf-ramadan', 'eid-al-fitr-2026', 'fitrana-2026', 'laylatul-qadr-2026', 'nawaz-sharif-birthday', 'governor-kpk-visit', 'advisor-punjab-visit', 'resham-nimra-visit', 'khawaja-imran-visit', 'salma-butt-visit', 'university-lahore-camp'].includes(item.id) && setSelectedBlog(item.id)}
+                className={`group relative bg-white rounded-3xl overflow-hidden shadow-lg border border-sundas-blue/5 hover:shadow-2xl transition-all duration-500 ${['hajj-2026', 'eid-ul-adha-2026', 'itikaf-ramadan', 'eid-al-fitr-2026', 'fitrana-2026', 'laylatul-qadr-2026', 'nawaz-sharif-birthday', 'governor-kpk-visit', 'advisor-punjab-visit', 'resham-nimra-visit', 'khawaja-imran-visit', 'salma-butt-visit', 'university-lahore-camp'].includes(item.id) ? 'cursor-pointer' : ''}`}
               >
                 <div className="aspect-video overflow-hidden">
                   <img 
@@ -1447,14 +2256,26 @@ const MediaPage = ({ onBack, subPage }: { onBack: () => void, subPage: string | 
                   <p className="text-sm text-sundas-blue/60 line-clamp-2">
                     {item.description || `A brief description of this ${subPage?.toLowerCase() || 'news'} item highlighting the core event or update.`}
                   </p>
-                  {['hajj-2026', 'eid-ul-adha-2026', 'itikaf-ramadan', 'eid-al-fitr-2026'].includes(item.id) && (
+                  {['hajj-2026', 'eid-ul-adha-2026', 'itikaf-ramadan', 'eid-al-fitr-2026', 'fitrana-2026', 'laylatul-qadr-2026', 'nawaz-sharif-birthday', 'governor-kpk-visit', 'advisor-punjab-visit', 'resham-nimra-visit', 'khawaja-imran-visit', 'salma-butt-visit', 'university-lahore-camp'].includes(item.id) && (
                     <div className="mt-4 flex items-center gap-2 text-sundas-red font-bold text-sm">
-                      Read Full Article <ArrowRight size={16} />
+                      Read Full {subPage === 'Events' ? 'Report' : 'Article'} <ArrowRight size={16} />
                     </div>
                   )}
                 </div>
               </motion.div>
-            ))}
+            )) : (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="text-center"
+              >
+                <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl border border-sundas-blue/10">
+                   <Activity className="text-sundas-blue/20" size={40} />
+                </div>
+                <h3 className="text-2xl font-display font-bold text-sundas-blue mb-2">No Certificates Found</h3>
+                <p className="text-sundas-blue/50">There are currently no certificates to display in this section.</p>
+              </motion.div>
+            )}
           </div>
         </motion.div>
       </div>
@@ -1797,7 +2618,7 @@ const Stats = () => {
               className="flex-shrink-0 w-[300px] md:w-[400px] text-center px-10"
             >
               <h3 className={`text-5xl md:text-7xl font-display font-extrabold mb-2 ${stat.color}`}>
-                {stat.value}
+                <Counter value={stat.value} />
               </h3>
               <p className="text-sundas-blue/60 font-medium uppercase tracking-widest text-sm">
                 {stat.label}
@@ -1815,24 +2636,27 @@ const Causes = ({ onLearnMore }: { onLearnMore: (cause: string) => void }) => {
     {
       id: 'thalassemia',
       title: 'Thalassemia',
-      description: 'Providing life-saving blood transfusions and medicine to children fighting Thalassemia.',
-      icon: <Droplets className="text-sundas-blue" size={40} />,
+      description: 'Thalassemia is a genetic blood disorder that affects the body’s ability to produce healthy hemoglobin—the protein in red blood cells that carries oxygen to every part of the body.',
+      img: 'https://sundas.org/images/cause_1.jpg',
+      icon: <Droplets className="text-white" size={24} />,
       border: 'border-sundas-blue',
       bg: 'hover:bg-sundas-blue/5'
     },
     {
       id: 'hemophilia',
       title: 'Hemophilia',
-      description: 'Specialized treatment and emergency care for patients with bleeding disorders.',
-      icon: <HeartHandshake className="text-sundas-red" size={40} />,
+      description: "Hemophilia is a rare genetic disorder that affects the blood's clotting ability. Patients with hemophilia experience prolonged bleeding due to the lack of specific clotting factors.",
+      img: 'https://sundas.org/images/cause_2.jpg',
+      icon: <HeartHandshake className="text-white" size={24} />,
       border: 'border-sundas-red',
       bg: 'hover:bg-sundas-red/5'
     },
     {
-      id: 'blood-bank',
-      title: 'Blood Bank',
-      description: 'A high-tech facility for collecting, testing, and storing safe blood products.',
-      icon: <Hospital className="text-sundas-blue" size={40} />,
+      id: 'other-blood-disorders',
+      title: 'Other Blood Disorders',
+      description: "Blood disorders include a wide range of conditions that affect the blood's ability to function properly, impacting red blood cells, white blood cells, platelets, or plasma.",
+      img: 'https://sundas.org/images/cause_3.jpg',
+      icon: <Hospital className="text-white" size={24} />,
       border: 'border-sundas-blue',
       bg: 'hover:bg-sundas-blue/5'
     }
@@ -1865,23 +2689,34 @@ const Causes = ({ onLearnMore }: { onLearnMore: (cause: string) => void }) => {
               transition={{ delay: index * 0.2 }}
               whileHover={{ 
                 y: -10, 
-                boxShadow: cause.id === 'thalassemia' ? "0 20px 40px rgba(203,0,0,0.15)" : "0 20px 40px rgba(0,74,173,0.15)"
+                boxShadow: cause.id === 'hemophilia' ? "0 20px 40px rgba(203,0,0,0.15)" : "0 20px 40px rgba(0,74,173,0.15)"
               }}
-              className={`bg-white p-10 rounded-3xl shadow-xl shadow-sundas-blue/10 border-b-8 ${cause.border} ${cause.bg} transition-all duration-500 group cursor-default`}
+              className={`bg-white rounded-3xl overflow-hidden shadow-xl shadow-sundas-blue/10 border-b-8 ${cause.border} transition-all duration-500 group cursor-default h-full flex flex-col`}
             >
-              <div className="mb-8 transform group-hover:scale-110 transition-transform duration-300">
-                {cause.icon}
+              <div className="relative h-64 overflow-hidden">
+                <img 
+                  src={cause.img} 
+                  alt={cause.title} 
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  referrerPolicy="no-referrer"
+                />
+                <div className={`absolute top-4 left-4 p-3 rounded-2xl backdrop-blur-md shadow-lg ${cause.id === 'hemophilia' ? 'bg-sundas-red/90' : 'bg-sundas-blue/90'}`}>
+                  {cause.icon}
+                </div>
               </div>
-              <h3 className="text-2xl font-display font-bold mb-4 text-sundas-blue">{cause.title}</h3>
-              <p className="text-sundas-blue/70 leading-relaxed mb-8">
-                {cause.description}
-              </p>
-              <button 
-                onClick={() => onLearnMore(cause.id)}
-                className="flex items-center gap-2 text-sundas-blue font-bold group-hover:gap-4 transition-all"
-              >
-                Learn More <ChevronRight size={18} />
-              </button>
+              
+              <div className="p-10 flex-grow flex flex-col">
+                <h3 className="text-2xl font-display font-bold mb-4 text-sundas-blue">{cause.title}</h3>
+                <p className="text-sundas-blue/70 leading-relaxed mb-8 flex-grow">
+                  {cause.description}
+                </p>
+                <button 
+                  onClick={() => onLearnMore(cause.id)}
+                  className="flex items-center gap-2 text-sundas-blue font-bold group-hover:gap-4 transition-all"
+                >
+                  Learn More <ChevronRight size={18} />
+                </button>
+              </div>
             </motion.div>
           ))}
         </div>
@@ -1953,16 +2788,18 @@ const CauseDetail = ({ causeId, onBack }: { causeId: string, onBack: () => void 
           </button>
           
           <img 
-            src="https://st1.photogallery.ind.sh/wp-content/uploads/indiacom/how-is-thalassemia-treated-201705-1494225090.jpg" 
-            alt="Thalassemia Treatment" 
+            src="https://sundas.org/images/cause_1.jpg" 
+            alt="Thalassemia" 
             className="w-full h-[400px] object-cover rounded-3xl mb-12 shadow-xl"
             referrerPolicy="no-referrer"
           />
           
-          <h1 className="text-4xl md:text-6xl font-display font-extrabold text-sundas-blue mb-8">Thalassemia Support</h1>
+          <h1 className="text-4xl md:text-6xl font-display font-extrabold text-sundas-blue mb-8">Thalassemia</h1>
           
-          <div className="prose prose-lg max-w-none text-sundas-blue/80 space-y-6 leading-relaxed">
-            <p>At Sundas Foundation, we are deeply committed to supporting patients living with Thalassemia. We work tirelessly to raise awareness, provide life-saving blood transfusions, and deliver effective treatments to those who need them most. Through our efforts, we aim to not only ease their struggles but also bring hope and positivity to their lives.</p>
+          <div className="prose prose-lg max-w-none text-sundas-blue/80 space-y-6 leading-relaxed text-justify">
+            <p>Thalassemia is a genetic blood disorder that affects the body’s ability to produce healthy hemoglobin—the protein in red blood cells that carries oxygen to every part of the body. This condition is inherited, meaning it’s passed down through families when at least one parent carries the gene.</p>
+
+            <p>Living with Thalassemia often means living with anemia, which can range from mild to severe depending on the type and severity of the disorder. For many people, managing this condition is a lifelong journey that requires regular medical care and frequent blood transfusions. At Sundas Foundation, we are deeply committed to supporting patients living with Thalassemia. We work tirelessly to raise awareness, provide life-saving blood transfusions, and deliver effective treatments to those who need them most. Through our efforts, we aim to not only ease their struggles but also bring hope and positivity to their lives.</p>
             
             <h2 className="text-3xl font-display font-bold text-sundas-blue mt-12">Types of thalassemia</h2>
             <p>There are two main types of thalassemia: alpha-thalassemia and beta-thalassemia, which are further classified into subtypes based on the severity of the disease:</p>
@@ -1972,6 +2809,7 @@ const CauseDetail = ({ causeId, onBack }: { causeId: string, onBack: () => void 
             </ul>
 
             <h2 className="text-3xl font-display font-bold text-sundas-blue mt-12">Alpha vs. Beta Thalassemia</h2>
+            <p>Alpha vs. beta-thalassemia has the following differences between them:</p>
             <div className="overflow-x-auto">
               <table className="w-full border-collapse border border-sundas-blue/10 mt-4">
                 <thead>
@@ -2008,6 +2846,7 @@ const CauseDetail = ({ causeId, onBack }: { causeId: string, onBack: () => void 
 
             <h2 className="text-3xl font-display font-bold text-sundas-blue mt-12">Signs & Symptoms</h2>
             <p>The signs and symptoms for thalassemia vary from patient to patient. Some babies start showing symptoms of thalassemia after childbirth while others develop the disease in the first 2-3 years.</p>
+            <p>Some common symptoms noticed among thalassemia patients are:</p>
             <ul className="list-disc pl-6 space-y-2">
               <li>Fatigue and weakness</li>
               <li>Pale or yellowish skin</li>
@@ -2034,8 +2873,13 @@ const CauseDetail = ({ causeId, onBack }: { causeId: string, onBack: () => void 
             <p>Mild forms of thalassemia trait don't need treatment. For moderate to severe thalassemia, treatments might include:</p>
             <ul className="list-disc pl-6 space-y-4">
               <li><strong>Frequent Blood Transfusions:</strong> Severe forms of thalassemia often require regular blood transfusions, sometimes as frequently as every few weeks. However, repeated transfusions can lead to iron buildup in the body, potentially damaging vital organs such as the heart and liver.</li>
-              <li><strong>Chelation Therapy:</strong> This treatment helps remove excess iron from the blood caused by frequent transfusions or naturally occurring iron buildup. Medications used for chelation include Deferasirox, Deferiprone, and Deferoxamine.</li>
-              <li><strong>Stem Cell Transplant:</strong> Also known as a bone marrow transplant, this treatment may be a viable option, especially for children with severe thalassemia. A successful stem cell transplant from a compatible donor can eliminate the need for lifelong blood transfusions.</li>
+              <li><strong>Chelation Therapy:</strong> This treatment helps remove excess iron from the blood caused by frequent transfusions or naturally occurring iron buildup. Medications used for chelation include:
+                <ul className="list-circle pl-6 mt-2 space-y-1">
+                  <li><strong>Deferasirox (Exjade, Jadenu) and Deferiprone (Ferriprox):</strong> These are oral medications that help reduce iron levels.</li>
+                  <li><strong>Deferoxamine (Desferal):</strong> Administered via injection, this drug is another option for managing iron overload.</li>
+                </ul>
+              </li>
+              <li><strong>Stem Cell Transplant:</strong> Also known as a bone marrow transplant, this treatment may be a viable option, especially for children with severe thalassemia. A successful stem cell transplant from a compatible donor (often a sibling) can eliminate the need for lifelong blood transfusions and iron control medications. This procedure involves replacing the defective stem cells with healthy ones to restore normal blood production.</li>
             </ul>
             <p>Sundas Foundation is the epitome of thalassemia treatment and diagnosis in Pakistan. We are dedicated to providing the best healthcare to those affected, no matter the challenges.</p>
 
@@ -2048,22 +2892,6 @@ const CauseDetail = ({ causeId, onBack }: { causeId: string, onBack: () => void 
               <li>Bone deformities and fractures.</li>
               <li>Osteoporosis, thrombophilia and pseudoxanthoma elasticum.</li>
             </ul>
-
-            <h2 className="text-3xl font-display font-bold text-sundas-blue mt-12">Thalassemia FAQs</h2>
-            <div className="space-y-6">
-              <div>
-                <h4 className="font-bold text-sundas-blue">1. How does Sundas Foundation help thalassemia patients?</h4>
-                <p>Sundas Foundation is established to support patients suffering from thalassemia and other serious blood disorders. Our staff works tirelessly to raise awareness, provide life-saving blood transfusions, and deliver on-time and effective treatment to needy patients.</p>
-              </div>
-              <div>
-                <h4 className="font-bold text-sundas-blue">2. How does Sundas Foundation manage thalassemia treatment?</h4>
-                <p>We provide comprehensive care including regular transfusions and chelation therapy.</p>
-              </div>
-              <div>
-                <h4 className="font-bold text-sundas-blue">3. How can I give donations to Sundas Foundation?</h4>
-                <p>You can donate through our website or visit any of our centers.</p>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -2082,16 +2910,18 @@ const CauseDetail = ({ causeId, onBack }: { causeId: string, onBack: () => void 
           </button>
           
           <img 
-            src="https://media.post.rvohealth.io/wp-content/uploads/2023/08/Woman-with-a-large-hematoma-on-her-leg-thumbnail.jpg" 
-            alt="Hemophilia Treatment" 
+            src="https://sundas.org/images/cause_2.jpg" 
+            alt="Hemophilia" 
             className="w-full h-[400px] object-cover rounded-3xl mb-12 shadow-xl"
             referrerPolicy="no-referrer"
           />
           
-          <h1 className="text-4xl md:text-6xl font-display font-extrabold text-sundas-blue mb-8">Hemophilia Care</h1>
+          <h1 className="text-4xl md:text-6xl font-display font-extrabold text-sundas-blue mb-8">Hemophilia</h1>
           
-          <div className="prose prose-lg max-w-none text-sundas-blue/80 space-y-6 leading-relaxed">
-            <p>Our services include:</p>
+          <div className="prose prose-lg max-w-none text-sundas-blue/80 space-y-6 leading-relaxed text-justify">
+            <p>Hemophilia is a rare genetic disorder that affects the blood's clotting ability. Patients with hemophilia experience prolonged bleeding due to the lack of specific clotting factors. If not managed properly, hemophilia can lead to severe health complications.</p>
+
+            <p>At Sundas Foundation, our mission is to raise awareness and support to those affected by hemophilia in Pakistan. Our services include:</p>
             <ul className="list-disc pl-6 space-y-2">
               <li>Covering the costs of essential diagnostic tests to monitor and manage the condition.</li>
               <li>Providing life-saving medications, such as clotting factor replacement therapy.</li>
@@ -2100,20 +2930,32 @@ const CauseDetail = ({ causeId, onBack }: { causeId: string, onBack: () => void 
             <p>We go beyond treatment at Sundas Foundation by creating a strong support system that ensures better health and well-being for hemophilia patients and their families. Our goal is to improve their quality of life, enabling them to face each day with hope and confidence.</p>
 
             <h2 className="text-3xl font-display font-bold text-sundas-blue mt-12">Hemophilia Types</h2>
+            <p>Hemophilia is classified into three types:</p>
             <ul className="list-disc pl-6 space-y-2">
               <li><strong>Hemophilia A:</strong> Also known as classic hemophilia. It is caused by a deficiency in clotting factor VIII. It is the most common form of the disorder.</li>
               <li><strong>Hemophilia B:</strong> Also called Christmas disease. It is a result of a deficiency in clotting factor IX. It is less common than Hemophilia A.</li>
-              <li><strong>Hemophilia C:</strong> This rarer form is caused by a deficiency in clotting factor XI and affects both males and females.</li>
+              <li><strong>Hemophilia C:</strong> This rarer form is caused by a deficiency in clotting factor XI and affects both males and females. It often leads to milder symptoms.</li>
             </ul>
 
             <h2 className="text-3xl font-display font-bold text-sundas-blue mt-12">Hemophilia Causes</h2>
             <ul className="list-disc pl-6 space-y-4">
               <li><strong>Genetic mutations:</strong> Hemophilia is usually caused by changes in the genes on the X chromosome, which affect the production of clotting factors.</li>
-              <li><strong>Gender differences:</strong> Males have only one X chromosome, so a single mutation can cause hemophilia. Females have two X chromosomes, so they are typically carriers.</li>
-              <li><strong>Rare cases:</strong> Sometimes, hemophilia can develop later in life due to autoimmune conditions or certain medical issues.</li>
+              <li><strong>Gender differences:</strong>
+                <ul className="list-circle pl-6 mt-2 space-y-1">
+                  <li><strong>Males:</strong> Since they have only one X chromosome, a single mutation can cause hemophilia.</li>
+                  <li><strong>Females:</strong> They have two X chromosomes, so they are typically carriers unless mutations occur on both X chromosomes. Carriers may also show mild symptoms.</li>
+                </ul>
+              </li>
+              <li><strong>Rare cases:</strong> Sometimes, hemophilia can develop later in life due to factors like:
+                <ul className="list-circle pl-6 mt-2 space-y-1">
+                  <li>Autoimmune conditions</li>
+                  <li>Certain medical issues that disrupt clotting factor production</li>
+                </ul>
+              </li>
             </ul>
 
             <h2 className="text-3xl font-display font-bold text-sundas-blue mt-12">Signs & Symptoms</h2>
+            <p>Hemophilia symptoms vary from patient to patient. Some common signs and symptoms of hemophilia are mentioned below:</p>
             <ul className="list-disc pl-6 space-y-2">
               <li>Prolonged bleeding from cuts or injuries</li>
               <li>Frequent nose bleeds</li>
@@ -2132,29 +2974,13 @@ const CauseDetail = ({ causeId, onBack }: { causeId: string, onBack: () => void 
               <li><strong>Gene Therapy:</strong> A promising experimental approach aimed at correcting the genetic mutation causing hemophilia.</li>
             </ul>
             <p>Sundas Foundation works closely with hemophilia patients and provides them quality treatment and better healthcare. Your donations help Sundas Foundation focus on hemophilia patients and their treatment without any financial barriers.</p>
-
-            <h2 className="text-3xl font-display font-bold text-sundas-blue mt-12">Hemophilia FAQs</h2>
-            <div className="space-y-6">
-              <div>
-                <h4 className="font-bold text-sundas-blue">1. What does Sundas Foundation do for Hemophilia Patients?</h4>
-                <p>At Sundas Foundation, we cover the cost of essential diagnostic tests, helping us monitor and manage the condition. We also provide life-saving medications to Hemophilia patients who are poor and cannot afford their treatment costs.</p>
-              </div>
-              <div>
-                <h4 className="font-bold text-sundas-blue">2. How can I support Hemophilia patients?</h4>
-                <p>You can support by donating funds or volunteering at our centers.</p>
-              </div>
-              <div>
-                <h4 className="font-bold text-sundas-blue">3. Is Hemophilia a curable disease?</h4>
-                <p>Currently, there is no cure, but it is highly manageable with modern treatment.</p>
-              </div>
-            </div>
           </div>
         </div>
       </div>
     );
   }
 
-  if (causeId === 'blood-bank') {
+  if (causeId === 'other-blood-disorders') {
     return (
       <div className="pt-32 pb-20 bg-white min-h-screen">
         <div className="max-w-4xl mx-auto px-6">
@@ -2166,15 +2992,19 @@ const CauseDetail = ({ causeId, onBack }: { causeId: string, onBack: () => void 
           </button>
           
           <img 
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTyQ1IGlEtxAxLVFPsn41U4Bdq-IOZI_xUsQ&s" 
-            alt="Blood Bank and Disorders" 
+            src="https://sundas.org/images/cause_3.jpg" 
+            alt="Other Blood Disorders" 
             className="w-full h-[400px] object-cover rounded-3xl mb-12 shadow-xl"
             referrerPolicy="no-referrer"
           />
           
-          <h1 className="text-4xl md:text-6xl font-display font-extrabold text-sundas-blue mb-8">Blood Bank & Disorders</h1>
+          <h1 className="text-4xl md:text-6xl font-display font-extrabold text-sundas-blue mb-8">Other Blood Disorders</h1>
           
-          <div className="prose prose-lg max-w-none text-sundas-blue/80 space-y-6 leading-relaxed">
+          <div className="prose prose-lg max-w-none text-sundas-blue/80 space-y-6 leading-relaxed text-justify">
+            <p>Blood disorders include a wide range of conditions that affect the blood's ability to function properly. These disorders can impact red blood cells, white blood cells, platelets, or plasma which leads to various health challenges.</p>
+
+            <p>At Sundas Foundation, we aim to raise awareness and provide treatments to those affected by blood disorders, helping them lead healthier lives.</p>
+            
             <h2 className="text-3xl font-display font-bold text-sundas-blue mt-12">Common Blood Disorders</h2>
             <p>At Sundas Foundation, we are committed to improving the lives of individuals battling a wide range of rare and complex blood disorders. Our mission is to ensure that every patient has access to the care, treatment, and support they need. We provide treatments and facilitate donations for the following conditions:</p>
             
@@ -2203,31 +3033,15 @@ const CauseDetail = ({ causeId, onBack }: { causeId: string, onBack: () => void 
             <h2 className="text-3xl font-display font-bold text-sundas-blue mt-12">Treatment Options</h2>
             <p>The treatment option also varies for different blood disorders. While some blood disorders can be managed with medication, others are fatal and require intensive care.</p>
             <ul className="list-disc pl-6 space-y-4">
-              <li><strong>Medications:</strong> To manage symptoms or address the underlying cause.</li>
-              <li><strong>Blood Transfusions:</strong> For severe anemia or other conditions.</li>
-              <li><strong>Bone Marrow or Stem Cell Transplants:</strong> For disorders like leukemia or severe thalassemia.</li>
-              <li><strong>Lifestyle Changes:</strong> Improved diet and regular monitoring.</li>
+              <li><strong>Medications:</strong> To manage symptoms or address the underlying cause</li>
+              <li><strong>Blood Transfusions:</strong> For severe anemia or other conditions</li>
+              <li><strong>Bone Marrow or Stem Cell Transplants:</strong> For disorders like leukemia or severe thalassemia</li>
+              <li><strong>Lifestyle Changes:</strong> Improved diet and regular monitoring</li>
             </ul>
 
             <h2 className="text-3xl font-display font-bold text-sundas-blue mt-12">Living with Blood Disorders</h2>
             <p>Living with a blood disorder requires ongoing care and management. Regular check-ups, following the treatment plans, and maintaining a healthy lifestyle can significantly improve quality of life.</p>
             <p>At Sundas Foundation, we are dedicated to raising awareness and support for individuals and families dealing with blood disorders. Your donations can help patients suffering from various blood disorders. Be a part of Sundas Foundation and let’s become a beacon of hope for those in need.</p>
-
-            <h2 className="text-3xl font-display font-bold text-sundas-blue mt-12">Other Blood Disorders FAQs</h2>
-            <div className="space-y-6">
-              <div>
-                <h4 className="font-bold text-sundas-blue">1. What blood disorders are managed by Sundas Foundation?</h4>
-                <p>Sundas Foundation is dedicatedly working to relieve patients suffering from Thalassemia, Hemophilia, Glanzmann’s thrombasthenia & Bernard-Soulier syndrome, pure red cell aplasia & aplastic anemia, chronic dyserythropoietic anemia (CDA), von Willebrand’s disease, and deficiencies in factor I, V, VII, X, and XIII.</p>
-              </div>
-              <div>
-                <h4 className="font-bold text-sundas-blue">2. How does Sundas Foundation manage blood disorders?</h4>
-                <p>We provide specialized medical care, transfusions, and medication support tailored to each condition.</p>
-              </div>
-              <div>
-                <h4 className="font-bold text-sundas-blue">3. How can I support patients with blood disorders?</h4>
-                <p>You can support through financial donations or by donating blood at our high-tech blood bank facilities.</p>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -3050,15 +3864,15 @@ export default function App() {
                 
                 <div className="grid grid-cols-3 gap-6 pt-10 border-t border-sundas-blue/5">
                   <div className="text-center">
-                    <p className="text-4xl font-black text-sundas-red mb-1">25+</p>
+                    <p className="text-4xl font-black text-sundas-red mb-1"><Counter value="25+" /></p>
                     <p className="text-[10px] uppercase font-bold text-sundas-blue/40 tracking-widest">Years of Service</p>
                   </div>
                   <div className="text-center">
-                    <p className="text-4xl font-black text-sundas-blue mb-1">12</p>
+                    <p className="text-4xl font-black text-sundas-blue mb-1"><Counter value="12" /></p>
                     <p className="text-[10px] uppercase font-bold text-sundas-blue/40 tracking-widest">Centers Nationwide</p>
                   </div>
                   <div className="text-center">
-                    <p className="text-4xl font-black text-sundas-blue mb-1">1M+</p>
+                    <p className="text-4xl font-black text-sundas-blue mb-1"><Counter value="1M+" /></p>
                     <p className="text-[10px] uppercase font-bold text-sundas-blue/40 tracking-widest">Lives Impacted</p>
                   </div>
                 </div>
@@ -3120,15 +3934,15 @@ export default function App() {
                 <div className="text-white text-center">
                   <div className="flex justify-center gap-8 md:gap-20">
                     <div className="bg-white/10 backdrop-blur-md px-6 py-4 rounded-2xl border border-white/20">
-                      <div className="text-3xl font-black">25+</div>
+                      <div className="text-3xl font-black"><Counter value="25+" /></div>
                       <div className="text-xs uppercase tracking-widest opacity-80 mt-1">Centers</div>
                     </div>
                     <div className="bg-white/10 backdrop-blur-md px-6 py-4 rounded-2xl border border-white/20">
-                      <div className="text-3xl font-black">100k+</div>
+                      <div className="text-3xl font-black"><Counter value="100k+" /></div>
                       <div className="text-xs uppercase tracking-widest opacity-80 mt-1">Donors</div>
                     </div>
                     <div className="bg-white/10 backdrop-blur-md px-6 py-4 rounded-2xl border border-white/20">
-                      <div className="text-3xl font-black">1M+</div>
+                      <div className="text-3xl font-black"><Counter value="1M+" /></div>
                       <div className="text-xs uppercase tracking-widest opacity-80 mt-1">Lives Saved</div>
                     </div>
                   </div>
