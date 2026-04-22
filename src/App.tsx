@@ -45,7 +45,7 @@ const Counter = ({ value, duration = 2 }: { value: string, duration?: number }) 
   return <span ref={ref}>{count}{suffix}</span>;
 };
 
-const Navbar = ({ onDonate, onAbout, onHome, onCauses, onContact, onAboutSubPage, onMediaSubPage }: { onDonate: () => void, onAbout: () => void, onHome: () => void, onCauses: () => void, onContact: () => void, onAboutSubPage?: (sub: string) => void, onMediaSubPage?: (sub: string) => void }) => {
+const Navbar = ({ onDonate, onAbout, onHome, onCauses, onContact, onCenters, onAboutSubPage, onMediaSubPage }: { onDonate: () => void, onAbout: () => void, onHome: () => void, onCauses: () => void, onContact: () => void, onCenters: () => void, onAboutSubPage?: (sub: string) => void, onMediaSubPage?: (sub: string) => void }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeMobileSub, setActiveMobileSub] = useState<string | null>(null);
@@ -73,6 +73,7 @@ const Navbar = ({ onDonate, onAbout, onHome, onCauses, onContact, onAboutSubPage
           ]
         },
         { name: 'Office Bearers', href: '#office-bearers' },
+        { name: 'Our Centers', href: '#centers' },
         { 
           name: 'Executive Management', 
           href: '#executive',
@@ -94,6 +95,7 @@ const Navbar = ({ onDonate, onAbout, onHome, onCauses, onContact, onAboutSubPage
       ]
     },
     { name: 'Our Causes', href: '#causes' },
+    { name: 'Our Centers', href: '#centers' },
     { name: 'Contact', href: '#contact' },
   ];
 
@@ -130,6 +132,7 @@ const Navbar = ({ onDonate, onAbout, onHome, onCauses, onContact, onAboutSubPage
                 onClick={() => {
                   if (link.name === 'About Us') onAbout();
                   else if (link.name === 'Our Causes') onCauses();
+                  else if (link.name === 'Our Centers') onCenters();
                   else if (link.name === 'Contact') onContact();
                   else if (link.name === 'Home') onHome();
                 }}
@@ -233,6 +236,7 @@ const Navbar = ({ onDonate, onAbout, onHome, onCauses, onContact, onAboutSubPage
                         setActiveDropdown(activeDropdown === link.name ? null : link.name);
                       } else {
                         if (link.name === 'Our Causes') onCauses();
+                        else if (link.name === 'Our Centers') onCenters();
                         else if (link.name === 'Contact') onContact();
                         else if (link.name === 'Home') onHome();
                         setIsMobileMenuOpen(false);
@@ -2362,6 +2366,156 @@ const CausesPage = ({ onBack, onLearnMore }: { onBack: () => void, onLearnMore: 
   );
 };
 
+const CentersPage = ({ onBack }: { onBack: () => void }) => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const centers = [
+    {
+      city: 'Lahore (Head Office)',
+      address: '880 Shadman-1, Near Crescent Girls School, Lahore.',
+      phone: '+92 42 111-786-327',
+      email: 'info@sundas.org',
+      image: 'https://walledcitylahore.gop.pk/wp-content/uploads/2024/06/Lahore-fort-main-gate-scaled.jpeg'
+    },
+    {
+      city: 'Gujranwala',
+      address: 'G.T. Road, Near General Bus Stand, Gujranwala.',
+      phone: '+92 55 3843555',
+      email: 'gujranwala@sundas.org',
+      image: 'https://crystalpakistan.com/wp-content/uploads/2024/07/Gujranwala.webp'
+    },
+    {
+      city: 'Sialkot',
+      address: 'Near Khawaja Safdar Medical College, Sialkot.',
+      phone: '+92 52 4589255',
+      email: 'sialkot@sundas.org',
+      image: 'https://handicrafts.punjab.gov.pk/public/uploads/all/6gn4DaS88udzwGHDHhpX7W70F08jrxrGpYh5ugRR.jpg'
+    },
+    {
+      city: 'Faisalabad',
+      address: 'Jail Road, Opposite District Courts, Faisalabad.',
+      phone: '+92 41 2622744',
+      email: 'faisalabad@sundas.org',
+      image: 'https://i.ytimg.com/vi/ID5B8vpojbs/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBgsHcUIXGD7xt0LtYKd4bolJZkJw'
+    },
+    {
+      city: 'Gujrat',
+      address: 'Bhimbher Road, Near Fawara Chowk, Gujrat.',
+      phone: '+92 53 3524255',
+      email: 'gujrat@sundas.org',
+      image: 'https://i.ytimg.com/vi/83UFTZGK2_c/sddefault.jpg'
+    },
+    {
+      city: 'Islamabad',
+      address: 'Plot # 22, G-8/4, Islamabad.',
+      phone: '+92 51 2252555',
+      email: 'islamabad@sundas.org',
+      image: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/01/3a/f7/e7/faisal-mosque-in-islamabad.jpg?w=600&h=-1&s=1'
+    },
+    {
+      city: 'Multan',
+      address: 'Near Children Complex, Multan.',
+      phone: '+92 61 4545222',
+      email: 'multan@sundas.org',
+      image: 'https://upload.wikimedia.org/wikipedia/commons/d/dc/Shrine_Shah_Rukn-e-Alam.jpg'
+    },
+    {
+      city: 'Mirpur (AJK)',
+      address: 'Industrial Area, Mirpur, Azad Kashmir.',
+      phone: '+92 5827 433333',
+      email: 'mirpur@sundas.org',
+      image: 'https://www.amflbd.com/upload/location/1777281164483802.jpg'
+    }
+  ];
+
+  return (
+    <div className="bg-white min-h-screen font-sans">
+      <section className="relative h-[350px] md:h-[450px] overflow-hidden">
+        <img 
+          src="https://sundas.org/images/gallery_5.jpg" 
+          alt="Our Centers" 
+          className="absolute inset-0 w-full h-full object-cover"
+          referrerPolicy="no-referrer"
+        />
+        <div className="absolute inset-0 bg-gray-900/70 flex items-center justify-center text-center">
+            <div className="container mx-auto px-6">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                >
+                  <h1 className="text-5xl md:text-7xl font-black text-white leading-tight uppercase tracking-tight">
+                      Our <span className="text-sundas-red">Centers</span>
+                  </h1>
+                  <div className="w-24 h-2 bg-sundas-red mx-auto mt-4 rounded-full"></div>
+                  <p className="text-xl md:text-2xl text-gray-200 mt-6 max-w-2xl mx-auto font-medium">
+                      Providing high-standard treatment & blood donation services across Pakistan.
+                  </p>
+                </motion.div>
+            </div>
+        </div>
+      </section>
+
+      <div className="max-w-7xl mx-auto px-6 py-12">
+        <button 
+          onClick={onBack}
+          className="flex items-center gap-2 text-sundas-blue font-bold mb-12 hover:gap-4 transition-all"
+        >
+          <ArrowRight className="rotate-180" size={20} /> Back to Home
+        </button>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {centers.map((center, index) => (
+            <motion.div
+              key={center.city}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+              className="bg-white rounded-3xl overflow-hidden shadow-xl border border-sundas-blue/5 group hover:shadow-2xl transition-all duration-500"
+            >
+              <div className="h-56 relative overflow-hidden">
+                <img 
+                  src={center.image} 
+                  alt={center.city} 
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-sundas-blue/60 to-transparent"></div>
+                <div className="absolute bottom-4 left-6">
+                  <h3 className="text-2xl font-bold text-white uppercase tracking-tight">{center.city}</h3>
+                </div>
+              </div>
+              <div className="p-8 space-y-4">
+                <div className="flex items-start gap-4">
+                  <div className="bg-sundas-red/10 p-2 rounded-lg text-sundas-red shrink-0">
+                    <MapPin size={18} />
+                  </div>
+                  <p className="text-sundas-blue/70 text-sm leading-relaxed">{center.address}</p>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="bg-sundas-red/10 p-2 rounded-lg text-sundas-red shrink-0">
+                    <Phone size={18} />
+                  </div>
+                  <p className="text-sundas-blue/70 text-sm">{center.phone}</p>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="bg-sundas-red/10 p-2 rounded-lg text-sundas-red shrink-0">
+                    <Mail size={18} />
+                  </div>
+                  <p className="text-sundas-blue/70 text-sm">{center.email}</p>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const ContactPage = ({ onBack }: { onBack: () => void }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -3302,7 +3456,7 @@ const Contact = () => {
   );
 };
 
-const Footer = ({ onContact }: { onContact: () => void }) => {
+const Footer = ({ onContact, onCenters }: { onContact: () => void, onCenters: () => void }) => {
   return (
     <footer className="bg-sundas-blue text-white pt-24 pb-12 px-6 relative overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-sundas-blue via-sundas-red to-sundas-blue glow-red opacity-50"></div>
@@ -3352,15 +3506,21 @@ const Footer = ({ onContact }: { onContact: () => void }) => {
               Quick Links <div className="h-1 w-8 bg-sundas-red rounded-full glow-red"></div>
             </h4>
             <ul className="text-white/60 space-y-4">
-              {['About Foundation', 'Zakat Calculator', 'Volunteer Program', 'Privacy Policy'].map((link) => (
-                <li key={link}>
-                  <motion.a 
-                    href="#" 
+              {[
+                { name: 'About Foundation', action: () => {} },
+                { name: 'Our Centers', action: onCenters },
+                { name: 'Zakat Calculator', action: () => {} },
+                { name: 'Volunteer Program', action: () => {} },
+                { name: 'Privacy Policy', action: () => {} }
+              ].map((link) => (
+                <li key={link.name}>
+                  <motion.button 
+                    onClick={link.action}
                     whileHover={{ x: 10, color: "#ffffff", textShadow: "0 0 8px rgba(255,255,255,0.5)" }}
-                    className="transition-colors inline-block"
+                    className="transition-colors inline-block text-left"
                   >
-                    {link}
-                  </motion.a>
+                    {link.name}
+                  </motion.button>
                 </li>
               ))}
             </ul>
@@ -3530,6 +3690,7 @@ export default function App() {
   const [showCausesPage, setShowCausesPage] = useState(false);
   const [showContactPage, setShowContactPage] = useState(false);
   const [showMediaPage, setShowMediaPage] = useState(false);
+  const [showCentersPage, setShowCentersPage] = useState(false);
   const [aboutSubPage, setAboutSubPage] = useState<string | null>(null);
   const [mediaSubPage, setMediaSubPage] = useState<string | null>(null);
 
@@ -3540,6 +3701,7 @@ export default function App() {
     setShowCausesPage(false);
     setShowContactPage(false);
     setShowMediaPage(false);
+    setShowCentersPage(false);
     setAboutSubPage(null);
     setMediaSubPage(null);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -3547,8 +3709,12 @@ export default function App() {
 
   const handleAboutSubPage = (sub: string) => {
     resetViews();
-    setShowAboutPage(true);
-    setAboutSubPage(sub);
+    if (sub === 'Our Centers') {
+      setShowCentersPage(true);
+    } else {
+      setShowAboutPage(true);
+      setAboutSubPage(sub);
+    }
   };
 
   const handleMediaSubPage = (sub: string) => {
@@ -3568,6 +3734,7 @@ export default function App() {
           onHome={() => resetViews()}
           onCauses={() => { resetViews(); setShowCausesPage(true); }}
           onContact={() => { resetViews(); setShowContactPage(true); }}
+          onCenters={() => { resetViews(); setShowCentersPage(true); }}
         />
         <motion.div
           initial={{ opacity: 0, x: 20 }}
@@ -3577,7 +3744,10 @@ export default function App() {
         >
           <DonatePage onBack={() => setShowDonatePage(false)} />
         </motion.div>
-        <Footer onContact={() => { resetViews(); setShowContactPage(true); }} />
+        <Footer 
+          onContact={() => { resetViews(); setShowContactPage(true); }} 
+          onCenters={() => { resetViews(); setShowCentersPage(true); }}
+        />
         <WhatsAppButton />
       </div>
     );
@@ -3594,6 +3764,7 @@ export default function App() {
           onHome={() => resetViews()}
           onCauses={() => { resetViews(); setShowCausesPage(true); }}
           onContact={() => { resetViews(); setShowContactPage(true); }}
+          onCenters={() => { resetViews(); setShowCentersPage(true); }}
         />
         <motion.div
            key={aboutSubPage || 'about'}
@@ -3604,7 +3775,10 @@ export default function App() {
         >
           <AboutPage onBack={() => setShowAboutPage(false)} subPage={aboutSubPage} />
         </motion.div>
-        <Footer onContact={() => { resetViews(); setShowContactPage(true); }} />
+        <Footer 
+          onContact={() => { resetViews(); setShowContactPage(true); }} 
+          onCenters={() => { resetViews(); setShowCentersPage(true); }}
+        />
         <WhatsAppButton />
       </div>
     );
@@ -3621,6 +3795,7 @@ export default function App() {
           onHome={() => resetViews()}
           onCauses={() => { resetViews(); setShowCausesPage(true); }}
           onContact={() => { resetViews(); setShowContactPage(true); }}
+          onCenters={() => { resetViews(); setShowCentersPage(true); }}
         />
         <motion.div
            key={mediaSubPage || 'media'}
@@ -3631,7 +3806,10 @@ export default function App() {
         >
           <MediaPage onBack={() => setShowMediaPage(false)} subPage={mediaSubPage} />
         </motion.div>
-        <Footer onContact={() => { resetViews(); setShowContactPage(true); }} />
+        <Footer 
+          onContact={() => { resetViews(); setShowContactPage(true); }} 
+          onCenters={() => { resetViews(); setShowCentersPage(true); }}
+        />
         <WhatsAppButton />
       </div>
     );
@@ -3648,6 +3826,7 @@ export default function App() {
           onHome={() => resetViews()}
           onCauses={() => setShowCausesPage(true)}
           onContact={() => { resetViews(); setShowContactPage(true); }}
+          onCenters={() => { resetViews(); setShowCentersPage(true); }}
         />
         <motion.div
            initial={{ opacity: 0, y: 20 }}
@@ -3657,7 +3836,10 @@ export default function App() {
         >
           <CausesPage onBack={() => setShowCausesPage(false)} onLearnMore={(id) => setSelectedCause(id)} />
         </motion.div>
-        <Footer onContact={() => { resetViews(); setShowContactPage(true); }} />
+        <Footer 
+          onContact={() => { resetViews(); setShowContactPage(true); }} 
+          onCenters={() => { resetViews(); setShowCentersPage(true); }}
+        />
         <WhatsAppButton />
       </div>
     );
@@ -3674,6 +3856,7 @@ export default function App() {
           onHome={() => resetViews()}
           onCauses={() => { resetViews(); setShowCausesPage(true); }}
           onContact={() => setShowContactPage(true)}
+          onCenters={() => { resetViews(); setShowCentersPage(true); }}
         />
         <motion.div
            initial={{ opacity: 0, scale: 1.1 }}
@@ -3683,7 +3866,40 @@ export default function App() {
         >
           <ContactPage onBack={() => setShowContactPage(false)} />
         </motion.div>
-        <Footer onContact={() => setShowContactPage(true)} />
+        <Footer 
+          onContact={() => setShowContactPage(true)} 
+          onCenters={() => { resetViews(); setShowCentersPage(true); }}
+        />
+        <WhatsAppButton />
+      </div>
+    );
+  }
+
+  if (showCentersPage) {
+    return (
+      <div className="min-h-screen bg-sundas-blue/5 font-sans text-sundas-blue selection:bg-sundas-red/10 selection:text-sundas-red">
+        <Navbar 
+          onDonate={() => { resetViews(); setShowDonatePage(true); }} 
+          onAbout={() => { resetViews(); setShowAboutPage(true); }}
+          onAboutSubPage={handleAboutSubPage}
+          onMediaSubPage={handleMediaSubPage}
+          onHome={() => resetViews()}
+          onCauses={() => { resetViews(); setShowCausesPage(true); }}
+          onContact={() => { resetViews(); setShowContactPage(true); }}
+          onCenters={() => { resetViews(); setShowCentersPage(true); }}
+        />
+        <motion.div
+           initial={{ opacity: 0, x: -100 }}
+           animate={{ opacity: 1, x: 0 }}
+           exit={{ opacity: 0, x: 100 }}
+           transition={{ duration: 0.5 }}
+        >
+          <CentersPage onBack={() => setShowCentersPage(false)} />
+        </motion.div>
+        <Footer 
+          onContact={() => { resetViews(); setShowContactPage(true); }} 
+          onCenters={() => { resetViews(); setShowCentersPage(true); }}
+        />
         <WhatsAppButton />
       </div>
     );
@@ -3695,9 +3911,12 @@ export default function App() {
         <Navbar 
           onDonate={() => { resetViews(); setShowDonatePage(true); }} 
           onAbout={() => { resetViews(); setShowAboutPage(true); }}
+          onAboutSubPage={handleAboutSubPage}
+          onMediaSubPage={handleMediaSubPage}
           onHome={() => resetViews()}
           onCauses={() => { resetViews(); setShowCausesPage(true); }}
           onContact={() => { resetViews(); setShowContactPage(true); }}
+          onCenters={() => { resetViews(); setShowCentersPage(true); }}
         />
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
@@ -3707,7 +3926,10 @@ export default function App() {
         >
           <CauseDetail causeId={selectedCause} onBack={() => setSelectedCause(null)} />
         </motion.div>
-        <Footer onContact={() => { resetViews(); setShowContactPage(true); }} />
+        <Footer 
+          onContact={() => { resetViews(); setShowContactPage(true); }} 
+          onCenters={() => { resetViews(); setShowCentersPage(true); }}
+        />
         <WhatsAppButton />
       </div>
     );
@@ -3723,6 +3945,7 @@ export default function App() {
         onHome={() => resetViews()}
         onCauses={() => { resetViews(); setShowCausesPage(true); }}
         onContact={() => { resetViews(); setShowContactPage(true); }}
+        onCenters={() => { resetViews(); setShowCentersPage(true); }}
       />
       
       <motion.main
@@ -3960,7 +4183,10 @@ export default function App() {
         <Contact />
       </motion.main>
 
-      <Footer onContact={() => { resetViews(); setShowContactPage(true); }} />
+      <Footer 
+        onContact={() => { resetViews(); setShowContactPage(true); }} 
+        onCenters={() => { resetViews(); setShowCentersPage(true); }}
+      />
       <WhatsAppButton />
       
       <DonateModal 
